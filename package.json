@@ -1,0 +1,28 @@
+{
+    "name": "portal-aplikasi-media-dprd-batanghari",
+    "version": "1.0.0",
+    "description": "CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.\r More information can be found at the [official site](https://codeigniter.com).",
+    "main": "index.js",
+    "directories": {
+        "test": "tests"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "npx tailwindcss -i ./public/assets/css/input.css -o ./public/assets/css/base.css --minify",
+        "watch": "npx tailwindcss -i ./public/assets/css/input.css -o ./public/assets/css/base.css --watch"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/muhammad2603/portal-aplikasi-media-dprd-bth.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/muhammad2603/portal-aplikasi-media-dprd-bth/issues"
+    },
+    "homepage": "https://github.com/muhammad2603/portal-aplikasi-media-dprd-bth#readme",
+    "devDependencies": {
+        "tailwindcss": "^3.4.17"
+    }
+}
