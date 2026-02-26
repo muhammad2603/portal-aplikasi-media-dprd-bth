@@ -11,7 +11,7 @@ class Login extends Controller
     {
         // data halaman
         $data_pages = [
-            'page_name' => 'Login | SiKEMA Setwan Kabupaten Batang Hari'
+            'page_name' => 'Login'
         ];
         // @return view ke halaman login
         return view('pages/login', $data_pages);
