@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="text-[14px] sm:text-[16px] 2xl:text-[20px]">
 
 <head>
     <meta charset="UTF-8">
@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="<?= base_url('/assets/css/base.css') ?>">
 </head>
 
-<body>
+<body class="bg-primary">
     <!-- @Content -->
     <?= $this->renderSection('content') ?>
 </body>

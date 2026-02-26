@@ -11,8 +11,8 @@ module.exports = {
         primary: {
           DEFAULT: "#F9FAFB"
         },
-        btn: {
-          primary: "#155DFC"
+        green: {
+          DEFAULT: "#4CAF50"
         }
       }
     },
