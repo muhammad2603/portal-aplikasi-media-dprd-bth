@@ -13,7 +13,7 @@
             <p class="text-center text-sm text-pretty text-gray-500/90 tracking-wide">Selamat datang di Sistem Informasi Media Elektronik Setwan Kabupaten Batang Hari!</p>
             <div class="form-login mt-5 flex flex-col gap-5 md:gap-4">
                 <div class="input-email flex flex-col gap-1.5 text-sm">
-                    <label for="#email" class="font-text font-semibold"><span>Email</span></label>
+                    <label for="email" class="font-text font-semibold"><span>Email</span></label>
                     <div class="input relative text-gray-500/90">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                             class="size-5 absolute top-[50%] left-3 -translate-y-[50%]">
@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="input-password flex flex-col gap-1.5 text-sm">
-                    <label for="#password" class="font-text font-semibold"><span>Kata Sandi</span></label>
+                    <label for="password" class="font-text font-semibold"><span>Kata Sandi</span></label>
                     <div class="input relative text-gray-500/90">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                             class="size-5 absolute top-[50%] left-3 -translate-y-[50%]">
@@ -47,7 +47,7 @@
                     <span class="shrink-0 text-sm">Atau</span>
                     <span class="flex-1 h-0.5 bg-gray-100"></span>
                 </div>
-                <p class="text-sm text-center">Belum memiliki akun? <a href="/register" class="font-semibold text-green">Daftar sekarang</a></p>
+                <p class="text-sm text-center">Belum memiliki akun? <a href="/daftar" class="font-semibold text-green">Daftar sekarang</a></p>
                 <p class="copyright mt-1 text-sm text-center">&copy; Copyright 2026. Setwan Batang Hari. All Rights Reserved.</p>
             </div>
         </div>
