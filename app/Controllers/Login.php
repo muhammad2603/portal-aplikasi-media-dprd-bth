@@ -9,10 +9,11 @@ class Login extends Controller
     // @method index: returned string view
     public function index(): string
     {
+        // data halaman
         $data_pages = [
             'page_name' => 'Login'
         ];
-
+        // @return view ke halaman login
         return view('pages/login', $data_pages);
     }
 }
