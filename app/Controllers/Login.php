@@ -9,6 +9,10 @@ class Login extends Controller
     // @method index: returned string view
     public function index(): string
     {
-        return view('pages/login', []);
+        $data_pages = [
+            'page_name' => 'Login'
+        ];
+
+        return view('pages/login', $data_pages);
     }
 }
