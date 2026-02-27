@@ -1,7 +1,7 @@
 <?= $this->extend('pages/dashboard/main') ?>
 <?= $this->section('content') ?>
 <div class="content py-6 px-6 md:py-8 sm:px-10 flex flex-col gap-6">
-    <section class="cards pb-3.5 lg:pb-0 px-2 lg:px-0 flex gap-6 overflow-x-scroll lg:overflow-visible">
+    <section class="cards pb-3.5 xl:pb-0 px-2 xl:px-0 flex gap-6 overflow-x-scroll xl:overflow-visible">
         <div class="total-pengajuan p-7 flex items-center shrink-0 gap-8 rounded-lg shadow-md">
             <div class="card-text flex flex-col gap-1">
                 <p class="font-semibold text-sm text-gray-500/90">Total Pengajuan</p>
@@ -69,7 +69,7 @@
     </section>
 
     <section class="grid grid-cols-1 lg:grid-cols-9 gap-6">
-        <aside class="lg:col-span-6 h-fit py-10 md:py-5 px-7 bg-white rounded-lg shadow-md">
+        <aside class="lg:col-span-5 xl:col-span-6 h-fit py-10 md:py-5 px-7 bg-white rounded-lg shadow-md">
             <div class="legend flex justify-between items-center">
                 <div class="title">
                     <h2 class="text-lg">Pengajuan Terakhir</h2>
@@ -189,7 +189,7 @@
                 <p class="font-semibold text-sm">Anda belum melakukan pengajuan.</p>
             </div>
         </aside>
-        <aside class="lg:col-span-3 py-10 md:py-5 px-7 bg-white rounded-lg shadow-md h-fit">
+        <aside class="lg:col-span-4 xl:col-span-3 py-10 md:py-5 px-7 bg-white rounded-lg shadow-md h-fit">
             <div class="legend text-center md:text-left">
                 <h2 class="text-lg">Aksi Cepat</h2>
                 <p class="text-sm text-gray-500/90">Pintasan fitur utama</p>
@@ -217,7 +217,7 @@
         </aside>
     </section>
 
-    <section class="news-activity py-10 lg:py-5 px-7 bg-white rounded-lg shadow-md">
+    <section class="news-activity py-10 lg:py-8 xl:py-5 px-7 bg-white rounded-lg shadow-md">
         <div class="legend">
             <h2 class="text-lg">Aktivitas Terbaru</h2>
             <p class="text-sm text-gray-500/90">Lihat timeline aktivitas Anda dalam 7 hari terakhir</p>
