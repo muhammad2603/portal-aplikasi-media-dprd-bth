@@ -9,15 +9,15 @@
     <link rel="stylesheet" href="<?= base_url('/assets/css/fonts.css') ?>">
 </head>
 
-<body class="grid grid-cols-1 md:grid-cols-12 min-h-screen">
-    <aside class="fixed md:block md:sticky top-0 h-screen md:h-fit md:col-span-2 border-r border-solid border-gray-200 z-[9999999]">
-        <div class="nav-overlay md:hidden absolute top-0 left-0 w-screen h-screen bg-black/35 z-[-1]"></div>
+<body class="grid grid-cols-1 lg:grid-cols-12 min-h-screen">
+    <aside class="fixed lg:block lg:sticky top-0 h-screen lg:h-fit lg:col-span-2 border-r border-solid border-gray-200 z-[9999999]">
+        <div class="nav-overlay lg:hidden absolute top-0 left-0 w-screen h-screen bg-black/35 z-[-1]"></div>
         <div class="top-aside bg-white pt-6 pb-4 px-6 flex gap-4 tracking-wider">
             <div class="title">
                 <h2 class="text-xl text-green">SiMELEK</h2>
                 <p class="mt-0.5 text-xs text-gray-500/90 text-pretty">Sistem Informasi Media Elektronik</p>
             </div>
-            <button type="button" class="md:hidden">
+            <button type="button" class="lg:hidden">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                 </svg>
