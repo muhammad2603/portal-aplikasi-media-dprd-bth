@@ -1,7 +1,7 @@
 <?= $this->extend('pages/dashboard/main') ?>
 <?= $this->section('content') ?>
-<div class="content py-6 px-6 sm:py-8 sm:px-10 flex flex-col gap-6">
-    <section class="cards pb-3.5 sm:pb-0 flex gap-6 overflow-x-scroll sm:overflow-visible">
+<div class="content py-6 px-6 md:py-8 sm:px-10 flex flex-col gap-6">
+    <section class="cards pb-3.5 md:pb-0 px-2 md:px-0 flex gap-6 overflow-x-scroll md:overflow-visible">
         <div class="total-pengajuan p-7 flex items-center shrink-0 gap-8 rounded-lg shadow-md">
             <div class="card-text flex flex-col gap-1">
                 <p class="font-semibold text-sm text-gray-500/90">Total Pengajuan</p>
@@ -68,8 +68,8 @@
         </a>
     </section>
 
-    <section class="grid grid-cols-1 sm:grid-cols-9 gap-6">
-        <aside class="sm:col-span-6 h-fit py-5 px-7 bg-white rounded-lg shadow-md">
+    <section class="grid grid-cols-1 md:grid-cols-9 gap-6">
+        <aside class="md:col-span-6 h-fit py-10 md:py-5 px-7 bg-white rounded-lg shadow-md">
             <div class="legend flex justify-between items-center">
                 <div class="title">
                     <h2 class="text-lg">Pengajuan Terakhir</h2>
@@ -189,25 +189,25 @@
                 <p class="font-semibold text-sm">Anda belum melakukan pengajuan.</p>
             </div>
         </aside>
-        <aside class="sm:col-span-3 py-5 px-7 bg-white rounded-lg shadow-md h-fit">
-            <div class="legend text-center sm:text-left">
+        <aside class="md:col-span-3 py-10 md:py-5 px-7 bg-white rounded-lg shadow-md h-fit">
+            <div class="legend text-center md:text-left">
                 <h2 class="text-lg">Aksi Cepat</h2>
                 <p class="text-sm text-gray-500/90">Pintasan fitur utama</p>
             </div>
             <nav class="mt-8 flex flex-col gap-4">
-                <a href="/dashboard/pengajuan" class="py-3.5 px-3 flex justify-center sm:justify-start items-center gap-1.5 bg-blue-500 text-white rounded-md transition duration-150 hover:bg-blue-600">
+                <a href="/dashboard/pengajuan" class="py-3.5 px-3 flex justify-center md:justify-start items-center gap-1.5 bg-blue-500 text-white rounded-md transition duration-150 hover:bg-blue-600">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                     </svg>
                     <span class="font-text font-semibold text-sm">Buat Pengajuan Baru</span>
                 </a>
-                <a href="/dashboard/pengajuan" class="py-3.5 px-3 flex justify-center sm:justify-start items-center gap-1.5 border border-solid border-gray-300 rounded-md transition duration-150 hover:bg-primary">
+                <a href="/dashboard/pengajuan" class="py-3.5 px-3 flex justify-center md:justify-start items-center gap-1.5 border border-solid border-gray-300 rounded-md transition duration-150 hover:bg-primary">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776" />
                     </svg>
                     <span class="font-text font-semibold text-sm">Kelola Pengajuan</span>
                 </a>
-                <a href="/dashboard/pengaturan/profil" class="py-3.5 px-3 flex justify-center sm:justify-start items-center gap-1.5 border border-solid border-gray-300 rounded-md transition duration-150 hover:bg-primary">
+                <a href="/dashboard/pengaturan/profil" class="py-3.5 px-3 flex justify-center md:justify-start items-center gap-1.5 border border-solid border-gray-300 rounded-md transition duration-150 hover:bg-primary">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                     </svg>
@@ -217,7 +217,7 @@
         </aside>
     </section>
 
-    <section class="news-activity py-5 px-7 bg-white rounded-lg shadow-md">
+    <section class="news-activity py-10 md:py-5 px-7 bg-white rounded-lg shadow-md">
         <div class="legend">
             <h2 class="text-lg">Aktivitas Terbaru</h2>
             <p class="text-sm text-gray-500/90">Lihat timeline aktivitas Anda dalam 7 hari terakhir</p>

@@ -9,12 +9,19 @@
     <link rel="stylesheet" href="<?= base_url('/assets/css/fonts.css') ?>">
 </head>
 
-<body class="grid grid-cols-1 sm:grid-cols-12 min-h-screen">
-    <aside class="fixed sm:block sm:sticky top-0 h-screen sm:h-fit sm:col-span-2 border-r border-solid border-gray-200 z-[9999999]">
-        <div class="nav-overlay sm:hidden absolute top-0 left-0 w-screen h-screen bg-black/35 z-[-1]"></div>
-        <div class="top-aside bg-white pt-6 pb-4 px-6 tracking-wider">
-            <h2 class="text-xl text-green">SiMELEK</h2>
-            <p class="mt-0.5 text-xs text-gray-500/90 text-pretty">Sistem Informasi Media Elektronik</p>
+<body class="grid grid-cols-1 md:grid-cols-12 min-h-screen">
+    <aside class="fixed md:block md:sticky top-0 h-screen md:h-fit md:col-span-2 border-r border-solid border-gray-200 z-[9999999]">
+        <div class="nav-overlay md:hidden absolute top-0 left-0 w-screen h-screen bg-black/35 z-[-1]"></div>
+        <div class="top-aside bg-white pt-6 pb-4 px-6 flex gap-4 tracking-wider">
+            <div class="title">
+                <h2 class="text-xl text-green">SiMELEK</h2>
+                <p class="mt-0.5 text-xs text-gray-500/90 text-pretty">Sistem Informasi Media Elektronik</p>
+            </div>
+            <button type="button" class="md:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                </svg>
+            </button>
         </div>
         <div class="profiles py-4 px-2.5 flex gap-3 border-y border-solid border-gray-200 bg-blue-100">
             <figure class="shrink-0 p-0.5 bg-white rounded-full overflow-hidden">
@@ -72,7 +79,7 @@
     </aside>
 
     <main class="col-span-10 bg-primary">
-        <header class="sticky top-0 py-5 px-7 flex items-center justify-between gap-6 sm:gap-0 bg-white border-b border-solid border-gray-200 shadow-sm z-10">
+        <header class="sticky top-0 py-8 md:py-5 px-7 flex items-center justify-between gap-6 sm:gap-0 bg-white border-b border-solid border-gray-200 shadow-sm z-10">
             <div class="start-header flex items-center gap-4 sm:gap-0">
                 <button type="button" class="hamburger sm:hidden py-1 px-2 shrink-0 border-[1.5px] border-solid border-gray-200 rounded transition duration-150 hover:bg-gray-100">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
