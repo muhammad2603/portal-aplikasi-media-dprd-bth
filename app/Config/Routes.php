@@ -11,3 +11,8 @@ $routes->get('/', fn() => redirect()->to('/login')->setStatusCode(301));
 $routes->get('/login', 'Login::index');
 // @GET register
 $routes->get('/daftar', 'Registrasi::index');
+
+// Lakukan filter sebelum masuk ke area Dashboard
+
+// @GET dashboard
+$routes->get('/dashboard', 'Dashboard::home');
