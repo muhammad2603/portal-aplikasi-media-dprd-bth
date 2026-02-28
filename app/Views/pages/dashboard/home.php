@@ -53,12 +53,12 @@
         </div>
     </section>
 
-    <section class="remainder py-8 flex flex-col items-center gap-4 bg-white rounded-lg shadow-md">
-        <p class="flex items-center gap-1 text-amber-600">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
+    <section class="remainder py-8 px-4 flex flex-col items-center gap-4 bg-white rounded-lg shadow-md">
+        <p class="flex flex-col items-center gap-1 text-amber-600">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
             </svg>
-            Anda belum mengajukan sejak 3 hari terakhir.
+            <span class="text-center">Anda belum melakukan pengajuan sejak 3 hari terakhir.</span>
         </p>
         <a href="/dashboard/pengajuan" class="py-2.5 px-3 w-fit flex items-center gap-1.5 bg-blue-500 text-white rounded-md transition duration-150 hover:bg-blue-600">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
