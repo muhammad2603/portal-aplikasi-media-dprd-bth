@@ -1,6 +1,8 @@
 <?= $this->extend('pages/dashboard/main') ?>
 <?= $this->section('content') ?>
+<!-- Section Cards: informasi Pengajuan -->
 <section class="cards pb-3.5 xl:pb-0 px-2 xl:px-0 flex gap-6 overflow-x-scroll xl:overflow-visible">
+    <!-- Card: Total Pengajuan -->
     <div class="total-pengajuan p-7 flex items-center shrink-0 gap-8 rounded-lg shadow-md">
         <div class="card-text flex flex-col gap-1">
             <p class="font-semibold text-sm text-gray-500/90">Total Pengajuan</p>
@@ -17,6 +19,7 @@
             </svg>
         </span>
     </div>
+    <!-- Card: Total Disetujui -->
     <div class="total-disetujui p-7 flex items-center shrink-0 gap-8 rounded-lg shadow-md">
         <div class="card-text flex flex-col gap-1">
             <p class="font-semibold text-sm text-gray-500/90">Disetujui</p>
@@ -28,6 +31,7 @@
             </svg>
         </span>
     </div>
+    <!-- Card: Total Pending -->
     <div class="total-pending p-7 flex items-center shrink-0 gap-8 rounded-lg shadow-md">
         <div class="card-text flex flex-col gap-1">
             <p class="font-semibold text-sm text-gray-500/90">Pending</p>
@@ -39,6 +43,7 @@
             </svg>
         </span>
     </div>
+    <!-- Card: Total Perbaikan -->
     <div class="total-pebaikan p-7 flex justify-between items-center shrink-0 grow gap-8 rounded-lg shadow-md">
         <div class="card-text flex flex-col gap-1">
             <p class="font-semibold text-sm text-gray-500/90">Perbaikan</p>
@@ -51,14 +56,17 @@
         </span>
     </div>
 </section>
-
+<!-- Akhir Section Cards -->
+<!-- Section Remainder -->
 <section class="remainder py-8 px-4 flex flex-col items-center gap-4 bg-white rounded-lg shadow-md">
+    <!-- Text Remainder -->
     <p class="flex flex-col items-center gap-1 text-amber-600">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
         </svg>
         <span class="text-center">Anda belum melakukan pengajuan sejak 3 hari terakhir.</span>
     </p>
+    <!-- Link Pengajuan -->
     <a href="/dashboard/pengajuan" class="py-2.5 px-3 w-fit flex items-center gap-1.5 bg-blue-500 text-white rounded-md transition duration-150 hover:bg-blue-600">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -66,9 +74,12 @@
         <span class="font-text font-semibold text-sm">Buat Pengajuan Baru</span>
     </a>
 </section>
-
+<!-- Akhir Section Remainder -->
+<!-- Section Pengajuan terakhir & aksi cepat -->
 <section class="grid grid-cols-1 lg:grid-cols-9 gap-6">
+    <!-- Aside Pengajuan terakhir -->
     <aside class="lg:col-span-5 xl:col-span-6 h-fit py-10 md:py-5 px-7 bg-white rounded-lg shadow-md">
+        <!-- Legend -->
         <div class="legend flex justify-between items-center">
             <div class="title">
                 <h2 class="text-lg">Pengajuan Terakhir</h2>
@@ -81,6 +92,7 @@
                 </svg>
             </a>
         </div>
+        <!-- List Pengajuan terakhir -->
         <div class="list-pengajuan-terakhir mt-8 flex flex-col gap-4">
             <article class="py-5 px-4 bg-primary rounded-md shadow-sm">
                 <div class="top flex items-center gap-4 justify-between">
@@ -188,11 +200,14 @@
             <p class="font-semibold text-sm">Anda belum melakukan pengajuan.</p>
         </div>
     </aside>
+    <!-- Aside aksi cepat -->
     <aside class="lg:col-span-4 xl:col-span-3 py-10 md:py-5 px-7 bg-white rounded-lg shadow-md h-fit">
+        <!-- Legend -->
         <div class="legend text-center md:text-left">
             <h2 class="text-lg">Aksi Cepat</h2>
             <p class="text-sm text-gray-500/90">Pintasan fitur utama</p>
         </div>
+        <!-- Link aksi cepat -->
         <nav class="mt-8 flex flex-col gap-4">
             <a href="/dashboard/pengajuan" class="py-3.5 px-3 flex justify-center md:justify-start items-center gap-1.5 bg-blue-500 text-white rounded-md transition duration-150 hover:bg-blue-600">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
@@ -215,12 +230,15 @@
         </nav>
     </aside>
 </section>
-
+<!-- Akhir Section Pengajuan terakhir & aksi cepat -->
+<!-- Section aktivitas terbaru -->
 <section class="news-activity py-10 lg:py-8 xl:py-5 px-7 bg-white rounded-lg shadow-md">
+    <!-- Legend -->
     <div class="legend">
         <h2 class="text-lg">Aktivitas Terbaru</h2>
         <p class="text-sm text-gray-500/90">Lihat timeline aktivitas Anda dalam 7 hari terakhir</p>
     </div>
+    <!-- Catatan aktivitas terbaru -->
     <div class="activities mt-8 flex flex-col gap-4">
         <div class="flex gap-3.5">
             <span class="py-1.5 px-1.5 h-fit bg-gray-200/60 text-green-600 rounded-lg">
@@ -292,4 +310,5 @@
         </div>
     </div>
 </section>
+<!-- Akhir Section aktivitas terbaru -->
 <?= $this->endSection() ?>
