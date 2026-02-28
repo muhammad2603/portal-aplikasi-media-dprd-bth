@@ -1,3 +1,4 @@
+<?php $current_nav = $navigation ?? 'Dashboard' ?>
 <!DOCTYPE html>
 <html lang="en" class="scrollbar-custom text-[14px] sm:text-[16px] 2xl:text-[20px]">
 <!-- HEAD -->
@@ -40,32 +41,25 @@
                 </div>
             </div>
             <nav class="scrollbar-custom p-4 flex flex-col gap-2 min-h-[230px] max-h-[230px] overflow-y-auto border-b border-solid border-gray-200">
-                <span class="beranda font-text active p-3 flex gap-1.5 bg-blue-600 text-white rounded-lg">
+                <a href="<?= $current_nav === 'Dashboard' ? 'javascript:void(0)' : '/dashboard' ?>" class="beranda font-text active p-3 flex gap-1.5 rounded-lg <?= $current_nav === 'Dashboard' ? 'font-semibold bg-blue-600 text-white' : 'text-gray-500/90 transition duration-150 ease-in hover:bg-gray-200 focus:outline-none focus:bg-gray-200' ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                     </svg>
-                    <span class="font-semibold truncate" title="Dashboard">Dashboard</span>
-                </span>
+                    <span class="truncate" title="Dashboard">Dashboard</span>
+                </a>
 
-                <a href="/dashboard/pengajuan" class="pengajuan font-text p-3 flex gap-1.5 text-gray-500/90 rounded-lg transition duration-150 ease-in hover:bg-gray-200 focus:outline-none focus:bg-gray-200" aria-label="Kunjungi halaman pengajuan">
+                <a href="<?= $current_nav === 'Pengajuan' ? 'javascript:void(0)' : '/dashboard/pengajuan' ?>" class="beranda font-text active p-3 flex gap-1.5 rounded-lg <?= $current_nav === 'Pengajuan' ? 'font-semibold bg-blue-600 text-white' : 'text-gray-500/90 transition duration-150 ease-in hover:bg-gray-200 focus:outline-none focus:bg-gray-200' ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776" />
                     </svg>
                     <span class="truncate" title="Pengajuan">Pengajuan</span>
                 </a>
 
-                <a href="/dashboard/riwayat-pengajuan" class="riwayat-pengajuan font-text p-3 flex gap-1.5 text-gray-500/90 rounded-lg transition duration-150 ease-in hover:bg-gray-200 focus:outline-none focus:bg-gray-200" aria-label="Kunjungi halaman riwayat pengajuan anda">
+                <a href="<?= $current_nav === 'Riwayat Pengajuan' ? 'javascript:void(0)' : '/dashboard/riwayat-pengajuan' ?>" class="beranda font-text active p-3 flex gap-1.5 rounded-lg <?= $current_nav === 'Riwayat Pengajuan' ? 'font-semibold bg-blue-600 text-white' : 'text-gray-500/90 transition duration-150 ease-in hover:bg-gray-200 focus:outline-none focus:bg-gray-200' ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m7.875 14.25 1.214 1.942a2.25 2.25 0 0 0 1.908 1.058h2.006c.776 0 1.497-.4 1.908-1.058l1.214-1.942M2.41 9h4.636a2.25 2.25 0 0 1 1.872 1.002l.164.246a2.25 2.25 0 0 0 1.872 1.002h2.092a2.25 2.25 0 0 0 1.872-1.002l.164-.246A2.25 2.25 0 0 1 16.954 9h4.636M2.41 9a2.25 2.25 0 0 0-.16.832V12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 12V9.832c0-.287-.055-.57-.16-.832M2.41 9a2.25 2.25 0 0 1 .382-.632l3.285-3.832a2.25 2.25 0 0 1 1.708-.786h8.43c.657 0 1.281.287 1.709.786l3.284 3.832c.163.19.291.404.382.632M4.5 20.25h15A2.25 2.25 0 0 0 21.75 18v-2.625c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125V18a2.25 2.25 0 0 0 2.25 2.25Z" />
                     </svg>
                     <span class="truncate" title="Riwayat Pengajuan">Riwayat Pengajuan</span>
-                </a>
-
-                <a href="/dashboard/pengaturan/profil" class="profil font-text p-3 flex gap-1.5 text-gray-500/90 rounded-lg transition duration-150 ease-in hover:bg-gray-200 focus:outline-none focus:bg-gray-200" aria-label="Kunjungi halaman informasi profil anda">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                    </svg>
-                    <span class="truncate" title="Riwayat Pengajuan">Profil</span>
                 </a>
             </nav>
             <div class="mores-nav p-4 flex flex-col gap-2">
@@ -177,12 +171,14 @@
                     </div>
                 </div>
                 <!-- Header link Pengajuan -->
-                <a href="/dashboard/pengajuan" class="hidden lg:flex py-2 px-2.5 gap-1 bg-blue-500 text-white rounded-md transition duration-150 hover:bg-blue-600 focus:outline-none focus:bg-blue-600" aria-label="Buat pengajuan baru">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                    </svg>
-                    <span class="font-semibold font-text text-sm">Pengajuan Baru</span>
-                </a>
+                <?php if ($current_nav !== 'Pengajuan'): ?>
+                    <a href="/dashboard/pengajuan" class="hidden lg:flex py-2 px-2.5 gap-1 bg-blue-500 text-white rounded-md transition duration-150 hover:bg-blue-600 focus:outline-none focus:bg-blue-600" aria-label="Buat pengajuan baru">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <span class="font-semibold font-text text-sm">Pengajuan Baru</span>
+                    </a>
+                <?php endif ?>
             </aside>
             <!-- Akhir Aside Header -->
         </header>
