@@ -1,19 +1,22 @@
 <?= $this->extend('pages/dashboard/main') ?>
 <?= $this->section('content') ?>
-
+<!-- Form Pengajuan -->
 <section class="form-pengajuan mx-auto py-10 lg:py-8 xl:py-5 px-7 shrink-0 grow-0 w-full md:w-3/4 xl:w-2/4 flex flex-col gap-4 bg-white rounded-lg shadow-md">
     <!-- Legend -->
     <div class="legend">
         <h2 class="text-xl">Formulir Pengajuan</h2>
         <p class="mt-1 text-sm text-gray-500/90">Lengkapi formulir di bawah ini untuk mengajukan</p>
     </div>
+    <!-- Subtitle Form -->
     <h3 class="mt-4 pb-2 text-lg border-b-[1.5px] border-solid border-gray-200">Informasi Dasar</h3>
+    <!-- Input Judul Pengajuan -->
     <div class="input-judul-pengajuan mt-4 flex flex-col gap-1.5 text-sm">
         <label for="judulPengajuan" class="font-text text-sm font-medium"><span>Judul Pengajuan</span><span class="ml-1 text-red-400">*</span></label>
         <div class="input text-gray-500/90">
             <input type="text" name="_judul_pengajuan" id="judulPengajuan" class="py-2.5 px-3 w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" placeholder="Cth: Liputan Pelantikan Anggota DPRD..." aria-label="Masukkan Judul Pengajuan" autocomplete="off" />
         </div>
     </div>
+    <!-- Input Tanggal Tayang -->
     <div class="input-tanggal-tayang mt-4 flex flex-col gap-1.5 text-sm">
         <label for="tanggalPublikasi" class="font-text text-sm font-medium"><span>Tanggal Publikasi/Tayang</span><span class="ml-1 text-red-400">*</span></label>
         <p class="pl-1.5 font-semibold text-xs text-gray-500/90 tracking-wide">Input ini diisi dengan tanggal publikasi berita dimedia anda</p>
@@ -21,6 +24,7 @@
             <input type="date" name="_tanggal_publikasi" id="tanggalPublikasi" class="py-2.5 px-3 w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" placeholder="Cth: Liputan Pelantikan Anggota DPRD..." aria-label="Masukkan Judul Pengajuan" autocomplete="off" />
         </div>
     </div>
+    <!-- Input Deskripsi -->
     <div class="input-deskripsi mt-4 flex flex-col gap-1.5 text-sm">
         <label for="deskripsi" class="font-text text-sm font-medium"><span>Deskripsi</span><span class="ml-1 text-red-400">*</span></label>
         <div class="input text-gray-500/90">
@@ -28,11 +32,16 @@
         </div>
     </div>
 </section>
-
+<!-- Akhir Form Pengajuan -->
+<!-- Form Lampiran Pengajuan -->
 <section class="form-lampiran-pengajuan mx-auto py-10 lg:py-8 xl:py-5 px-7 shrink-0 grow-0 w-full md:w-3/4 xl:w-2/4 flex flex-col gap-4 bg-white rounded-lg shadow-md">
+    <!-- Subtitle Form -->
     <h3 class="pb-2 font-text font-semibold text-lg text-center border-b-[1.5px] border-solid border-gray-200">Screenshot Tayangan Berita Di Media Anda</h3>
+    <!-- Input Lampiran -->
     <div class="input-lampiran mt-1.5 flex flex-col gap-1.5 text-sm">
+        <!-- Deskripsi Lampiran -->
         <p class="font-semibold text-sm text-center text-gray-500/90 tracking-wide text-pretty">Lampirkan screenshot sebagai bukti bahwa berita telah dipublikasikan di media Anda.</p>
+        <!-- Add File -->
         <div class="lampiran mt-4 border-2 border-dashed border-gray-500/70 rounded-lg hover:border-blue-500">
             <label for="lampiran" class="py-8 flex flex-col items-center gap-2 cursor-pointer">
                 <span class="text-gray-500/90">
@@ -48,6 +57,7 @@
             </label>
             <input type="file" name="_lampiran" id="lampiran" accept=".jpg,.jpeg,.png,.webp" class="hidden" hidden />
         </div>
+        <!-- Tambah ini jika user telah memilih lampirannya -->
         <div class="file-selected mt-4 flex-col items-center gap-3 hidden">
             <img
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvYMdJYjMJIxYaA70ar0T1C1BWT1BCqIBXPw&s"
@@ -60,5 +70,5 @@
         <button type="submit" class="col-span-2 py-1.5 font-text font-semibold text-sm bg-blue-500 text-white rounded-sm transition duration-150 ease-in hover:bg-blue-600">Kirim Pengajuan</button>
     </div>
 </section>
-
+<!-- Akhir Form Lampiran Pengajuan -->
 <?= $this->endSection() ?>
