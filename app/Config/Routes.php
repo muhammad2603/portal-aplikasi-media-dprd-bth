@@ -16,3 +16,9 @@ $routes->get('/daftar', 'Registrasi::index');
 
 // @GET dashboard
 $routes->get('/dashboard', 'Dashboard::home');
+// @GET dashboard/pengajuan
+$routes->get('/dashboard/pengajuan', 'Dashboard::pengajuan');
+// @GET dashboard/riwayat-pengajuan
+$routes->get('/dashboard/riwayat-pengajuan', 'Dashboard::riwayatPengajuan');
+// @GET dashboard/profil
+$routes->get('/dashboard/pengaturan/profil', 'Dashboard::profil');
