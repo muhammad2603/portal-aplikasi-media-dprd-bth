@@ -42,4 +42,14 @@ class Dashboard extends Controller
         // @return: view profil dashboard
         return view('pages/dashboard/profil.php', $data_page);
     }
+    // @method: riwayat hapus
+    public function riwayatHapus(): string
+    {
+        // @data
+        $data_page = [
+            "navigation" => "Riwayat Hapus"
+        ];
+        // @return: view riwayat hapus dashboard
+        return view('pages/dashboard/riwayat_hapus.php', $data_page);
+    }
 }
