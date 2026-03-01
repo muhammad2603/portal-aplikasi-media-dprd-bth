@@ -37,8 +37,8 @@
                     <img src="https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2281862025.jpg" alt="Profil <nama_user>" class="size-11" />
                 </figure>
                 <div class="text-xs flex-1 min-w-0 flex flex-col justify-center gap-0.5">
-                    <p class="truncate text-sm font-semibold">Muhammad Fattahillah. Mz</p>
-                    <p class="text-xs text-gray-500/90">User</p>
+                    <p class="truncate text-sm font-semibold">fattahillah</p>
+                    <p class="text-xs text-gray-500/90"><?= $role ?></p>
                 </div>
             </div>
             <nav class="scrollbar-custom p-4 flex flex-col gap-2 min-h-[230px] max-h-[230px] overflow-y-auto border-b border-solid border-gray-200">
