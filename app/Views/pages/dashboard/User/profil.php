@@ -3,9 +3,21 @@
 <!-- Section Data Profil -->
 <section class="riwayat-pengajuan py-12 lg:py-13 xl:py-10 px-7 bg-white rounded-lg shadow-md">
     <!-- Legend -->
-    <div class="legend">
-        <h2 class="text-xl">Data Profil</h2>
-        <p class="mt-1 text-sm text-gray-500/90">Lengkapi data profil anda</p>
+    <div class="legend flex justify-between items-center">
+        <!-- Title -->
+        <div class="title">
+            <h2 class="text-xl">Data Profil</h2>
+            <p class="mt-1 text-sm text-gray-500/90">Lengkapi data profil anda</p>
+        </div>
+        <!-- Button Edit Profile -->
+        <button type="button" class="py-1.5 px-2.5 w-fit h-fit flex items-center gap-2 bg-indigo-500 text-xs text-white rounded-md transition duration-150 ease-in hover:bg-indigo-600 focus:bg-indigo-600 focus:outline-none">
+            <span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                </svg>
+            </span>
+            <span>Edit Profil</span>
+        </button>
     </div>
     <!-- Box Data profile -->
     <div class="box-data-profile mt-4">
