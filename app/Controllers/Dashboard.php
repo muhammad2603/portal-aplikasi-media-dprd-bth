@@ -34,7 +34,7 @@ class Dashboard extends Controller
         // Atur jalur file layout berdasarkan role
         $path_page_by_role = $data_page["role"] === "user" ? 'pages/dashboard/User/' : "";
         // @return: view pengajuan
-       return view($path_page_by_role . 'pengajuan', $data_page);
+        return view($path_page_by_role . 'pengajuan', $data_page);
     }
     // @method: riwayat pengajuan
     public function riwayatPengajuan(): string
@@ -65,6 +65,21 @@ class Dashboard extends Controller
         $path_page_by_role = $data_page["role"] === "user" ? 'pages/dashboard/User/' : "";
         // @return: view riwayat hapus
         return view($path_page_by_role . 'riwayat_hapus', $data_page);
+    }
+    // @method: aktivitas
+    public function aktivitas(): string
+    {
+        // @data
+        $data_page = [
+            "navigation" => "Aktivitas",
+            "subtitle" => "Lihat riwayat aktivitas anda",
+            "role" => "user", // Role "user" hanya untuk debug, implementasi nyata lebih baik diambil dari database
+        ];
+        // @note: ubah ternary dengan block if supaya lebih mudah dibaca
+        // Atur jalur file layout berdasarkan role
+        $path_page_by_role = $data_page["role"] === "user" ? 'pages/dashboard/User/' : "";
+        // @return: view riwayat hapus
+        return view($path_page_by_role . 'aktivitas', $data_page);
     }
     // @method: profil
     public function profil(): string

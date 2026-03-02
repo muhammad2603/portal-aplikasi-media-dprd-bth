@@ -234,9 +234,19 @@
 <!-- Section aktivitas terbaru -->
 <section class="news-activity py-10 lg:py-8 xl:py-5 px-7 bg-white rounded-lg shadow-md">
     <!-- Legend -->
-    <div class="legend">
-        <h2 class="text-lg">Aktivitas Terbaru</h2>
-        <p class="text-sm text-gray-500/90">Lihat timeline aktivitas Anda dalam 7 hari terakhir</p>
+    <div class="legend flex justify-between items-center">
+        <!-- Title -->
+        <div class="title">
+            <h2 class="text-lg">Aktivitas Terbaru</h2>
+            <p class="text-sm text-gray-500/90">Lihat timeline aktivitas Anda dalam 7 hari terakhir</p>
+        </div>
+        <!-- Link -->
+        <a href="/dashboard/aktivitas" class="font-text py-1.5 px-4 flex items-center gap-1.5 text-blue-600 text-sm rounded-full group transition duration-150 ease-in hover:bg-blue-100">
+            <span>Lihat semua</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-3 transition duration-200 ease-in group-hover:translate-x-1">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+            </svg>
+        </a>
     </div>
     <!-- Catatan aktivitas terbaru -->
     <div class="activities mt-8 flex flex-col gap-4">

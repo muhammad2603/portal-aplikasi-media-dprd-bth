@@ -22,5 +22,7 @@ $routes->get('/dashboard/pengajuan', 'Dashboard::pengajuan');
 $routes->get('/dashboard/riwayat-pengajuan', 'Dashboard::riwayatPengajuan');
 // @GET dashboard/riwayat-hapus
 $routes->get('/dashboard/riwayat-hapus', 'Dashboard::riwayatHapus');
+// @GET dashboard/aktivitas
+$routes->get('/dashboard/aktivitas', 'Dashboard::aktivitas');
 // @GET dashboard/profil
 $routes->get('/dashboard/pengaturan/profil', 'Dashboard::profil');
