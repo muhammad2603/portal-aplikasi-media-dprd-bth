@@ -1,6 +1,5 @@
 <?= $this->extend('pages/dashboard/main') ?>
 <?= $this->section('content') ?>
-
 <!-- Section Cards: informasi Pengajuan -->
 <section class="cards pb-3.5 xl:pb-0 px-2 xl:px-0 flex gap-6 overflow-x-scroll xl:overflow-visible">
     <?= view('components/card', [
@@ -8,7 +7,7 @@
             [
                 "card_title" => 'Total Pengajuan Baru',
                 "card_description" => '36',
-                "width" => 'w-[340px]',
+                "add_class" => 'w-[340px]',
                 "card_icon" => [
                     "icon" => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14.25 18.28" class="size-5">
                     <path d="M.5,1.69v14.89c0,.66.53,1.19,1.19,1.19h10.87c.66,0,1.19-.53,1.19-1.19V5.53c0-.32-.13-.62-.35-.84l-3.76-3.76c-.22-.22-.52-.34-.83-.35l-7.11-.08c-.66,0-1.2.53-1.2,1.19Z" fill="none" stroke="currentColor" stroke-miterlimit="10" />
@@ -24,7 +23,7 @@
             [
                 "card_title" => 'Total Pengajuan yang Telah Diperbaiki',
                 "card_description" => '2',
-                "width" => 'w-[350px]',
+                "add_class" => 'w-[350px]',
                 "card_icon" => [
                     "icon" => '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
@@ -36,7 +35,6 @@
     ]) ?>
 </section>
 <!-- Akhir Section Cards -->
-
 <!-- Section Pengajuan terakhir & aksi cepat -->
 <section class="grid grid-cols-1 lg:grid-cols-9 gap-6">
     <!-- Aside Pengajuan terakhir -->
@@ -190,42 +188,12 @@
             <p class="text-sm text-gray-500/90">Pintasan fitur utama</p>
         </div>
         <!-- Link aksi cepat -->
-        <nav class="mt-8 flex flex-col gap-4">
-            <a href="/dashboard/pengajuan" class="py-3.5 px-3 flex justify-center md:justify-start items-center gap-1.5 bg-blue-500 text-white rounded-md transition duration-150 hover:bg-blue-600">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                </svg>
-                <span class="font-text font-semibold text-sm">Buat Pengajuan Baru</span>
-            </a>
-            <a href="/dashboard/riwayat-pengajuan" class="py-3.5 px-3 flex justify-center md:justify-start items-center gap-1.5 border border-solid border-gray-300 rounded-md transition duration-150 hover:bg-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776" />
-                </svg>
-                <span class="font-text font-semibold text-sm">Kelola Pengajuan</span>
-            </a>
-            <a href="/dashboard/aktivitas" class="py-3.5 px-3 flex justify-center md:justify-start items-center gap-1.5 border border-solid border-gray-300 rounded-md transition duration-150 hover:bg-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                </svg>
-                <span class="font-text font-semibold text-sm">Aktivitas</span>
-            </a>
-            <a href="/dashboard/riwayat-hapus" class="py-3.5 px-3 flex justify-center md:justify-start items-center gap-1.5 text-red-500 border border-solid border-red-400 rounded-md transition duration-150 hover:bg-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                </svg>
-                <span class="font-text font-semibold text-sm">Riwayat Hapus</span>
-            </a>
-            <a href="/dashboard/pengaturan/profil" class="py-3.5 px-3 flex justify-center md:justify-start items-center gap-1.5 border border-solid border-gray-300 rounded-md transition duration-150 hover:bg-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                </svg>
-                <span class="font-text font-semibold text-sm">Kelola Profil</span>
-            </a>
-        </nav>
+        <?= view('components/quick_actions') ?>
     </aside>
 </section>
 <!-- Akhir Section Pengajuan terakhir & aksi cepat -->
 <!-- Section aktivitas terbaru -->
+<!-- @note: masukkan section aktivitas kedalam components jika diperlukan -->
 <section class="news-activity py-10 lg:py-8 xl:py-5 px-7 bg-white rounded-lg shadow-md">
     <!-- Legend -->
     <div class="legend flex justify-between items-center">
