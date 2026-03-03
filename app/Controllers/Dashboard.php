@@ -27,7 +27,7 @@ class Dashboard extends Controller
         // @data
         $data_page = [
             "navigation" => "Pengajuan",
-            "subtitle" => "Buat pengajuan baru",
+            "subtitle" => $this->role === "User" ? "Buat pengajuan baru" : "Kelola pengajuan yang belum diproses",
             "role" => $this->role,
         ];
         // @return: view home by role
@@ -39,7 +39,7 @@ class Dashboard extends Controller
         // @data
         $data_page = [
             "navigation" => "Riwayat Pengajuan",
-            "subtitle" => "Kelola riwayat pengajuan anda",
+            "subtitle" => $this->role === "User" ? "Buat pengajuan baru" : "Kelola pengajuan yang telah diproses",
             "role" => $this->role,
         ];
         // @return: view home by role
