@@ -6,6 +6,9 @@ use CodeIgniter\Controller;
 // @class
 class Dashboard extends Controller
 {
+    protected $role = 'User'; // Role ini hanya untuk debug, implementasi nyata lebih baik diambil dari database
+    protected $pages_dashboard = "pages/dashboard";
+
     // @method: home
     public function home(): string
     {
@@ -13,13 +16,10 @@ class Dashboard extends Controller
         $data_page = [
             "navigation" => "Dashboard",
             "subtitle" => "Selamat datang kembali, Muhammad!",
-            "role" => "user", // Role "user" hanya untuk debug, implementasi nyata lebih baik diambil dari database
+            "role" => $this->role,
         ];
-        // @note: ubah ternary dengan block if supaya lebih mudah dibaca
-        // Atur jalur file layout berdasarkan role
-        $path_page_by_role = $data_page["role"] === "user" ? 'pages/dashboard/User/' : "";
-        // @return: view home
-        return view($path_page_by_role . 'home', $data_page);
+        // @return: view home by role
+        return view("$this->pages_dashboard/" . $this->role . "/home", $data_page);
     }
     // @method: pengajuan
     public function pengajuan(): string
@@ -27,14 +27,11 @@ class Dashboard extends Controller
         // @data
         $data_page = [
             "navigation" => "Pengajuan",
-            "subtitle" => "Buat pengajuan baru",
-            "role" => "user", // Role "user" hanya untuk debug, implementasi nyata lebih baik diambil dari database
+            "subtitle" => $this->role === "User" ? "Buat pengajuan baru" : "Kelola pengajuan yang belum diproses",
+            "role" => $this->role,
         ];
-        // @note: ubah ternary dengan block if supaya lebih mudah dibaca
-        // Atur jalur file layout berdasarkan role
-        $path_page_by_role = $data_page["role"] === "user" ? 'pages/dashboard/User/' : "";
-        // @return: view pengajuan
-        return view($path_page_by_role . 'pengajuan', $data_page);
+        // @return: view home by role
+        return view("$this->pages_dashboard/" . $this->role . "/pengajuan", $data_page);
     }
     // @method: riwayat pengajuan
     public function riwayatPengajuan(): string
@@ -42,29 +39,35 @@ class Dashboard extends Controller
         // @data
         $data_page = [
             "navigation" => "Riwayat Pengajuan",
-            "subtitle" => "Kelola riwayat pengajuan anda",
-            "role" => "user", // Role "user" hanya untuk debug, implementasi nyata lebih baik diambil dari database
+            "subtitle" => $this->role === "User" ? "Buat pengajuan baru" : "Kelola pengajuan yang telah diproses",
+            "role" => $this->role,
         ];
-        // @note: ubah ternary dengan block if supaya lebih mudah dibaca
-        // Atur jalur file layout berdasarkan role
-        $path_page_by_role = $data_page["role"] === "user" ? 'pages/dashboard/User/' : "";
-        // @return: view riwayat pengajuan
-        return view($path_page_by_role . 'riwayat_pengajuan', $data_page);
+        // @return: view home by role
+        return view("$this->pages_dashboard/" . $this->role . "/riwayat_pengajuan", $data_page);
     }
-    // @method: riwayat hapus
+    // @method: riwayat hapus, method ini dikhususkan untuk User
     public function riwayatHapus(): string
     {
         // @data
         $data_page = [
             "navigation" => "Riwayat Hapus",
             "subtitle" => "Kelola pengajuan yang terhapus",
-            "role" => "user", // Role "user" hanya untuk debug, implementasi nyata lebih baik diambil dari database
+            "role" => $this->role,
         ];
-        // @note: ubah ternary dengan block if supaya lebih mudah dibaca
-        // Atur jalur file layout berdasarkan role
-        $path_page_by_role = $data_page["role"] === "user" ? 'pages/dashboard/User/' : "";
-        // @return: view riwayat hapus
-        return view($path_page_by_role . 'riwayat_hapus', $data_page);
+        // @return: view home by role
+        return view("$this->pages_dashboard/" . $this->role . "/riwayat_hapus", $data_page);
+    }
+    // @method: riwayat batal, method ini dikhususkan untuk Admin
+    public function riwayatBatal(): string
+    {
+        // @data
+        $data_page = [
+            "navigation" => "Riwayat Pembatalan",
+            "subtitle" => "Kelola pengajuan yang dibatalkan",
+            "role" => $this->role,
+        ];
+        // @return: view home by role
+        return view("$this->pages_dashboard/" . $this->role . "/riwayat_pembatalan", $data_page);
     }
     // @method: aktivitas
     public function aktivitas(): string
@@ -73,13 +76,10 @@ class Dashboard extends Controller
         $data_page = [
             "navigation" => "Aktivitas",
             "subtitle" => "Lihat riwayat aktivitas anda",
-            "role" => "user", // Role "user" hanya untuk debug, implementasi nyata lebih baik diambil dari database
+            "role" => $this->role,
         ];
-        // @note: ubah ternary dengan block if supaya lebih mudah dibaca
-        // Atur jalur file layout berdasarkan role
-        $path_page_by_role = $data_page["role"] === "user" ? 'pages/dashboard/User/' : "";
-        // @return: view riwayat hapus
-        return view($path_page_by_role . 'aktivitas', $data_page);
+        // @return: view home by role
+        return view("$this->pages_dashboard/" . $this->role . "/aktivitas", $data_page);
     }
     // @method: profil
     public function profil(): string
@@ -88,12 +88,9 @@ class Dashboard extends Controller
         $data_page = [
             "navigation" => "Profil",
             "subtitle" => "Edit data profil anda",
-            "role" => "user", // Role "user" hanya untuk debug, implementasi nyata lebih baik diambil dari database
+            "role" => $this->role,
         ];
-        // @note: ubah ternary dengan block if supaya lebih mudah dibaca
-        // Atur jalur file layout berdasarkan role
-        $path_page_by_role = $data_page["role"] === "user" ? 'pages/dashboard/User/' : "";
-        // @return: view profil
-        return view($path_page_by_role . 'profil', $data_page);
+        // @return: view home by role
+        return view("$this->pages_dashboard/" . $this->role . "/profil", $data_page);
     }
 }

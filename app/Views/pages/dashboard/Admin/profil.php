@@ -33,6 +33,10 @@
             <div class="nama-lengkap mt-4 flex flex-col gap-1.5 text-sm">
                 <p class="font-text text-sm font-medium">Nama Lengkap: <span class="font-text font-normal text-gray-500/90">Muhammad Fattahillah. Mz</span></p>
             </div>
+            <!-- Role -->
+            <div class="role mt-2 flex flex-col gap-1.5 text-sm">
+                <p class="font-text text-sm font-medium">Role: <span class="font-text font-normal text-gray-500/90">Admin</span></p>
+            </div>
             <!-- Tanggal Lahir -->
             <div class="tanggal-lahir mt-2 flex flex-col gap-1.5 text-sm">
                 <p class="font-text text-sm font-medium">Tanggal Lahir: <span class="font-text font-normal text-gray-500/90">26 Maret 2026</span></p>
@@ -42,22 +46,22 @@
                 <p class="font-text text-sm font-medium">No HP/WA: <span class="font-text font-normal text-gray-500/90">0822-8034-3857</span></p>
             </div>
         </div>
-        <!-- Informasi Kantor/Perusahaan Media -->
-        <div class="informasi-kantor-media mt-4">
+        <!-- Informasi Lainnya -->
+        <div class="informasi-lainnya mt-4">
             <!-- Subtitle Form -->
-            <h3 class="mt-4 pb-2 text-lg border-b-[1.5px] border-solid border-gray-200">Informasi Kantor/Perusahaan Media</h3>
-            <!-- Kantor/Perusahaan Media -->
-            <div class="nama-kantor-media mt-4 flex flex-col gap-1.5 text-sm">
-                <p class="font-text text-sm font-medium">Nama Kantor/Perusahaan Media: <span class="font-text font-normal text-gray-500/90">Media Jambi News</span></p>
+            <h3 class="mt-4 pb-2 text-lg border-b-[1.5px] border-solid border-gray-200">Informasi Lainnya</h3>
+            <!-- Jabatan -->
+            <div class="jabatan mt-4 flex flex-col gap-1.5 text-sm">
+                <p class="font-text text-sm font-medium">Jabatan: <span class="font-text font-normal text-gray-500/90">Non ASN</span></p>
             </div>
-            <!-- Alamat Kantor/Perusahaan Media -->
-            <div class="alamat-kantor-media mt-2 flex flex-col gap-1.5 text-sm">
-                <p class="font-text text-sm font-medium">Alamat Kantor/Perusahaan Media: <span class="font-text font-normal text-gray-500/90">Jl Cut Mutia No. 6 Kelurahan Rajawali, Kecamatan Jambi Timur, Kota Jambi, 36143</span></p>
+            <!-- Bagian -->
+            <div class="bagian mt-2 flex flex-col gap-1.5 text-sm">
+                <p class="font-text text-sm font-medium">Bagian: <span class="font-text font-normal text-gray-500/90">Humas & Publikasi</span></p>
             </div>
         </div>
     </div>
     <!-- Box Change Data -->
-    <div class="box-change-data mt-4 hidden">
+    <div class="box-change-data mt-4">
         <!-- Profile Image -->
         <div class="profile-image flex flex-col gap-0.5">
             <!-- Placeholder Profile Image -->
@@ -72,7 +76,7 @@
             </button>
         </div>
         <!-- Informasi Pribadi -->
-        <div class="informasi-pribadi mt-4">
+        <div class="informasi-pribadi mt-4 hidden">
             <!-- Subtitle Form -->
             <h3 class="mt-4 pb-2 text-lg border-b-[1.5px] border-solid border-gray-200">Informasi Dasar</h3>
             <!-- Input Nama Lengkap -->
@@ -96,27 +100,6 @@
                 <p class="pl-1.5 font-semibold text-xs text-gray-500/90 tracking-wide">Diawali dengan 08XXXXXXXXXX. Minimal 12 digit angka</p>
                 <div class="input mt-1.5 text-gray-500/90">
                     <input type="tel" name="_change_no_telp" id="noTelp" class="py-2.5 px-3 w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" aria-label="Masukkan Nomor HP atau WhatsApp Anda" value="082280343857" placeholder="No HP/WA" autocomplete="tel-local" />
-                </div>
-            </div>
-        </div>
-        <!-- Informasi Kantor/Perusahaan Media -->
-        <div class="informasi-kantor-media mt-4">
-            <!-- Subtitle Form -->
-            <h3 class="mt-4 pb-2 text-lg border-b-[1.5px] border-solid border-gray-200">Informasi Kantor/Perusahaan Media</h3>
-            <!-- Input Nama Kantor/Perusahaan Media -->
-            <div class="input-nama-kantor-media mt-4 flex flex-col gap-1.5 text-sm">
-                <label for="namaKantorMedia" class="font-text text-sm font-medium">Nama Kantor/Perusahaan Media</label>
-                <p class="pl-1.5 font-semibold text-xs text-gray-500/90 tracking-wide">Tidak wajib diisi.</p>
-                <div class="input mt-1.5 text-gray-500/90">
-                    <input type="text" name="_change_media_office_name" id="namaKantorMedia" class="py-2.5 px-3 w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" aria-label="Masukkan Nama Kantor/Perusahaan Media Anda" placeholder="Cth: Media Jambi News, CNN, dll." value="Media Jambi News" autocomplete="off" />
-                </div>
-            </div>
-            <!-- Input Alamat Kantor/Perusahaan Media -->
-            <div class="input-alamat-kantor-media mt-4 flex flex-col gap-1.5 text-sm">
-                <label for="alamatKantorMedia" class="font-text text-sm font-medium">Alamat Kantor/Perusahaan Media</label>
-                <p class="pl-1.5 font-semibold text-xs text-gray-500/90 tracking-wide">Tidak wajib diisi.</p>
-                <div class="input mt-1.5 text-gray-500/90">
-                    <input type="text" name="_change_media_office_address" id="alamatKantorMedia" class="py-2.5 px-3 w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" aria-label="Masukkan Alamat Kantor/Perusahaan Media Anda" placeholder="Cth: Jl. Melati No. 5, RT 01/RW 02, Jakarta, 14350" value="Jl Cut Mutia No. 6 Kelurahan Rajawali, Kecamatan Jambi Timur, Kota Jambi, 36143" autocomplete="off" />
                 </div>
             </div>
         </div>
