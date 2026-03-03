@@ -1,38 +1,42 @@
 <?= $this->extend('pages/dashboard/main') ?>
 <?= $this->section('content') ?>
+
 <!-- Section Cards: informasi Pengajuan -->
 <section class="cards pb-3.5 xl:pb-0 px-2 xl:px-0 flex gap-6 overflow-x-scroll xl:overflow-visible">
-    <!-- Card: Total Pengajuan -->
-    <div class="total-pengajuan-baru p-7 flex items-center w-[340px] gap-8 rounded-lg shadow-md">
-        <div class="card-text flex flex-col gap-1">
-            <p class="font-semibold text-sm text-gray-500/90">Total Pengajuan Baru</p>
-            <span class="font-text font-semibold text-3xl">36</span>
-        </div>
-        <span class="p-3 bg-blue-100/80 text-blue-600 rounded-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14.25 18.28" class="size-5">
-                <path d="M.5,1.69v14.89c0,.66.53,1.19,1.19,1.19h10.87c.66,0,1.19-.53,1.19-1.19V5.53c0-.32-.13-.62-.35-.84l-3.76-3.76c-.22-.22-.52-.34-.83-.35l-7.11-.08c-.66,0-1.2.53-1.2,1.19Z" fill="none" stroke="currentColor" stroke-miterlimit="10" />
-                <path d="M8.81.58v4.11c0,.28.23.51.51.51h4.43" fill="none" stroke="currentColor" stroke-miterlimit="10" />
-                <rect x="2.64" y="8.78" width="3.5" height=".8" rx=".4" ry=".4" fill="currentColor" stroke-width="0" />
-                <rect x="2.64" y="13.64" width="8.98" height=".8" rx=".4" ry=".4" fill="currentColor" stroke-width="0" />
-                <rect x="2.64" y="12.02" width="8.98" height=".8" rx=".4" ry=".4" fill="currentColor" stroke-width="0" />
-                <rect x="2.64" y="10.4" width="8.98" height=".8" rx=".4" ry=".4" fill="currentColor" stroke-width="0" />
-            </svg>
-        </span>
-    </div>
-    <!-- Card: Total Perbaikan -->
-    <div class="total-pebaikan p-7 flex justify-between items-center w-[350px] gap-8 rounded-lg shadow-md">
-        <div class="card-text flex flex-col gap-1">
-            <p class="font-semibold text-sm text-gray-500/90">Total Pengajuan yang Telah Diperbaiki</p>
-            <span class="font-text font-semibold text-3xl">2</span>
-        </div>
-        <span class="p-3 bg-indigo-100/80 text-indigo-600 rounded-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-            </svg>
-        </span>
-    </div>
+    <?= view('components/card', [
+        "items" => [
+            [
+                "card_title" => 'Total Pengajuan Baru',
+                "card_description" => '36',
+                "width" => 'w-[340px]',
+                "card_icon" => [
+                    "icon" => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14.25 18.28" class="size-5">
+                    <path d="M.5,1.69v14.89c0,.66.53,1.19,1.19,1.19h10.87c.66,0,1.19-.53,1.19-1.19V5.53c0-.32-.13-.62-.35-.84l-3.76-3.76c-.22-.22-.52-.34-.83-.35l-7.11-.08c-.66,0-1.2.53-1.2,1.19Z" fill="none" stroke="currentColor" stroke-miterlimit="10" />
+                    <path d="M8.81.58v4.11c0,.28.23.51.51.51h4.43" fill="none" stroke="currentColor" stroke-miterlimit="10" />
+                    <rect x="2.64" y="8.78" width="3.5" height=".8" rx=".4" ry=".4" fill="currentColor" stroke-width="0" />
+                    <rect x="2.64" y="13.64" width="8.98" height=".8" rx=".4" ry=".4" fill="currentColor" stroke-width="0" />
+                    <rect x="2.64" y="12.02" width="8.98" height=".8" rx=".4" ry=".4" fill="currentColor" stroke-width="0" />
+                    <rect x="2.64" y="10.4" width="8.98" height=".8" rx=".4" ry=".4" fill="currentColor" stroke-width="0" />
+                </svg>',
+                    "icon_color" => "bg-blue-100/80 text-blue-600"
+                ]
+            ],
+            [
+                "card_title" => 'Total Pengajuan yang Telah Diperbaiki',
+                "card_description" => '2',
+                "width" => 'w-[350px]',
+                "card_icon" => [
+                    "icon" => '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                </svg>',
+                    "icon_color" => "bg-indigo-100/80 text-indigo-600"
+                ]
+            ]
+        ]
+    ]) ?>
 </section>
 <!-- Akhir Section Cards -->
+
 <!-- Section Pengajuan terakhir & aksi cepat -->
 <section class="grid grid-cols-1 lg:grid-cols-9 gap-6">
     <!-- Aside Pengajuan terakhir -->
