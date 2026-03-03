@@ -1,9 +1,13 @@
 <?php foreach ($items as $card): ?>
     <?php
+    // @prop {string} add_class: class tambahan untuk elemen card
     $add_class = $card["add_class"] ?? '';
-
+    /*
+     * temukan flex-col pada add_class, digunakan untuk styling card yang berbeda
+     * @return <bool|int>
+     */
     $find_str_flex_col_on_add_class = strrpos($add_class, 'flex-col', 0);
-
+    // atur urutan elemen anak yang terakhir didalam card
     $set_card_child_pos = 'order-[-1]';
     ?>
     <div class="p-7 flex <?= $find_str_flex_col_on_add_class === false ? 'items-center gap-8' : 'shrink-0 gap-4' ?> rounded-lg shadow-md <?= $add_class ?>">
