@@ -7,7 +7,7 @@
         <!-- Legend -->
         <div class="legend">
             <h2 class="text-base">Daftar Riwayat Aktivitas</h2>
-            <p class="text-sm text-gray-500/90">Data ditampilkan dari yang <span class="font-semibold text-black">Terbaru</span></p>
+            <p class="text-sm text-gray-500/90">Aktivitas diurut berdasarkan dari <span class="font-semibold text-black">Terbaru</span></p>
         </div>
         <!-- Filter Box wrapper -->
         <div class="filter-box-wrapper relative shrink">
