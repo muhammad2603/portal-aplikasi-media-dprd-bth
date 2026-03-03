@@ -156,6 +156,7 @@
                 </div>
                 <div class="deskripsi mt-2 text-sm text-gray-500/90">
                     <p>Liputan komprehensif tentang pelaksanaan Pemilu 2026</p>
+                    <p>Komentar perbaikan dari Admin: Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reprehenderit impedit corrupti ipsa aspernatur tempora explicabo quia molestiae ullam saepe excepturi.</p>
                     <p class="font-medium mt-1.5"><?= ($i % 2 === 0 && $i !== 5) ? 'Disetujui oleh Admin Andi' : (($i % 2 === 1 && $i !== 5) ? 'Ditandai perbaikan oleh Admin Iref' : 'Ditolak oleh Admin Iil') ?></p>
                 </div>
                 <div class="info mt-2 flex gap-3">
