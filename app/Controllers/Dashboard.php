@@ -45,7 +45,7 @@ class Dashboard extends Controller
         // @return: view home by role
         return view("$this->pages_dashboard/" . $this->role . "/riwayat_pengajuan", $data_page);
     }
-    // @method: riwayat hapus
+    // @method: riwayat hapus, method ini dikhususkan untuk User
     public function riwayatHapus(): string
     {
         // @data
@@ -56,6 +56,18 @@ class Dashboard extends Controller
         ];
         // @return: view home by role
         return view("$this->pages_dashboard/" . $this->role . "/riwayat_hapus", $data_page);
+    }
+    // @method: riwayat batal, method ini dikhususkan untuk Admin
+    public function riwayatBatal(): string
+    {
+        // @data
+        $data_page = [
+            "navigation" => "Riwayat Pembatalan",
+            "subtitle" => "Kelola pengajuan yang dibatalkan",
+            "role" => $this->role,
+        ];
+        // @return: view home by role
+        return view("$this->pages_dashboard/" . $this->role . "/riwayat_pembatalan", $data_page);
     }
     // @method: aktivitas
     public function aktivitas(): string
