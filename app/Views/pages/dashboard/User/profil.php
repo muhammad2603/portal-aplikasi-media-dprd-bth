@@ -123,7 +123,7 @@
         <!-- Form Actions -->
         <div class="form-actions mt-8 ml-auto w-2/4 grid grid-cols-1 sm:grid-cols-4 gap-4 sm:gap-3">
             <button type="button" class="col-span-2 py-1.5 font-text text-sm bg-transparent border-[1.5px] border-solid border-red-600 font-semibold text-red-400 rounded-sm transition duration-150 ease-in hover:bg-red-500 focus:outline-none focus:bg-red-500 active:bg-red-500 hover:text-white focus:text-white">Batalkan</button>
-            <button type="submit" class="col-span-2 py-1.5 font-text font-semibold text-sm bg-blue-500 text-white rounded-sm transition duration-150 ease-in hover:bg-blue-600 focus:outline-none focus:bg-blue-600 active:bg-blue-600">Kirim Pengajuan</button>
+            <button type="submit" class="col-span-2 py-1.5 font-text font-semibold text-sm bg-blue-500 text-white rounded-sm transition duration-150 ease-in hover:bg-blue-600 focus:outline-none focus:bg-blue-600 active:bg-blue-600">Perbarui</button>
         </div>
     </div>
 </section>
