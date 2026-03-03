@@ -70,12 +70,23 @@
                     <span class="truncate" title="Aktivitas">Aktivitas</span>
                 </a>
 
-                <a href="<?= $navigation === 'Riwayat Hapus' ? 'javascript:void(0)' : '/dashboard/riwayat-hapus' ?>" class="riwayat-hapus font-text text-sm p-3 flex items-center font-semibold gap-1.5 rounded-lg <?= $navigation === 'Riwayat Hapus' ? 'bg-blue-600 text-white' : 'text-gray-500/90 transition duration-150 ease-in hover:bg-gray-200 focus:outline-none focus:bg-gray-200' ?>">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                    </svg>
-                    <span class="truncate" title="Riwayat Hapus">Riwayat Hapus</span>
-                </a>
+                <?php if ($role === 'User'): ?>
+                    <a href="<?= $navigation === 'Riwayat Hapus' ? 'javascript:void(0)' : '/dashboard/riwayat-hapus' ?>" class="riwayat-hapus font-text text-sm p-3 flex items-center font-semibold gap-1.5 rounded-lg <?= $navigation === 'Riwayat Hapus' ? 'bg-blue-600 text-white' : 'text-gray-500/90 transition duration-150 ease-in hover:bg-gray-200 focus:outline-none focus:bg-gray-200' ?>">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                        </svg>
+                        <span class="truncate" title="Riwayat Hapus">Riwayat Hapus</span>
+                    </a>
+                <?php endif ?>
+
+                <?php if ($role === 'Admin'): ?>
+                    <a href="<?= $navigation === 'Riwayat Pembatalan' ? 'javascript:void(0)' : '/dashboard/riwayat-pembatalan' ?>" class="riwayat-pembatalan font-text text-sm p-3 flex items-center font-semibold gap-1.5 rounded-lg <?= $navigation === 'Riwayat Pembatalan' ? 'bg-blue-600 text-white' : 'text-gray-500/90 transition duration-150 ease-in hover:bg-gray-200 focus:outline-none focus:bg-gray-200' ?>">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <span class="truncate" title="Riwayat Pembatalan">Riwayat Pembatalan</span>
+                    </a>
+                <?php endif ?>
             </nav>
             <!-- Mores Navigation -->
             <div class="mores-nav p-4 flex flex-col gap-2">
