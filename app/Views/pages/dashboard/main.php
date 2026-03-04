@@ -92,20 +92,16 @@
             <div class="mores-nav p-4 flex flex-col gap-2">
                 <!-- Navigasi Pengaturan -->
                 <div class="setting-group">
-                    <span class="pengaturan font-text p-3 flex items-center gap-1.5 text-gray-500/90 rounded-lg transition duration-150 ease-in hover:bg-gray-200 focus:outline-none focus:bg-gray-200 cursor-pointer" role="button">
+                    <span id="navSettings" class="pengaturan font-text p-3 flex items-center gap-1.5 text-gray-500/90 rounded-lg transition duration-150 ease-in hover:bg-gray-200 focus:outline-none focus:bg-gray-200 cursor-pointer" role="button">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 0 1 1.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.559.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.894.149c-.424.07-.764.383-.929.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 0 1-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.398.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 0 1-.12-1.45l.527-.737c.25-.35.272-.806.108-1.204-.165-.397-.506-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.108-1.204l-.526-.738a1.125 1.125 0 0 1 .12-1.45l.773-.773a1.125 1.125 0 0 1 1.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894Z" />
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                         </svg>
                         <span class="font-semibold truncate text-sm" title="Pengaturan">Pengaturan</span>
                     </span>
-                    <!-- Navigasi Dropdown Pengaturan -->
-                    <!--
-                        @note: tambahkan animasi pada dropdown saat tombolnya diklik
-                            - berikan properti max-height
-                    -->
-                    <div class="settings-dropdown bg-white pl-5 max-h-0 overflow-hidden transition-[max-height] duration-500 ease-in">
-                        <a href="<?= $navigation === 'Riwayat Hapus' ? 'javascript:void(0)' : '/dashboard/riwayat-hapus' ?>" class="riwayat-hapus font-text text-sm p-3 flex items-center font-semibold gap-1.5 rounded-lg <?= $navigation === 'Riwayat Hapus' ? 'bg-blue-600 text-white' : 'text-gray-500/90 transition duration-150 ease-in hover:bg-gray-200 focus:outline-none focus:bg-gray-200' ?>">
+                    <!-- Dropdown Menu -->
+                    <div id="settingsDropdown" class="settings-dropdown bg-white pl-5 max-h-0 overflow-hidden transition-[max-height] duration-300 ease-in">
+                        <a href="<?= $navigation === 'Profil' ? 'javascript:void(0)' : '/dashboard/pengaturan/profil' ?>" class="profil mt-2 font-text text-sm p-2 flex items-center font-semibold gap-1.5 rounded-lg <?= $navigation === 'Profil' ? 'bg-blue-600 text-white' : 'text-gray-500/90 transition duration-150 ease-in hover:bg-gray-200 focus:outline-none focus:bg-gray-200' ?>">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                             </svg>
@@ -148,14 +144,14 @@
                 <!-- Notification Wrapper -->
                 <div class="notification-wrapper relative">
                     <!-- Button show Notification -->
-                    <button type="button" class="relative py-1.5 px-2 h-fit border-[1.5px] border-solid border-gray-200 rounded-md transition duration-150 hover:bg-gray-100 focus:outline-gray-200 focus:bg-gray-100">
+                    <button id="btnNotif" type="button" class="relative py-1.5 px-2 h-fit border-[1.5px] border-solid border-gray-200 rounded-md transition duration-150 hover:bg-gray-100 focus:outline-gray-200 focus:bg-gray-100">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 sm:size-5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
                         </svg>
                         <span class="font-text absolute -top-1.5 -right-2.5 py-0.5 px-1.5 bg-red-500 text-[.75rem] text-white rounded-full">2</span>
                     </button>
                     <!-- Notifications Message -->
-                    <div class="notifications hidden absolute top-16 sm:top-13 md:top-11 lg:top-14 xl:top-11 right-0 bg-white border border-solid border-gray-200 shadow-md rounded-lg overflow-hidden">
+                    <div id="notification" class="notifications absolute top-16 sm:top-13 md:top-11 lg:top-14 xl:top-11 right-0 bg-white border border-solid border-gray-200 shadow-md rounded-lg overflow-hidden hidden">
                         <!-- Notification Legend -->
                         <div class="notification-legend p-4 w-96 flex flex-col border-b border-solid border-gray-200">
                             <h2 class="text-lg">Notifikasi</h2>
@@ -163,7 +159,7 @@
                         </div>
                         <!-- Notification message info -->
                         <div class="notification-message scrollbar-custom min-h-96 max-h-96 2xl:min-h-[65vh] 2xl:max-h-[65vh] flex flex-col overflow-y-auto">
-                            <a href="#" class="py-3.5 px-4 flex gap-2.5 bg-blue-50/95 border-b border-solid border-gray-200 transition duration-150 hover:bg-primary">
+                            <a href="#" class="py-3.5 px-4 flex gap-2.5 bg-blue-50/95 border-b border-solid border-gray-200 transition duration-150 hover:bg-primary" data-notification="/riwayat-pengajuan/202602-liputan-pemilu-2026" data-read="0">
                                 <span class="mt-0.5 text-green-600">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -175,7 +171,7 @@
                                     <span class="mt-1 flex gap-1 text-gray-500/90 text-xs">5 hari yang lalu</span>
                                 </div>
                             </a>
-                            <a href="#" class="py-3.5 px-4 flex gap-2.5 bg-blue-50/95 border-b border-solid border-gray-200 transition duration-150 hover:bg-primary">
+                            <a href="#" class="py-3.5 px-4 flex gap-2.5 bg-blue-50/95 border-b border-solid border-gray-200 transition duration-150 hover:bg-primary" data-notification="/riwayat-pengajuan/202602-festival-budaya-nusantara" data-read="0">
                                 <span class="mt-0.5 text-red-600">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -199,7 +195,7 @@
                                     <span class="mt-1 flex gap-1 text-gray-500/90 text-xs">8 hari yang lalu</span>
                                 </div>
                             </a>
-                            <a href="#" class="py-3.5 px-4 flex gap-2.5 bg-white border-b border-solid border-gray-200 transition duration-150 hover:bg-primary">
+                            <a href="#" class="py-3.5 px-4 flex gap-2.5 bg-white border-b border-solid border-gray-200 transition duration-150 hover:bg-primary" data-notification="/riwayat-pengajuan/202602-liputan-pemilu-2026" data-read="1">
                                 <span class="mt-0.5 text-indigo-600">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
@@ -236,6 +232,8 @@
         <!-- Akhir Content -->
     </main>
     <!-- Akhir Main -->
+    <!-- Script Main JS -->
+    <script src="<?= base_url('/assets/js/main.js') ?>"></script>
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" href="<?= base_url('/assets/css/scrollbar-custom.css') ?>">
 </body>
