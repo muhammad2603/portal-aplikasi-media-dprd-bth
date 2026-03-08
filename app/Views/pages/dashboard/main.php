@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scrollbar-custom text-[14px] sm:text-[16px] 2xl:text-[20px]">
+<html lang="id" class="scrollbar-custom text-[14px] sm:text-[16px] 2xl:text-[20px]">
 <!-- HEAD -->
 
 <head>
@@ -34,7 +34,7 @@
             </div>
             <div class="profiles py-4 px-2.5 flex gap-3 border-y border-solid border-gray-200 bg-blue-100">
                 <figure class="shrink-0 p-0.5 bg-white rounded-full overflow-hidden">
-                    <img src="https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2281862025.jpg" alt="Profil <nama_user>" class="size-11" />
+                    <img src="/assets/images/default-profile-image.webp" alt="Profil <nama_user>" class="size-11" />
                 </figure>
                 <div class="text-xs flex-1 min-w-0 flex flex-col justify-center gap-0.5">
                     <p class="truncate text-sm font-semibold">fattahillah</p>
@@ -98,6 +98,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                         </svg>
                         <span class="font-semibold truncate text-sm" title="Pengaturan">Pengaturan</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 ml-auto">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>
                     </span>
                     <!-- Dropdown Menu -->
                     <div id="settingsDropdown" class="settings-dropdown bg-white pl-5 max-h-0 overflow-hidden transition-[max-height] duration-300 ease-in">
