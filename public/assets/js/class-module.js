@@ -11,8 +11,10 @@ const classManipulation = (element) => {
      * @param classes {Array}
      */
     add: function (...classes) {
+      // @if check if classes item on index 0 is Array
+      const cls = !Array.isArray(classes[0]) ? classes : classes[0];
       // @loop class dan suntik ke-element
-      classes.forEach((cls) => this.e.classList.add(cls));
+      cls.forEach((cls) => this.e.classList.add(cls));
       // @return {Object}
       return this;
     },
