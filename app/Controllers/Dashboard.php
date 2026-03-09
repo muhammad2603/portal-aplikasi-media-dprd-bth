@@ -6,7 +6,7 @@ use CodeIgniter\Controller;
 // @class
 class Dashboard extends Controller
 {
-    protected $role = 'Admin'; // Role ini hanya untuk debug, implementasi nyata lebih baik diambil dari database
+    protected $role = 'User'; // Role ini hanya untuk debug, implementasi nyata lebih baik diambil dari database
     protected $pages_dashboard = "pages/dashboard";
 
     // @method: home

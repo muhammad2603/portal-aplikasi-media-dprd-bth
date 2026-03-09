@@ -14,8 +14,148 @@
 <!-- Akhir HEAD -->
 
 <body class="grid grid-cols-1 lg:grid-cols-12">
+    <!--
+        @animation:
+            - tambahkan class visible dan hapus class invisible
+            - tambahkan class opacity-100 dan hapus opacity-0
+    -->
+    <div class="modals-overlay absolute top-0 left-0 w-screen h-screen px-6 sm:px-0 flex justify-center items-center bg-black/50 z-[9999999] invisible opacity-0 transition duration-250 ease-in">
+        <!--
+            @animation:
+                - tambahkan class scale-100 dan hapus class scale-75
+        -->
+        <div class="modal-parent w-full sm:w-3/4 md:w-3/5 xl:w-[40%] 2xl:w-2/4 relative p-6 bg-white rounded-lg shadow-md transform-gpu scale-75 transition-transform duration-150 ease-in">
+            <button type="button" class="btn-close-modal absolute top-3.5 right-4 text-gray-500/90 hover:text-black focus:outline-none focus:text-black" title="Tutup Jendela" aria-label="Tutup Jendela Popup">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                </svg>
+            </button>
+            <!-- Content Modal -->
+            <div class="informations">
+                <div class="modal-legend">
+                    <p class="font-semibold text-lg">Detail Informasi Pengajuan</p>
+                    <span class="font-text text-xs text-gray-500/90">Lihat informasi pengajuan secara lebih detail.</span>
+                </div>
+                <div class="modal-content mt-3">
+                    <!-- @data: dynamic -->
+                    <article class="py-5 px-4 border-[1.5px] border-solid border-gray-200 rounded-md shadow-sm">
+                        <div class="top flex items-center gap-4">
+                            <h3 class="text-base">Liputan Pemilu 2025</h3>
+                            <span class="py-1 px-3 flex items-center gap-1 bg-green-100/80 font-semibold text-green-600 text-xs rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                </svg>
+                                <span class="font-text">Disetujui</span>
+                            </span>
+                        </div>
+                        <div class="deskripsi mt-2 text-sm text-gray-500/90">
+                            <p>Liputan komprehensif tentang pelaksanaan Pemilu 2026</p>
+                        </div>
+                        <div class="info mt-2 flex gap-3">
+                            <span class="flex items-center gap-1 text-gray-500/90">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" />
+                                </svg>
+                                <span class="font-text text-sm">Kompas TV</span>
+                            </span>
+                            <span class="flex items-center gap-1 text-gray-500/90">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                                </svg>
+                                <span class="font-text text-sm">22 Februari 2026</span>
+                            </span>
+                        </div>
+                        <div class="other-info mt-3 flex flex-col gap-0.5 text-xs text-gray-500/90">
+                            <p class="text-sm font-medium">Informasi Lainnya:</p>
+                            <span>Pengajuan dibuat pada tanggal 02 Maret 2026.</span>
+                            <span>URL/Link pengajuan: <a href="#" target="_blank" referrerpolicy="no-referrer" class="underline text-blue-600">https://media.com/berita/link-berita</a></span>
+                            <span>Pengajuan telah direvisi sebanyak 3x.</span>
+                            <span>Disetujui oleh Admin (Andi Rahman) pada tanggal 07 Maret 2026.</span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <!-- @note: lanjutkan membuat input form untuk perubahan pengajuan -->
+            <div class="edit hidden">
+                <div class="modal-legend">
+                    <p class="font-semibold text-lg">Edit Pengajuan</p>
+                    <span class="font-text text-xs text-gray-500/90">Ubah informasi pengajuan.</span>
+                </div>
+                <div class="modal-content scrollbar-custom mt-3 pr-2 h-[280px] text-gray-500/90 overflow-y-auto">
+                    <!-- @form -->
+                    <div class="input-judul-pengajuan flex flex-col gap-1.5 text-sm">
+                        <p class="font-text text-sm font-medium">Judul Pengajuan</p>
+                        <span class="error pl-1.5 font-text font-semibold text-xs text-red-500 tracking-wide"></span>
+                        <input type="text" class="input py-2.5 px-3 font-text w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" placeholder="Cth: Liputan Pelantikan Anggota DPRD..." value="Liputan DPRD Kabupaten Batang Hari Tahun 2024" aria-label="Edit Judul Pengajuan" autocomplete="off" />
+                    </div>
+                    <div class="input-url-berita mt-4 flex flex-col gap-1.5 text-sm">
+                        <p class="font-text text-sm font-medium">URL/Link</p>
+                        <span class="error pl-1.5 font-text font-semibold text-xs text-red-500 tracking-wide"></span>
+                        <input type="url" class="input py-2.5 px-3 font-text w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" placeholder="Cth: https://media.com/berita/link-berita" value="https://media.com/berita/liputan-dprd-batang-hari-tahun-2024" aria-label="Edit URL atau Link Berita" autocomplete="url" />
+                    </div>
+                    <div class="input-tanggal-publikasi mt-4 flex flex-col gap-1.5 text-sm">
+                        <p class="font-text text-sm font-medium">Tanggal/Publikasi</p>
+                        <span class="error pl-1.5 font-text font-semibold text-xs text-red-500 tracking-wide"></span>
+                        <input type="date" class="input py-2.5 px-3 font-text w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" aria-label="Edit Tanggal Publikasi/Tayang Berita" value="2026-03-01" autocomplete="off" />
+                    </div>
+                    <div class="input-tanggal-publikasi mt-4 flex flex-col gap-1.5 text-sm">
+                        <p class="font-text text-sm font-medium">Deskripsi</p>
+                        <span class="error pl-1.5 font-text font-semibold text-xs text-red-500 tracking-wide"></span>
+                        <textarea class="input scrollbar-custom py-2.5 px-3 font-text text-sm w-full h-32 bg-primary border border-solid border-gray-500/90 rounded-md resize-none focus:outline-none" placeholder="Jelaskan deskripsi dari pengajuan anda, Max: 300 karakter." aria-label="Edit Deskripsi" autocomplete="off"></textarea>
+                        <span class="font-text mt-1 mr-2.5 block text-right text-xs">Total: <span id="wordCount">0</span> karakter</span>
+                    </div>
+                </div>
+                <div class="modal-footer mt-4 flex gap-3 justify-end">
+                    <button type="button" class="py-1.5 px-7 font-text font-semibold text-sm border-2 border-solid border-gray-100 rounded-sm transition duration-150 ease-in hover:bg-gray-200 focus:outline-none" aria-label="Batalkan Edit Pengajuan">Batalkan</button>
+                    <button type="submit" class="py-1.5 px-7 font-text font-semibold text-sm bg-blue-500 text-white rounded-sm transition duration-150 ease-in hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Edit</button>
+                </div>
+            </div>
+            <div class="delete-confirm hidden">
+                <div class="modal-legend">
+                    <p class="font-semibold text-lg">Konfirmasi Penghapusan</p>
+                    <span class="font-text text-xs text-gray-500/90">Apakah anda yakin ingin menghapus pengajuan ini?</span>
+                </div>
+                <div class="modal-content mt-3">
+                    <!-- @data: dynamic -->
+                    <article class="py-5 px-4 border-[1.5px] border-solid border-gray-200 rounded-md shadow-sm">
+                        <div class="top flex items-center gap-4">
+                            <h3 class="text-base">Liputan Pemilu 2025</h3>
+                            <span class="py-1 px-3 flex items-center gap-1 bg-green-100/80 font-semibold text-green-600 text-xs rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                </svg>
+                                <span class="font-text">Disetujui</span>
+                            </span>
+                        </div>
+                        <div class="deskripsi mt-2 text-sm text-gray-500/90">
+                            <p>Liputan komprehensif tentang pelaksanaan Pemilu 2026</p>
+                        </div>
+                        <div class="info mt-2 flex gap-3">
+                            <span class="flex items-center gap-1 text-gray-500/90">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" />
+                                </svg>
+                                <span class="font-text text-sm">Kompas TV</span>
+                            </span>
+                            <span class="flex items-center gap-1 text-gray-500/90">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                                </svg>
+                                <span class="font-text text-sm">22 Februari 2026</span>
+                            </span>
+                        </div>
+                        <div class="actions mt-3.5 pt-3 flex justify-end gap-2.5 border-t-[1.5px] border-solid border-gray-200">
+                            <button type="button" class="font-text py-2 px-3.5 flex items-center gap-1.5 font-semibold text-xs border-[1.5px] border-solid border-gray-100 rounded-md transition duration-150 ease-in hover:bg-gray-200">Batalkan</button>
+                            <button type="button" class="font-text py-2 px-3.5 flex items-center gap-1.5 font-semibold text-red-600 text-xs border-[1.5px] border-solid border-gray-100 rounded-md transition duration-150 ease-in hover:bg-red-50 hover:border-red-200">Konfirmasi</button>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Aside -->
-    <aside class="fixed lg:sticky top-0 translate-x-[-100%] lg:translate-x-0 w-screen lg:w-full lg:col-span-3 xl:col-span-2 border-r border-solid border-gray-200 z-[9999999]">
+    <aside class="fixed lg:sticky top-0 translate-x-[-100%] lg:translate-x-0 w-screen lg:w-full lg:col-span-3 xl:col-span-2 border-r border-solid border-gray-200 z-[999999]">
         <!-- hidden opacity-0 invisible -->
         <div class="nav-overlay lg:hidden absolute top-0 left-0 w-screen h-screen bg-black/35 z-[-1]"></div>
         <!-- Navigation Container -->
