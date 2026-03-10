@@ -25,9 +25,10 @@
         <p class="text-sm text-gray-500/90">Menampilkan <span class="font-semibold text-black">6</span> dari <span class="font-semibold text-black">8</span> total pengajuan terhapus</p>
     </div>
     <!-- List Riwayat Pengajuan -->
-    <div class="list-riwayat-pengajuan mt-8 flex flex-col gap-4">
+    <div id="listRiwayatPengajuan" class="list-riwayat-pengajuan mt-8 flex flex-col gap-4">
         <?php for ($i = 0; $i < 6; $i++): ?>
-            <article class="py-5 px-4 border-[1.5px] border-solid border-gray-200 rounded-md shadow-sm">
+            <article class="py-5 px-4 border-[1.5px] border-solid border-gray-200 rounded-md shadow-sm"
+                data-meta-pengajuan='{"judul": "Liputan Pemilu 2025", "tanggalPublikasi": "2026-03-01", "deskripsi": "Liputan pemilu 2025 yang diselenggarakan di DPRD Kabupaten Batang Hari", "media": "Kompas TV", "tanggalUpload": "22 Februari 2026"}'>
                 <div class="top flex items-center gap-4">
                     <h3 class="text-base">Liputan Pemilu 2025</h3>
                 </div>
@@ -49,7 +50,7 @@
                     </span>
                 </div>
                 <div class="actions mt-3.5 pt-3 flex justify-end gap-2.5 border-t-[1.5px] border-solid border-gray-200">
-                    <button type="button" class="font-text p-2 flex items-center gap-1.5 font-semibold text-blue-600 text-xs border-[1.5px] border-solid border-gray-100 rounded-md transition duration-150 ease-in hover:bg-blue-50 hover:border-blue-200" aria-label="Pulihkan pengajuan">
+                    <button type="button" id="btnRecovery" class="btn-recovery font-text p-2 flex items-center gap-1.5 font-semibold text-blue-600 text-xs border-[1.5px] border-solid border-gray-100 rounded-md transition duration-150 ease-in hover:bg-blue-50 hover:border-blue-200" data-modal="#confirm" aria-label="Pulihkan pengajuan">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
@@ -57,7 +58,7 @@
                         </span>
                         <span>Pulihkan</span>
                     </button>
-                    <button type="button" class="font-text p-2 flex items-center gap-1.5 font-semibold text-red-600 text-xs border-[1.5px] border-solid border-gray-100 rounded-md transition duration-150 ease-in hover:bg-red-50 hover:border-red-200" aria-label="Hapus permanen pengajuan">
+                    <button type="button" id="btnDeletePermanent" class="btn-delete-permanent font-text p-2 flex items-center gap-1.5 font-semibold text-red-600 text-xs border-[1.5px] border-solid border-gray-100 rounded-md transition duration-150 ease-in hover:bg-red-50 hover:border-red-200" data-modal="#confirm" aria-label="Hapus permanen pengajuan">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636" />
@@ -71,4 +72,6 @@
     </div>
 </section>
 <!-- Akhir Section Riwayat Pengajuan -->
+<!-- Script Riwayat Hapus -->
+<script type="module" src="<?= base_url("/assets/js/aksi-riwayat-hapus.js") ?>"></script>
 <?= $this->endSection() ?>
