@@ -142,18 +142,18 @@
     </div>
 
     <!-- Aside -->
-    <aside class="fixed lg:sticky top-0 translate-x-[-100%] lg:translate-x-0 w-screen lg:w-full lg:col-span-3 xl:col-span-2 border-r border-solid border-gray-200 z-[999999]">
-        <!-- hidden opacity-0 invisible -->
-        <div class="nav-overlay lg:hidden absolute top-0 left-0 w-screen h-screen bg-black/35 z-[-1]"></div>
-        <!-- Navigation Container -->
-        <div class="nav-container scrollbar-custom relative lg:w-full w-fit h-screen bg-white z-10 overflow-y-auto">
+    <aside id="navContainer" class="fixed lg:sticky top-0 translate-x-[-100%] lg:translate-x-0 w-screen lg:w-full lg:col-span-3 xl:col-span-2 border-r border-solid border-gray-200 z-[999999] transition duration-300 ease-out">
+        <!-- Navigation Overlay -->
+        <div id="navOverlay" class="nav-overlay lg:hidden absolute top-0 left-0 w-screen h-screen bg-black/35 z-[-1]"></div>
+        <!-- Navigation Contents -->
+        <div class="nav-contents scrollbar-custom relative lg:w-full w-fit h-screen bg-white z-10 overflow-y-auto">
             <!-- Top/Legend Navigation -->
             <div class="top-nav pt-6 pb-4 px-6 flex gap-4 tracking-wider">
                 <div class="title">
                     <h2 class="text-xl text-green">SiMELEK</h2>
                     <p class="mt-0.5 text-xs text-gray-500/90 text-pretty">Sistem Informasi Media Elektronik</p>
                 </div>
-                <button type="button" class="lg:hidden">
+                <button type="button" id="btnCloseNavMobile" class="lg:hidden">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                     </svg>
@@ -257,7 +257,7 @@
             <!-- Header left -->
             <aside class="start-header flex items-center gap-4 lg:gap-0">
                 <!-- Hamburber menu, for viewport width < 1024px -->
-                <button type="button" class="hamburger lg:hidden py-1 px-2 shrink-0 border-[1.5px] border-solid border-gray-200 rounded transition duration-150 hover:bg-gray-100" aria-label="Buka notifikasi">
+                <button type="button" id="hamburgerMenu" class="hamburger-menu lg:hidden py-1 px-2 shrink-0 border-[1.5px] border-solid border-gray-200 rounded transition duration-150 hover:bg-gray-100" aria-label="Buka notifikasi">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                     </svg>
@@ -363,7 +363,7 @@
     </main>
     <!-- Akhir Main -->
     <!-- Script Main JS -->
-    <script src="<?= base_url('/assets/js/main.js') ?>"></script>
+    <script type="module" src="<?= base_url('/assets/js/main.js') ?>"></script>
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" href="<?= base_url('/assets/css/scrollbar-custom.css') ?>">
 </body>

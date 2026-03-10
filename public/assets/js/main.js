@@ -1,3 +1,5 @@
+import { classManipulation } from './class-module.js';
+
 // @state initialize stateNotif
 var stateNotif, notification, btnNotif;
 
@@ -9,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // @event: click
   navSettings.addEventListener("click", function () {
     // class max-height lebih bekerja dan lebih baik digunakan untuk dropdown
-    settingsDropdown.classList.toggle("max-h-96");
+    classManipulation(settingsDropdown).toggle("max-h-96");
   });
   // @mark: Open notification
   btnNotif = document.getElementById("btnNotif");
@@ -21,26 +23,24 @@ document.addEventListener("DOMContentLoaded", () => {
     // @if buka notifikasi jika state-nya masih tertutup
     if (stateNotif === false) {
       stateNotif = true;
-      notification.classList.remove("hidden");
+      classManipulation(notification).remove("hidden");
     } else {
       stateNotif = false;
-      notification.classList.add("hidden");
+      classManipulation(notification).add("hidden");
     }
   });
   // @mark: notification change status
-  const notificationMessage = notification.querySelectorAll(
-    ".notification-message > a",
-  );
+  const notificationMessage = notification.querySelectorAll(".notification-message > a");
   // @loop notification message
   notificationMessage.forEach((message) => {
     // @event
-    message.addEventListener("click", function (e) {
+    message.addEventListener("click", e => {
       // cegah aksi default
       e.preventDefault();
       // ambil value dari atribut data-notification pada elemen pesan notifikasi
-      const dataNotif = this.dataset.notification;
+      const dataNotif = e.target.dataset.notification;
       // ambil value dari atribut data-read pada elemen pesan notifikasi
-      const dataRead = this.dataset.read;
+      const dataRead = e.target.dataset.read;
       /*
        * @remainder
        * perbarui Notifikasi yang diklik sebagai sudah dibaca jika Notifikasi tersebut belum dibaca
@@ -48,10 +48,27 @@ document.addEventListener("DOMContentLoaded", () => {
        */
     });
   });
+
+  // @mark: navigation mobile
+  const hamburgerMenu = document.getElementById("hamburgerMenu");
+  const navContainer = document.getElementById("navContainer");
+  const navOverlay = document.getElementById("navOverlay");
+  const btnCloseNavMobile = document.getElementById("btnCloseNavMobile");
+  // @event
+  hamburgerMenu.addEventListener("click", () => {
+    classManipulation(navContainer).remove("translate-x-[-100%]")
+    classManipulation(navContainer).add("translate-x-0")
+  })
+  // @event
+  btnCloseNavMobile.addEventListener("click", () => {
+    classManipulation(navContainer).remove("translate-x-0")
+    classManipulation(navContainer).add("translate-x-[-100%]")
+  })
+
 });
 
 // @event click
-window.addEventListener("click", (e) => {
+window.addEventListener("click", e => {
   // element target
   const currentElement = e.target;
   // @cond cek apakah elemen target yang diklik adalah elemen tombol notifikasi?
@@ -63,6 +80,6 @@ window.addEventListener("click", (e) => {
     // @state set stateNotif menjadi false
     stateNotif = false;
     // sembunyikan notifikasi message
-    notification.classList.add("hidden");
+    classManipulation(notification).add("hidden");
   }
 });
