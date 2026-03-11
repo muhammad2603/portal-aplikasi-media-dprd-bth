@@ -108,6 +108,14 @@ class InputValidator {
       }
     }
   }
+  email(input) {
+    return {
+      value: input.value,
+      isValidEmail: function () {
+        return /@gmail.com$/.test(this.value)
+      }
+    }
+  }
   address(input) {
     return {
       value: input.value,
