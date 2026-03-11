@@ -142,11 +142,11 @@
     </div>
 
     <!-- Aside -->
-    <aside id="navContainer" class="fixed lg:sticky top-0 translate-x-[-100%] lg:translate-x-0 w-screen lg:w-full lg:col-span-3 xl:col-span-2 border-r border-solid border-gray-200 z-[999999] transition duration-300 ease-out">
+    <aside id="navContainer" class="fixed lg:sticky top-0 w-screen lg:w-full lg:col-span-3 xl:col-span-2 border-r border-solid border-gray-200 z-[999999] transition duration-300 ease-out invisible lg:visible">
         <!-- Navigation Overlay -->
-        <div id="navOverlay" class="nav-overlay lg:hidden absolute top-0 left-0 w-screen h-screen bg-black/35 z-[-1]"></div>
+        <div id="navOverlay" class="nav-overlay lg:hidden absolute top-0 left-0 w-screen h-screen bg-black/35 z-[-1] opacity-0 lg:opacity-100 transition-opacity duration-300 ease-in"></div>
         <!-- Navigation Contents -->
-        <div class="nav-contents scrollbar-custom relative lg:w-full w-fit h-screen bg-white z-10 overflow-y-auto">
+        <div id="navContents" class="nav-contents scrollbar-custom translate-x-[-100%] lg:translate-x-0 relative lg:w-full w-fit h-screen bg-white z-10 overflow-y-auto transition-transform duration-300 ease-in will-change-transform">
             <!-- Top/Legend Navigation -->
             <div class="top-nav pt-6 pb-4 px-6 flex gap-4 tracking-wider">
                 <div class="title">

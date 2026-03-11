@@ -1,4 +1,5 @@
 import { classManipulation } from './class-module.js';
+import { NavigationMobile } from './NavigationMobile.js';
 
 // @state initialize stateNotif
 var stateNotif, notification, btnNotif;
@@ -48,23 +49,20 @@ document.addEventListener("DOMContentLoaded", () => {
        */
     });
   });
-
   // @mark: navigation mobile
   const hamburgerMenu = document.getElementById("hamburgerMenu");
   const navContainer = document.getElementById("navContainer");
   const navOverlay = document.getElementById("navOverlay");
+  const navContents = document.getElementById("navContents");
   const btnCloseNavMobile = document.getElementById("btnCloseNavMobile");
+  // @class
+  const C_NavMobile = new NavigationMobile(navContainer, navOverlay, navContents);
   // @event
-  hamburgerMenu.addEventListener("click", () => {
-    classManipulation(navContainer).remove("translate-x-[-100%]")
-    classManipulation(navContainer).add("translate-x-0")
-  })
+  hamburgerMenu.addEventListener("click", () => C_NavMobile.openNavigation())
   // @event
-  btnCloseNavMobile.addEventListener("click", () => {
-    classManipulation(navContainer).remove("translate-x-0")
-    classManipulation(navContainer).add("translate-x-[-100%]")
-  })
-
+  btnCloseNavMobile.addEventListener("click", () => C_NavMobile.closeNavigation())
+  // @event
+  navOverlay.addEventListener("click", () => C_NavMobile.closeNavigation())
 });
 
 // @event click

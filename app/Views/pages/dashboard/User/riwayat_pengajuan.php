@@ -133,7 +133,7 @@
     <div id="listRiwayatPengajuan" class="list-riwayat-pengajuan mt-8 flex flex-col gap-4">
         <?php for ($i = 0; $i < 6; $i++): ?>
             <article class="py-5 px-4 border-[1.5px] border-solid border-gray-200 rounded-md shadow-sm"
-                data-meta-pengajuan='{"confirmedBy": "Andi Rahman", "confirmedDate": "07 Maret 2026", "status": "Disetujui", "judul": "Liputan Pemilu 2025", "url": "https://media.com/berita/liputan-pemilu-2025", "tanggalPublikasi": "2026-03-01", "deskripsi": "Liputan pemilu 2025 yang diselenggarakan di DPRD Kabupaten Batang Hari", "media": "Kompas TV", "revisiCount": "3", "uploadDate": "22 Februari 2026"}'>
+                data-meta-pengajuan='{"confirmedBy": "Andi Rahman", "confirmedDate": "07 Maret 2026", "status": "Disetujui", "judul": "Liputan Pemilu 2025", "url": "https://media.com/berita/liputan-pemilu-2025", "tanggalPublikasi": "2026-03-01", "deskripsi": "Liputan pemilu 2025 yang diselenggarakan di DPRD Kabupaten Batang Hari", "media": "Kompas TV", "revisiCount": "3", "tanggalUpload": "22 Februari 2026"}'>
                 <div class="top flex items-center gap-4">
                     <h3 class="text-base">Liputan Pemilu 2025</h3>
                     <span class="py-1 px-3 flex items-center gap-1 bg-green-100/80 font-semibold text-green-600 text-xs rounded-full">
