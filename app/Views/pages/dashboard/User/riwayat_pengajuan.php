@@ -58,9 +58,9 @@
 </section>
 <!-- Akhir Section Cards -->
 <!-- Section Search Filter -->
-<section class="search-filter py-10 lg:py-8 xl:py-5 px-7 flex gap-4 bg-white rounded-lg shadow-md">
+<section class="search-filter py-10 lg:py-8 xl:py-5 px-7 flex flex-col sm:flex-row gap-4 bg-white rounded-lg shadow-md">
     <!-- Input Search -->
-    <div class="input-search flex flex-col gap-1.5 text-sm shrink-0 grow">
+    <div class="input-search flex flex-col gap-1.5 text-sm shrink grow">
         <!-- Input wrapper -->
         <div class="input relative text-gray-500/90 shadow-sm rounded-md overflow-hidden">
             <!-- Icon -->
@@ -73,32 +73,20 @@
         </div>
     </div>
     <!-- Filter Box wrapper -->
-    <div class="filter-box-wrapper relative shrink">
+    <div class="filter-box-wrapper relative shrink-0 ml-auto">
         <!-- Button show filter select -->
-        <button type="button" class="filter-box py-2.5 px-4 flex items-center gap-3.5 bg-gray-100 rounded-md shadow-sm">
-            <span class="text-gray-500/90">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
-                </svg>
-            </span>
-            <span class="filter-text font-text text-sm tracking-wider">Semua Status</span>
-            <span class="text-gray-500/90">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                </svg>
-            </span>
+        <button id="btnFilterBox" type="button" class="filter-box py-2.5 px-4 w-52 flex justify-between items-center gap-3.5 bg-gray-100 rounded-md shadow-sm focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 text-gray-500/90">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
+            </svg>
+            <span id="filterText" class="filter-text font-text text-sm tracking-wider">Semua Status</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-gray-500/90">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+            </svg>
         </button>
         <!-- Filter Select -->
-        <!--
-            @note: filter-select akan dianimasikan
-            @class-animation:
-                - hidden to flex
-                - translate-y to 0
-                - opacity to 100
-        -->
-        <div class="filter-select hidden w-full p-1.5 absolute top-[120%] translate-y-[-16px] flex-col border border-solid border-gray-200 bg-white rounded-md shadow-sm opacity-10 transition duration-250 ease-out">
-            <!-- @note: filter yang dipilih saat ini harus diberikan background, saat dihover, lepaskan backgroundnya -->
-            <button type="button" class="filter-option py-1.5 px-2 flex justify-between items-center bg-gray-100 text-sm rounded-md hover:bg-gray-100">
+        <div id="filterSelect" class="filter-select w-full p-1.5 absolute top-[120%] translate-y-[-16px] flex flex-col border border-solid border-gray-200 bg-white rounded-md shadow-sm opacity-0 transition duration-350 ease-out visibility-hidden pointer-events-none closed">
+            <button type="button" class="filter-option py-1.5 px-2 flex justify-between items-center bg-gray-100 text-sm rounded-md hover:bg-gray-100 focus:outline-none focus:bg-gray-100 active">
                 <span>Semua Status</span>
                 <span>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4">
@@ -106,7 +94,7 @@
                     </svg>
                 </span>
             </button>
-            <button type="button" class="filter-option py-1.5 px-2 flex justify-between items-center text-sm rounded-md hover:bg-gray-100">
+            <button type="button" class="filter-option py-1.5 px-2 flex justify-between items-center text-sm rounded-md hover:bg-gray-100 focus:outline-none focus:bg-gray-100">
                 <span>Disetujui</span>
                 <span class="hidden">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4">
@@ -114,7 +102,7 @@
                     </svg>
                 </span>
             </button>
-            <button type="button" class="filter-option py-1.5 px-2 flex justify-between items-center text-sm rounded-md hover:bg-gray-100">
+            <button type="button" class="filter-option py-1.5 px-2 flex justify-between items-center text-sm rounded-md hover:bg-gray-100 focus:outline-none focus:bg-gray-100">
                 <span>Pending</span>
                 <span class="hidden">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4">
@@ -122,7 +110,7 @@
                     </svg>
                 </span>
             </button>
-            <button type="button" class="filter-option py-1.5 px-2 flex justify-between items-center text-sm rounded-md hover:bg-gray-100">
+            <button type="button" class="filter-option py-1.5 px-2 flex justify-between items-center text-sm rounded-md hover:bg-gray-100 focus:outline-none focus:bg-gray-100">
                 <span>Ditolak</span>
                 <span class="hidden">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4">
@@ -142,9 +130,10 @@
         <p class="text-sm text-gray-500/90">Menampilkan <span class="font-semibold text-black">6</span> dari <span class="font-semibold text-black">36</span> total pengajuan</p>
     </div>
     <!-- List Riwayat Pengajuan -->
-    <div class="list-riwayat-pengajuan mt-8 flex flex-col gap-4">
+    <div id="listRiwayatPengajuan" class="list-riwayat-pengajuan mt-8 flex flex-col gap-4">
         <?php for ($i = 0; $i < 6; $i++): ?>
-            <article class="py-5 px-4 border-[1.5px] border-solid border-gray-200 rounded-md shadow-sm">
+            <article class="py-5 px-4 border-[1.5px] border-solid border-gray-200 rounded-md shadow-sm"
+                data-meta-pengajuan='{"confirmedBy": "Andi Rahman", "confirmedDate": "07 Maret 2026", "status": "Disetujui", "judul": "Liputan Pemilu 2025", "url": "https://media.com/berita/liputan-pemilu-2025", "tanggalPublikasi": "2026-03-01", "deskripsi": "Liputan pemilu 2025 yang diselenggarakan di DPRD Kabupaten Batang Hari", "media": "Kompas TV", "revisiCount": "3", "tanggalUpload": "22 Februari 2026"}'>
                 <div class="top flex items-center gap-4">
                     <h3 class="text-base">Liputan Pemilu 2025</h3>
                     <span class="py-1 px-3 flex items-center gap-1 bg-green-100/80 font-semibold text-green-600 text-xs rounded-full">
@@ -153,9 +142,6 @@
                         </svg>
                         <span class="font-text">Disetujui</span>
                     </span>
-                </div>
-                <div class="deskripsi mt-2 text-sm text-gray-500/90">
-                    <p>Liputan komprehensif tentang pelaksanaan Pemilu 2026</p>
                 </div>
                 <div class="info mt-2 flex gap-3">
                     <span class="flex items-center gap-1 text-gray-500/90">
@@ -172,7 +158,7 @@
                     </span>
                 </div>
                 <div class="actions mt-3.5 pt-3 flex gap-2.5 border-t-[1.5px] border-solid border-gray-200">
-                    <button type="button" class="font-text p-2 flex items-center gap-1.5 font-semibold text-xs border-[1.5px] border-solid border-gray-100 rounded-md transition duration-150 ease-in hover:bg-gray-200">
+                    <button type="button" data-modal="#informations" class="btn-see-details font-text p-2 flex items-center gap-1.5 font-semibold text-xs border-[1.5px] border-solid border-gray-100 rounded-md transition duration-150 ease-in hover:bg-gray-200">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
@@ -181,7 +167,7 @@
                         </span>
                         <span>Lihat Detail</span>
                     </button>
-                    <button type="button" class="font-text p-2 flex items-center gap-1.5 font-semibold text-xs border-[1.5px] border-solid border-gray-100 rounded-md transition duration-150 ease-in hover:bg-gray-200">
+                    <button type="button" data-modal="#edit" class="btn-edit font-text p-2 flex items-center gap-1.5 font-semibold text-xs border-[1.5px] border-solid border-gray-100 rounded-md transition duration-150 ease-in hover:bg-gray-200">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
@@ -189,7 +175,7 @@
                         </span>
                         <span>Edit</span>
                     </button>
-                    <button type="button" class="font-text ml-auto p-2 flex items-center gap-1.5 font-semibold text-red-600 text-xs border-[1.5px] border-solid border-gray-100 rounded-md transition duration-150 ease-in hover:bg-red-50 hover:border-red-200">
+                    <button type="button" data-modal="#confirm" class="btn-delete font-text ml-auto p-2 flex items-center gap-1.5 font-semibold text-red-600 text-xs border-[1.5px] border-solid border-gray-100 rounded-md transition duration-150 ease-in hover:bg-red-50 hover:border-red-200">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
@@ -203,4 +189,8 @@
     </div>
 </section>
 <!-- Akhir Section Riwayat Pengajuan -->
+<!-- Script Filter Box -->
+<script type="module" src="<?= base_url('/assets/js/filter-box.js') ?>"></script>
+<!-- Script Aksi Riwayat Pengajuan -->
+<script type="module" src="<?= base_url("/assets/js/aksi-riwayat-pengajuan.js") ?>"></script>
 <?= $this->endSection() ?>

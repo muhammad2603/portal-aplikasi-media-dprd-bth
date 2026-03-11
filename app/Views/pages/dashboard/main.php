@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scrollbar-custom text-[14px] sm:text-[16px] 2xl:text-[20px]">
+<html lang="id" class="scrollbar-custom text-[14px] sm:text-[16px] 2xl:text-[20px]">
 <!-- HEAD -->
 
 <head>
@@ -14,19 +14,146 @@
 <!-- Akhir HEAD -->
 
 <body class="grid grid-cols-1 lg:grid-cols-12">
+    <div id="modals" class="modals-overlay absolute top-0 left-0 w-screen h-screen px-6 sm:px-0 flex justify-center items-center bg-black/50 z-[9999999] invisible opacity-0 transition duration-250 ease-in">
+        <div id="modalParent" class="modal-parent w-full sm:w-3/4 md:w-3/5 xl:w-[40%] 2xl:w-2/4 relative p-6 bg-white rounded-lg shadow-md transform-gpu scale-75 transition-transform duration-150 ease-in">
+            <button type="button" id="btnCloseModal" class="btn-close-modal absolute top-3.5 right-4 text-gray-500/90 hover:text-black focus:outline-none focus:text-black" title="Tutup Jendela" aria-label="Tutup Jendela Popup">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                </svg>
+            </button>
+            <!-- Content Modal -->
+            <div id="informations" class="informations hidden">
+                <div class="modal-legend">
+                    <p class="font-semibold text-lg">Detail Informasi Pengajuan</p>
+                    <span class="font-text text-xs text-gray-500/90">Lihat informasi pengajuan secara lebih detail.</span>
+                </div>
+                <div class="modal-content mt-3">
+                    <!-- @data: dynamic -->
+                    <article class="py-5 px-4 border-[1.5px] border-solid border-gray-200 rounded-md shadow-sm">
+                        <div class="top flex items-center gap-4">
+                            <h3 class="text-base" id="judul"></h3>
+                            <span class="py-1 px-3 flex items-center gap-1 bg-green-100/80 font-semibold text-green-600 text-xs rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                </svg>
+                                <span class="font-text" id="status"></span>
+                            </span>
+                        </div>
+                        <div class="deskripsi mt-2 text-sm text-gray-500/90">
+                            <p id="deskripsi"></p>
+                        </div>
+                        <div class="info mt-2 flex gap-3">
+                            <span class="flex items-center gap-1 text-gray-500/90">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" />
+                                </svg>
+                                <span class="font-text text-sm" id="media"></span>
+                            </span>
+                            <span class="flex items-center gap-1 text-gray-500/90">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                                </svg>
+                                <span class="font-text text-sm" id="tanggalUpload"></span>
+                            </span>
+                        </div>
+                        <div class="other-info mt-3 flex flex-col gap-0.5 text-xs text-gray-500/90">
+                            <p class="text-sm font-medium">Informasi Lainnya:</p>
+                            <span>URL/Link: <span id="url"></span></span>
+                            <span>Pengajuan telah direvisi sebanyak <span id="revisi"></span>x.</span>
+                            <span>Disetujui oleh Admin (<span id="confirmedBy"></span>) pada tanggal <span id="confirmedDate"></span>.</span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div id="edit" class="edit hidden">
+                <div class="modal-legend">
+                    <p class="font-semibold text-lg">Edit Pengajuan</p>
+                    <span class="font-text text-xs text-gray-500/90">Ubah informasi pengajuan.</span>
+                </div>
+                <div class="modal-content scrollbar-custom mt-3 pr-2 h-[280px] text-gray-500/90 overflow-y-auto">
+                    <!-- @form -->
+                    <div class="input-judul-pengajuan flex flex-col gap-1.5 text-sm">
+                        <p class="font-text text-sm font-medium">Judul Pengajuan</p>
+                        <span class="error pl-1.5 font-text font-semibold text-xs text-red-500 tracking-wide"></span>
+                        <input type="text" id="updateJudul" class="input py-2.5 px-3 font-text w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" placeholder="Cth: Liputan Pelantikan Anggota DPRD..." aria-label="Edit Judul Pengajuan" autocomplete="off" />
+                    </div>
+                    <div class="input-url-berita mt-4 flex flex-col gap-1.5 text-sm">
+                        <p class="font-text text-sm font-medium">URL/Link</p>
+                        <span class="error pl-1.5 font-text font-semibold text-xs text-red-500 tracking-wide"></span>
+                        <input type="url" id="updateUrl" class="input py-2.5 px-3 font-text w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" placeholder="Cth: https://media.com/berita/link-berita" aria-label="Edit URL atau Link Berita" autocomplete="url" />
+                    </div>
+                    <div class="input-tanggal-publikasi mt-4 flex flex-col gap-1.5 text-sm">
+                        <p class="font-text text-sm font-medium">Tanggal/Publikasi</p>
+                        <span class="error pl-1.5 font-text font-semibold text-xs text-red-500 tracking-wide"></span>
+                        <input type="date" id="updateTanggalPublikasi" class="input py-2.5 px-3 font-text w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" aria-label="Edit Tanggal Publikasi/Tayang Berita" autocomplete="off" />
+                    </div>
+                    <div class="input-tanggal-publikasi mt-4 flex flex-col gap-1.5 text-sm">
+                        <p class="font-text text-sm font-medium">Deskripsi</p>
+                        <span class="error pl-1.5 font-text font-semibold text-xs text-red-500 tracking-wide"></span>
+                        <textarea id="updateDeskripsi" class="input scrollbar-custom py-2.5 px-3 font-text text-sm w-full h-32 bg-primary border border-solid border-gray-500/90 rounded-md resize-none focus:outline-none" placeholder="Jelaskan deskripsi dari pengajuan anda, Max: 300 karakter." aria-label="Edit Deskripsi" autocomplete="off"></textarea>
+                        <span class="font-text mt-1 mr-2.5 block text-right text-xs">Total: <span id="wordCount">0</span> karakter</span>
+                    </div>
+                </div>
+                <div class="actions mt-3.5 pt-3 flex justify-end gap-2.5 border-t-[1.5px] border-solid border-gray-200">
+                    <button type="submit" class="py-1.5 px-7 font-text font-semibold bg-blue-500 text-xs text-white rounded-sm transition duration-150 ease-in hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Konfirmasi Perubahan</button>
+                </div>
+            </div>
+            <div id="confirm" class="confirm hidden">
+                <div class="modal-legend">
+                    <p class="font-semibold text-lg">Konfirmasi <span id="titleConfirm"></span></p>
+                    <span id="warnConfirmMessage" class="font-text text-xs text-gray-500/90"></span>
+                </div>
+                <div class="modal-content mt-3">
+                    <!-- @data: dynamic -->
+                    <article class="py-5 px-4 border-[1.5px] border-solid border-gray-200 rounded-md shadow-sm">
+                        <div class="top flex items-center gap-4">
+                            <h3 class="text-base" id="judulInfoConfirm"></h3>
+                            <span class="py-1 px-3 flex items-center gap-1 bg-green-100/80 font-semibold text-green-600 text-xs rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                </svg>
+                                <span class="font-text" id="statusInfoConfirm"></span>
+                            </span>
+                        </div>
+                        <div class="deskripsi mt-2 text-sm text-gray-500/90">
+                            <p id="deskripsiInfoConfirm"></p>
+                        </div>
+                        <div class="info mt-2 flex gap-3">
+                            <span class="flex items-center gap-1 text-gray-500/90">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" />
+                                </svg>
+                                <span id="mediaInfoConfirm" class="font-text text-sm"></span>
+                            </span>
+                            <span class="flex items-center gap-1 text-gray-500/90">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                                </svg>
+                                <span id="tanggalUploadInfoConfirm" class="font-text text-sm"></span>
+                            </span>
+                        </div>
+                    </article>
+                    <div class="actions mt-3.5 pt-3 flex justify-end gap-2.5">
+                        <button type="button" id="btnConfirm" class="font-text py-2 px-3.5 flex items-center gap-1.5 font-semibold text-xs border-[1.5px] border-solid border-gray-100 rounded-md transition duration-150 ease-in">Konfirmasi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Aside -->
-    <aside class="fixed lg:sticky top-0 translate-x-[-100%] lg:translate-x-0 w-screen lg:w-full lg:col-span-3 xl:col-span-2 border-r border-solid border-gray-200 z-[9999999]">
-        <!-- hidden opacity-0 invisible -->
-        <div class="nav-overlay lg:hidden absolute top-0 left-0 w-screen h-screen bg-black/35 z-[-1]"></div>
-        <!-- Navigation Container -->
-        <div class="nav-container scrollbar-custom relative lg:w-full w-fit h-screen bg-white z-10 overflow-y-auto">
+    <aside id="navContainer" class="fixed lg:sticky top-0 w-screen lg:w-full lg:col-span-3 xl:col-span-2 border-r border-solid border-gray-200 z-[999999] transition duration-300 ease-out invisible lg:visible">
+        <!-- Navigation Overlay -->
+        <div id="navOverlay" class="nav-overlay lg:hidden absolute top-0 left-0 w-screen h-screen bg-black/35 z-[-1] opacity-0 lg:opacity-100 transition-opacity duration-300 ease-in"></div>
+        <!-- Navigation Contents -->
+        <div id="navContents" class="nav-contents scrollbar-custom translate-x-[-100%] lg:translate-x-0 relative lg:w-full w-fit h-screen bg-white z-10 overflow-y-auto transition-transform duration-300 ease-in will-change-transform">
             <!-- Top/Legend Navigation -->
             <div class="top-nav pt-6 pb-4 px-6 flex gap-4 tracking-wider">
                 <div class="title">
                     <h2 class="text-xl text-green">SiMELEK</h2>
                     <p class="mt-0.5 text-xs text-gray-500/90 text-pretty">Sistem Informasi Media Elektronik</p>
                 </div>
-                <button type="button" class="lg:hidden">
+                <button type="button" id="btnCloseNavMobile" class="lg:hidden">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                     </svg>
@@ -34,7 +161,7 @@
             </div>
             <div class="profiles py-4 px-2.5 flex gap-3 border-y border-solid border-gray-200 bg-blue-100">
                 <figure class="shrink-0 p-0.5 bg-white rounded-full overflow-hidden">
-                    <img src="https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2281862025.jpg" alt="Profil <nama_user>" class="size-11" />
+                    <img src="/assets/images/default-profile-image.webp" alt="Profil <nama_user>" class="size-11" />
                 </figure>
                 <div class="text-xs flex-1 min-w-0 flex flex-col justify-center gap-0.5">
                     <p class="truncate text-sm font-semibold">fattahillah</p>
@@ -92,20 +219,19 @@
             <div class="mores-nav p-4 flex flex-col gap-2">
                 <!-- Navigasi Pengaturan -->
                 <div class="setting-group">
-                    <span class="pengaturan font-text p-3 flex items-center gap-1.5 text-gray-500/90 rounded-lg transition duration-150 ease-in hover:bg-gray-200 focus:outline-none focus:bg-gray-200 cursor-pointer" role="button">
+                    <span id="navSettings" class="pengaturan font-text p-3 flex items-center gap-1.5 text-gray-500/90 rounded-lg transition duration-150 ease-in hover:bg-gray-200 focus:outline-none focus:bg-gray-200 cursor-pointer" role="button">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 0 1 1.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.559.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.894.149c-.424.07-.764.383-.929.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 0 1-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.398.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 0 1-.12-1.45l.527-.737c.25-.35.272-.806.108-1.204-.165-.397-.506-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.108-1.204l-.526-.738a1.125 1.125 0 0 1 .12-1.45l.773-.773a1.125 1.125 0 0 1 1.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894Z" />
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                         </svg>
                         <span class="font-semibold truncate text-sm" title="Pengaturan">Pengaturan</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 ml-auto">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>
                     </span>
-                    <!-- Navigasi Dropdown Pengaturan -->
-                    <!--
-                        @note: tambahkan animasi pada dropdown saat tombolnya diklik
-                            - berikan properti max-height
-                    -->
-                    <div class="settings-dropdown bg-white pl-5 max-h-0 overflow-hidden transition-[max-height] duration-500 ease-in">
-                        <a href="<?= $navigation === 'Riwayat Hapus' ? 'javascript:void(0)' : '/dashboard/riwayat-hapus' ?>" class="riwayat-hapus font-text text-sm p-3 flex items-center font-semibold gap-1.5 rounded-lg <?= $navigation === 'Riwayat Hapus' ? 'bg-blue-600 text-white' : 'text-gray-500/90 transition duration-150 ease-in hover:bg-gray-200 focus:outline-none focus:bg-gray-200' ?>">
+                    <!-- Dropdown Menu -->
+                    <div id="settingsDropdown" class="settings-dropdown bg-white pl-5 max-h-0 overflow-hidden transition-[max-height] duration-300 ease-in">
+                        <a href="<?= $navigation === 'Profil' ? 'javascript:void(0)' : '/dashboard/pengaturan/profil' ?>" class="profil mt-2 font-text text-sm p-2 flex items-center font-semibold gap-1.5 rounded-lg <?= $navigation === 'Profil' ? 'bg-blue-600 text-white' : 'text-gray-500/90 transition duration-150 ease-in hover:bg-gray-200 focus:outline-none focus:bg-gray-200' ?>">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                             </svg>
@@ -131,7 +257,7 @@
             <!-- Header left -->
             <aside class="start-header flex items-center gap-4 lg:gap-0">
                 <!-- Hamburber menu, for viewport width < 1024px -->
-                <button type="button" class="hamburger lg:hidden py-1 px-2 shrink-0 border-[1.5px] border-solid border-gray-200 rounded transition duration-150 hover:bg-gray-100" aria-label="Buka notifikasi">
+                <button type="button" id="hamburgerMenu" class="hamburger-menu lg:hidden py-1 px-2 shrink-0 border-[1.5px] border-solid border-gray-200 rounded transition duration-150 hover:bg-gray-100" aria-label="Buka notifikasi">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                     </svg>
@@ -148,14 +274,14 @@
                 <!-- Notification Wrapper -->
                 <div class="notification-wrapper relative">
                     <!-- Button show Notification -->
-                    <button type="button" class="relative py-1.5 px-2 h-fit border-[1.5px] border-solid border-gray-200 rounded-md transition duration-150 hover:bg-gray-100 focus:outline-gray-200 focus:bg-gray-100">
+                    <button id="btnNotif" type="button" class="relative py-1.5 px-2 h-fit border-[1.5px] border-solid border-gray-200 rounded-md transition duration-150 hover:bg-gray-100 focus:outline-gray-200 focus:bg-gray-100">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 sm:size-5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
                         </svg>
                         <span class="font-text absolute -top-1.5 -right-2.5 py-0.5 px-1.5 bg-red-500 text-[.75rem] text-white rounded-full">2</span>
                     </button>
                     <!-- Notifications Message -->
-                    <div class="notifications hidden absolute top-16 sm:top-13 md:top-11 lg:top-14 xl:top-11 right-0 bg-white border border-solid border-gray-200 shadow-md rounded-lg overflow-hidden">
+                    <div id="notification" class="notifications absolute top-16 sm:top-13 md:top-11 lg:top-14 xl:top-11 right-0 bg-white border border-solid border-gray-200 shadow-md rounded-lg overflow-hidden hidden">
                         <!-- Notification Legend -->
                         <div class="notification-legend p-4 w-96 flex flex-col border-b border-solid border-gray-200">
                             <h2 class="text-lg">Notifikasi</h2>
@@ -163,7 +289,7 @@
                         </div>
                         <!-- Notification message info -->
                         <div class="notification-message scrollbar-custom min-h-96 max-h-96 2xl:min-h-[65vh] 2xl:max-h-[65vh] flex flex-col overflow-y-auto">
-                            <a href="#" class="py-3.5 px-4 flex gap-2.5 bg-blue-50/95 border-b border-solid border-gray-200 transition duration-150 hover:bg-primary">
+                            <a href="#" class="py-3.5 px-4 flex gap-2.5 bg-blue-50/95 border-b border-solid border-gray-200 transition duration-150 hover:bg-primary" data-notification="/riwayat-pengajuan/202602-liputan-pemilu-2026" data-read="0">
                                 <span class="mt-0.5 text-green-600">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -175,7 +301,7 @@
                                     <span class="mt-1 flex gap-1 text-gray-500/90 text-xs">5 hari yang lalu</span>
                                 </div>
                             </a>
-                            <a href="#" class="py-3.5 px-4 flex gap-2.5 bg-blue-50/95 border-b border-solid border-gray-200 transition duration-150 hover:bg-primary">
+                            <a href="#" class="py-3.5 px-4 flex gap-2.5 bg-blue-50/95 border-b border-solid border-gray-200 transition duration-150 hover:bg-primary" data-notification="/riwayat-pengajuan/202602-festival-budaya-nusantara" data-read="0">
                                 <span class="mt-0.5 text-red-600">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -199,7 +325,7 @@
                                     <span class="mt-1 flex gap-1 text-gray-500/90 text-xs">8 hari yang lalu</span>
                                 </div>
                             </a>
-                            <a href="#" class="py-3.5 px-4 flex gap-2.5 bg-white border-b border-solid border-gray-200 transition duration-150 hover:bg-primary">
+                            <a href="#" class="py-3.5 px-4 flex gap-2.5 bg-white border-b border-solid border-gray-200 transition duration-150 hover:bg-primary" data-notification="/riwayat-pengajuan/202602-liputan-pemilu-2026" data-read="1">
                                 <span class="mt-0.5 text-indigo-600">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
@@ -236,6 +362,8 @@
         <!-- Akhir Content -->
     </main>
     <!-- Akhir Main -->
+    <!-- Script Main JS -->
+    <script type="module" src="<?= base_url('/assets/js/main.js') ?>"></script>
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" href="<?= base_url('/assets/css/scrollbar-custom.css') ?>">
 </body>
