@@ -8,6 +8,7 @@ import {
     hidePreview,
     emptyValue
 } from './ClassForms.js';
+import { Modal } from './modal-class.js';
 const C_InputValidator = new InputValidator();
 const inputsValidator = [
     {
@@ -85,7 +86,7 @@ const inputsValidator = [
         }
     },
     {
-        inputId: "deskripsi",
+        inputId: "inputDeskripsi",
         messageErrorId: "errorInputDeskripsi",
         validations: {
             stringValidation: [
@@ -110,6 +111,7 @@ const inputsValidator = [
         }
     }
 ];
+const C_Modal = new Modal();
 const allowedExtensions = ["image/jpeg", "image/png", "image/webp"];
 document.addEventListener("DOMContentLoaded", () => {
     const inputsEl = document.querySelectorAll('.input');
@@ -180,8 +182,22 @@ document.addEventListener("DOMContentLoaded", () => {
         inputsEl.forEach(el => emptyValue(el));
     })
     const btnSubmit = document.getElementById("btnSubmit");
+    const modalContainer = document.getElementById("modals");
+    const modalParent = document.getElementById("modalParent");
+    const modalChild = document.getElementById("confirm");
+    const modalTitle = document.getElementById("titleConfirm");
+    const warningMessage = document.getElementById("warnConfirmMessage");
+    const contentModal = document.querySelector("#confirm .modal-content > article");
+    const btnConfirm = document.getElementById("btnConfirm");
+    const btnCloseModal = document.getElementById("btnCloseModal");
+    // payloads untuk request
+    let payloads;
+    // @event
+    btnCloseModal.addEventListener("click", () => C_Modal.closeModal(modalContainer, modalParent))
     // @event
     btnSubmit.addEventListener("click", function () {
+
+        let isValid = true;
         // @for
         // @note: jika bisa, lakukan refactoring dengan membungkuskan eksekusi kode looping kedalam function
         for (const { inputId, messageErrorId, validations } of inputsValidator) {
@@ -196,10 +212,39 @@ document.addEventListener("DOMContentLoaded", () => {
                     const result = isNegate ? !rawResult : rawResult;
                     if (result) {
                         setErrorMessage(messageEl, errorMessage);
+                        isValid = false;
                     }
                 }
             }
         }
-        /** Lanjutkan pengiriman data ke Database **/
+        // cegah konfirmasi popup muncul jika data belum lengkap
+        if (isValid === false) return;
+        // popup konfirmasi
+        C_Modal.setConfirmModal(
+            "Pengajuan", "Apakah anda yakin ingin melanjutkan pengiriman pengajuan?",
+            {
+                modalContainerElement: modalContainer,
+                modalParentElement: modalParent,
+                modalChildElement: modalChild,
+                titleElement: modalTitle,
+                warningMessageElement: warningMessage,
+                contentModalElement: contentModal,
+                buttonConfirm: btnConfirm
+            },
+            false,
+            "blue",
+            true
+        )
     });
+    // @event
+    btnConfirm.addEventListener("click", () => {
+        payloads = {
+            judul: document.getElementById("judulPengajuan").value,
+            url: document.getElementById("urlBerita").value,
+            tanggalPublikasi: document.getElementById("tanggalPublikasi").value,
+            deskripsi: document.getElementById("deskripsi").value,
+            lampiran: lampiranInput.files[0] ?? null
+        };
+        /** Lanjutkan pengiriman data ke Database */
+    })
 })

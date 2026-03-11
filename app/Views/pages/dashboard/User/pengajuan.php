@@ -37,10 +37,10 @@
     </div>
     <!-- Input Deskripsi -->
     <div class="input-deskripsi mt-4 flex flex-col gap-1.5 text-sm">
-        <label for="deskripsi" class="font-text text-sm font-medium"><span>Deskripsi</span><span class="ml-1 text-red-400">*</span></label>
+        <span class="font-text text-sm font-medium"><span>Deskripsi</span><span class="ml-1 text-red-400">*</span></span>
         <span id="errorInputDeskripsi" class="error pl-1.5 font-text font-semibold text-xs text-red-500 tracking-wide">Deskripsi wajib diisi.</span>
         <div class="input-wrapper text-gray-500/90">
-            <textarea id="deskripsi" name="_deskripsi" class="input scrollbar-custom py-2.5 px-3 font-text text-sm w-full h-32 bg-primary border border-solid border-gray-500/90 rounded-md resize-none focus:outline-none" placeholder="Jelaskan deskripsi dari pengajuan anda, Max: 300 karakter." aria-label="Masukkan Deskripsi Pengajuan" data-error-message-id="errorInputDeskripsi" autocomplete="off"></textarea>
+            <textarea id="inputDeskripsi" name="_deskripsi" class="input scrollbar-custom py-2.5 px-3 font-text text-sm w-full h-32 bg-primary border border-solid border-gray-500/90 rounded-md resize-none focus:outline-none" placeholder="Jelaskan deskripsi dari pengajuan anda, Max: 300 karakter." aria-label="Masukkan Deskripsi Pengajuan" data-error-message-id="errorInputDeskripsi" autocomplete="off"></textarea>
             <span class="font-text mt-1 mr-2.5 block text-right text-xs">Total: <span id="wordCount">0</span> karakter</span>
         </div>
     </div>

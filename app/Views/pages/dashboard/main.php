@@ -75,22 +75,22 @@
                     <div class="input-judul-pengajuan flex flex-col gap-1.5 text-sm">
                         <p class="font-text text-sm font-medium">Judul Pengajuan</p>
                         <span class="error pl-1.5 font-text font-semibold text-xs text-red-500 tracking-wide"></span>
-                        <input type="text" id="inputJudul" class="input py-2.5 px-3 font-text w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" placeholder="Cth: Liputan Pelantikan Anggota DPRD..." aria-label="Edit Judul Pengajuan" autocomplete="off" />
+                        <input type="text" id="updateJudul" class="input py-2.5 px-3 font-text w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" placeholder="Cth: Liputan Pelantikan Anggota DPRD..." aria-label="Edit Judul Pengajuan" autocomplete="off" />
                     </div>
                     <div class="input-url-berita mt-4 flex flex-col gap-1.5 text-sm">
                         <p class="font-text text-sm font-medium">URL/Link</p>
                         <span class="error pl-1.5 font-text font-semibold text-xs text-red-500 tracking-wide"></span>
-                        <input type="url" id="inputUrl" class="input py-2.5 px-3 font-text w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" placeholder="Cth: https://media.com/berita/link-berita" aria-label="Edit URL atau Link Berita" autocomplete="url" />
+                        <input type="url" id="updateUrl" class="input py-2.5 px-3 font-text w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" placeholder="Cth: https://media.com/berita/link-berita" aria-label="Edit URL atau Link Berita" autocomplete="url" />
                     </div>
                     <div class="input-tanggal-publikasi mt-4 flex flex-col gap-1.5 text-sm">
                         <p class="font-text text-sm font-medium">Tanggal/Publikasi</p>
                         <span class="error pl-1.5 font-text font-semibold text-xs text-red-500 tracking-wide"></span>
-                        <input type="date" id="inputTanggalPublikasi" class="input py-2.5 px-3 font-text w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" aria-label="Edit Tanggal Publikasi/Tayang Berita" autocomplete="off" />
+                        <input type="date" id="updateTanggalPublikasi" class="input py-2.5 px-3 font-text w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" aria-label="Edit Tanggal Publikasi/Tayang Berita" autocomplete="off" />
                     </div>
                     <div class="input-tanggal-publikasi mt-4 flex flex-col gap-1.5 text-sm">
                         <p class="font-text text-sm font-medium">Deskripsi</p>
                         <span class="error pl-1.5 font-text font-semibold text-xs text-red-500 tracking-wide"></span>
-                        <textarea id="inputDeskripsi" class="input scrollbar-custom py-2.5 px-3 font-text text-sm w-full h-32 bg-primary border border-solid border-gray-500/90 rounded-md resize-none focus:outline-none" placeholder="Jelaskan deskripsi dari pengajuan anda, Max: 300 karakter." aria-label="Edit Deskripsi" autocomplete="off"></textarea>
+                        <textarea id="updateDeskripsi" class="input scrollbar-custom py-2.5 px-3 font-text text-sm w-full h-32 bg-primary border border-solid border-gray-500/90 rounded-md resize-none focus:outline-none" placeholder="Jelaskan deskripsi dari pengajuan anda, Max: 300 karakter." aria-label="Edit Deskripsi" autocomplete="off"></textarea>
                         <span class="font-text mt-1 mr-2.5 block text-right text-xs">Total: <span id="wordCount">0</span> karakter</span>
                     </div>
                 </div>
@@ -132,10 +132,10 @@
                                 <span id="tanggalUploadInfoConfirm" class="font-text text-sm"></span>
                             </span>
                         </div>
-                        <div class="actions mt-3.5 pt-3 flex justify-end gap-2.5 border-t-[1.5px] border-solid border-gray-200">
-                            <button type="button" id="btnConfirm" class="font-text py-2 px-3.5 flex items-center gap-1.5 font-semibold text-xs border-[1.5px] border-solid border-gray-100 rounded-md transition duration-150 ease-in">Konfirmasi</button>
-                        </div>
                     </article>
+                    <div class="actions mt-3.5 pt-3 flex justify-end gap-2.5">
+                        <button type="button" id="btnConfirm" class="font-text py-2 px-3.5 flex items-center gap-1.5 font-semibold text-xs border-[1.5px] border-solid border-gray-100 rounded-md transition duration-150 ease-in">Konfirmasi</button>
+                    </div>
                 </div>
             </div>
         </div>
