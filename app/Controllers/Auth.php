@@ -72,6 +72,8 @@ class Auth extends BaseController
                     "message" => "Email atau Password tidak cocok. Coba lagi!"
                 ]);
         }
+        // set session isLoggedIn
+        session()->set('isLoggedIn', true);
         // success
         return $this->response
             ->setJSON([

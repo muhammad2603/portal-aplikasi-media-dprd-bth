@@ -12,6 +12,8 @@ use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\PageCache;
 use CodeIgniter\Filters\PerformanceMetrics;
 use CodeIgniter\Filters\SecureHeaders;
+use \App\Filters\NotLoggedIn;
+use \App\Filters\IsLoggedIn;
 
 class Filters extends BaseFilters
 {
@@ -34,6 +36,8 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
+        'notloggedin'   => NotLoggedIn::class,
+        'isloggedin'    => IsLoggedIn::class,
     ];
 
     /**
@@ -72,9 +76,22 @@ class Filters extends BaseFilters
      */
     public array $globals = [
         'before' => [
-            'csrf',
+            // 'csrf',
             // 'honeypot',
             // 'invalidchars',
+            'notloggedin' => [
+                'except' => [
+                    "login",
+                    "daftar"
+                ]
+            ],
+            'isloggedin' => [
+                'except' => [
+                    "daftar",
+                    "dashboard",
+                    "dashboard/*"
+                ]
+            ],
         ],
         'after' => [
             // 'honeypot',
