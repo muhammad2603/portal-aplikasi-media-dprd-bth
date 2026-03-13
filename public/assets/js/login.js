@@ -86,7 +86,8 @@ document.addEventListener("DOMContentLoaded", () => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "X-CSRF-TOKEN": tokenCsrf
+                "X-CSRF-TOKEN": tokenCsrf,
+                "X-Requested-With": "XMLHttpRequest",
             },
             body: JSON.stringify(payload)
         })

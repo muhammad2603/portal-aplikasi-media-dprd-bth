@@ -6,6 +6,12 @@ namespace App\Controllers;
 // use UserModel
 use App\Models\UserModel;
 
+use CodeIgniter\Cookie\Cookie;
+
+use DateTime;
+
+helper("text");
+// @class
 class Auth extends BaseController
 {
     // @protected: Model
@@ -42,12 +48,10 @@ class Auth extends BaseController
         }
         // @request
         $password_req = $payload->password;
-        // @request
-        $remember_req = $payload->remember ?? false;
-        // @db get email user from database
-        $getEmail = $this->userModel->select("email")->where("email", $email_req)->first();
+        // @db get user identity (including User ID, Full Name, Email, and Role) from database
+        $getUserIdentity = $this->userModel->select(["user.id" => "user_id", "nama_lengkap", "email", "role"])->join("user_meta", "user_meta.user_id = user.id")->join("roles_user", "roles_user.id = user.role_id")->where("email", $email_req)->first();
         // @if: email tidak ditemukan
-        if ($getEmail === null) {
+        if ($getUserIdentity === null) {
             // @return
             return $this->response
                 ->setStatusCode(401)
@@ -58,7 +62,7 @@ class Auth extends BaseController
                 ]);
         }
         // @db get password user if email user found
-        $getPassword = $this->userModel->select("password")->where("email", $getEmail["email"])->first()["password"];
+        $getPassword = $this->userModel->select("password")->where(["id" => $getUserIdentity["user_id"], "email" => $getUserIdentity["email"]])->first()["password"];
         // cek password cocok atau tidak
         $isCredentialsValid = password_verify($password_req, $getPassword);
         // @if: password tidak cocok
@@ -72,13 +76,42 @@ class Auth extends BaseController
                     "message" => "Email atau Password tidak cocok. Coba lagi!"
                 ]);
         }
+        // @request
+        $remember_req = $payload->remember ?? false;
+        // @if user requested remember me
+        if ($remember_req) {
+            // create token login for user
+            $token_login = bin2hex(random_bytes(32));
+            // hash token login with sha256 algorithm
+            $hash_token_login = hash("sha256", $token_login);
+            // save random string as token login to table user
+            $this->userModel->update($getUserIdentity["user_id"], ["token_login" => $hash_token_login]);
+            // save token login to cookie with securely and httponly
+            $this->response->setCookie(
+                "token_login",
+                $token_login,
+                // add expire to 24 hour from now
+                new DateTime("+24 hours"),
+                '',
+                '/',
+                '',
+                ($_ENV["CI_ENVIRONMENT"] === "production") ?? false,
+                true,
+                COOKIE::SAMESITE_STRICT
+            );
+        }
         // set session isLoggedIn
-        session()->set('isLoggedIn', true);
+        session()->set([
+            "isLoggedIn" => true,
+            "userId" => $getUserIdentity["user_id"],
+            "userFullName" => $getUserIdentity["nama_lengkap"],
+            "role" => $getUserIdentity["role"],
+        ]);
         // success
         return $this->response
             ->setJSON([
                 "status" => 200,
-                "message" => "Login berhasil. Sedang mengalihkan halaman..."
+                "message" => "Login berhasil. Sedang mengalihkan halaman...",
             ]);
     }
 }

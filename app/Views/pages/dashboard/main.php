@@ -1,3 +1,6 @@
+<?php
+helper("cookie");
+?>
 <!DOCTYPE html>
 <html lang="id" class="scrollbar-custom text-[14px] sm:text-[16px] 2xl:text-[20px]">
 <!-- HEAD -->
@@ -164,7 +167,7 @@
                     <img src="/assets/images/default-profile-image.webp" alt="Profil <nama_user>" class="size-11" />
                 </figure>
                 <div class="text-xs flex-1 min-w-0 flex flex-col justify-center gap-0.5">
-                    <p class="truncate text-sm font-semibold">fattahillah</p>
+                    <p class="truncate text-sm font-semibold"><?= session()->get('userFullName') ?></p>
                     <p class="text-xs text-gray-500/90"><?= $role ?></p>
                 </div>
             </div>

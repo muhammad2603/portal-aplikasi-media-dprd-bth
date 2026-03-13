@@ -6,16 +6,20 @@ use CodeIgniter\Controller;
 // @class
 class Dashboard extends Controller
 {
-    protected $role = 'User'; // Role ini hanya untuk debug, implementasi nyata lebih baik diambil dari database
+    protected $role;
     protected $pages_dashboard = "pages/dashboard";
-
+    // @constructor
+    public function __construct()
+    {
+        $this->role = session()->get("role");
+    }
     // @method: home
     public function home(): string
     {
         // @data
         $data_page = [
             "navigation" => "Dashboard",
-            "subtitle" => "Selamat datang kembali, Muhammad!",
+            "subtitle" => "Selamat datang kembali, " . session()->get("userFullName") . "!",
             "role" => $this->role,
         ];
         // @return: view home by role
