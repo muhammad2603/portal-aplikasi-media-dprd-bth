@@ -243,12 +243,6 @@ helper("cookie");
                     </div>
                 </div>
                 <!-- Navigasi Log Out -->
-                <!-- <a href="/dashboard/logout" class="logout active font-text p-3 flex items-center gap-1.5 text-red-500 rounded-lg transition duration-150 ease-in hover:bg-red-100 focus:outline-none focus:bg-red-100" aria-label="Keluar">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M5.636 5.636a9 9 0 1 0 12.728 0M12 3v9" />
-                    </svg>
-                    <span class="font-semibold truncate text-sm" title="Pengaturan">Keluar</span>
-                </a> -->
                 <form action="/dashboard/logout" method="post">
                     <?= csrf_field() ?>
                     <button type="submit" class="logout active font-text p-3 w-full flex items-center gap-1.5 text-red-500 rounded-lg transition duration-150 ease-in hover:bg-red-100 focus:outline-none focus:bg-red-100" aria-label="Keluar" title="Keluar">
