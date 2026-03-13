@@ -9,6 +9,8 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', fn() => redirect()->to('/login')->setStatusCode(301));
 // @GET login
 $routes->get('/login', 'Login::index');
+// @POST login
+$routes->post('/login', 'Auth::attemptLogin');
 // @GET register
 $routes->get('/daftar', 'Registrasi::index');
 
