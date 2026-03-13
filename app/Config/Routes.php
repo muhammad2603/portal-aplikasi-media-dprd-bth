@@ -13,9 +13,6 @@ $routes->get('/login', 'Login::index');
 $routes->post('/login', 'Auth::attemptLogin');
 // @GET register
 $routes->get('/daftar', 'Registrasi::index');
-
-// Lakukan filter sebelum masuk ke area Dashboard
-
 // @GET dashboard
 $routes->get('/dashboard', 'Dashboard::home');
 // @GET dashboard/pengajuan
@@ -30,3 +27,5 @@ $routes->get('/dashboard/riwayat-pembatalan', 'Dashboard::riwayatBatal');
 $routes->get('/dashboard/aktivitas', 'Dashboard::aktivitas');
 // @GET dashboard/profil
 $routes->get('/dashboard/pengaturan/profil', 'Dashboard::profil');
+// @POST dashboard/logout
+$routes->post('/dashboard/logout', 'Dashboard::logout');

@@ -3,6 +3,8 @@
 namespace App\Controllers;
 // use controller from codeigniter
 use CodeIgniter\Controller;
+// load helper cookie
+helper("cookie");
 // @class
 class Dashboard extends Controller
 {
@@ -96,5 +98,15 @@ class Dashboard extends Controller
         ];
         // @return: view home by role
         return view("$this->pages_dashboard/" . $this->role . "/profil", $data_page);
+    }
+    // @method: logout
+    public function logout()
+    {
+        // delete cookie token_login
+        delete_cookie("token_login");
+        // destroy current session
+        session()->destroy();
+        // @return with redirect to login
+        return redirect()->to('/login');
     }
 }
