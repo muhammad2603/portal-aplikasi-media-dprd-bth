@@ -82,14 +82,15 @@ class Filters extends BaseFilters
             'notloggedin' => [
                 'except' => [
                     "login",
-                    "daftar"
+                    "daftar",
+                    "status-akun",
                 ]
             ],
             'isloggedin' => [
                 'except' => [
                     "daftar",
                     "dashboard",
-                    "dashboard/*"
+                    "dashboard/*",
                 ]
             ],
         ],

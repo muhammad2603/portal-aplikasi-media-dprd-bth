@@ -102,8 +102,8 @@ class Dashboard extends Controller
     // @method: logout
     public function logout()
     {
-        // delete cookie token_login
-        delete_cookie("token_login");
+        // set cookie token_login to expired
+        setcookie("token_login", "", time() - 3600, "/", "");
         // destroy current session
         session()->destroy();
         // @return with redirect to login

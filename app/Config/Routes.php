@@ -11,6 +11,8 @@ $routes->get('/', fn() => redirect()->to('/login')->setStatusCode(301));
 $routes->get('/login', 'Login::index');
 // @POST login
 $routes->post('/login', 'Auth::attemptLogin');
+// @GET account status
+$routes->get('/status-akun', 'StatusAkun::index');
 // @GET register
 $routes->get('/daftar', 'Registrasi::index');
 // @GET dashboard
