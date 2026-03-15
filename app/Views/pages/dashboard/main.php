@@ -16,6 +16,14 @@ helper("cookie");
 </head>
 <!-- Akhir HEAD -->
 
+<?php if ($_ENV["CI_ENVIRONMENT"] === "development"): ?>
+    <style>
+        #debug-bar {
+            z-index: 99999999999999999999 !important;
+        }
+    </style>
+<?php endif ?>
+
 <body class="grid grid-cols-1 lg:grid-cols-12">
     <div id="modals" class="modals-overlay absolute top-0 left-0 w-screen h-screen px-6 sm:px-0 flex justify-center items-center bg-black/50 z-[9999999] invisible opacity-0 transition duration-250 ease-in">
         <div id="modalParent" class="modal-parent w-full sm:w-3/4 md:w-3/5 xl:w-[40%] 2xl:w-2/4 relative p-6 bg-white rounded-lg shadow-md transform-gpu scale-75 transition-transform duration-150 ease-in">

@@ -14,6 +14,7 @@ use CodeIgniter\Filters\PerformanceMetrics;
 use CodeIgniter\Filters\SecureHeaders;
 use \App\Filters\NotLoggedIn;
 use \App\Filters\IsLoggedIn;
+use App\Filters\CheckAccountStatus;
 
 class Filters extends BaseFilters
 {
@@ -27,17 +28,18 @@ class Filters extends BaseFilters
      * or [filter_name => [classname1, classname2, ...]]
      */
     public array $aliases = [
-        'csrf'          => CSRF::class,
-        'toolbar'       => DebugToolbar::class,
-        'honeypot'      => Honeypot::class,
-        'invalidchars'  => InvalidChars::class,
-        'secureheaders' => SecureHeaders::class,
-        'cors'          => Cors::class,
-        'forcehttps'    => ForceHTTPS::class,
-        'pagecache'     => PageCache::class,
-        'performance'   => PerformanceMetrics::class,
-        'notloggedin'   => NotLoggedIn::class,
-        'isloggedin'    => IsLoggedIn::class,
+        'csrf'                  => CSRF::class,
+        'toolbar'               => DebugToolbar::class,
+        'honeypot'              => Honeypot::class,
+        'invalidchars'          => InvalidChars::class,
+        'secureheaders'         => SecureHeaders::class,
+        'cors'                  => Cors::class,
+        'forcehttps'            => ForceHTTPS::class,
+        'pagecache'             => PageCache::class,
+        'performance'           => PerformanceMetrics::class,
+        'notloggedin'           => NotLoggedIn::class,
+        'isloggedin'            => IsLoggedIn::class,
+        'checkaccountstatus'    => CheckAccountStatus::class,
     ];
 
     /**
@@ -79,18 +81,26 @@ class Filters extends BaseFilters
             'csrf',
             // 'honeypot',
             // 'invalidchars',
-            'notloggedin' => [
+            'notloggedin' => [ // filter ini dijalankan ketika user belum login dan mengakses route selain yang ada di @except
                 'except' => [
                     "login",
                     "daftar",
                     "status-akun",
                 ]
             ],
-            'isloggedin' => [
+            'isloggedin' => [ // filter ini dijalankan ketika user sudah login dan mengakses route selain yang ada di @except
                 'except' => [
+                    "status-akun",
                     "daftar",
                     "dashboard",
                     "dashboard/*",
+                ]
+            ],
+            'checkaccountstatus' => [ // filter ini dijalankan ketika akun user belum diverifikasi dan ingin mengakses route selain yang ada di @except
+                'except' => [
+                    "status-akun",
+                    "login",
+                    "daftar",
                 ]
             ],
         ],

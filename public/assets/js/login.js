@@ -96,6 +96,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 const { status, message } = data;
                 classManipulation(alertPopUp).remove("translate-y-[-120%]")
                 classManipulation(alertPopUp).add("translate-y-4")
+                // @if akun user belum diverifikasi
+                if (status === 403) return setTimeout(() => window.location.href = data.redirect_to);
                 // @if status not OK!
                 if (status !== 200) throw new Error(message)
                 classManipulation(successElement).remove("hidden")

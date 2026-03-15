@@ -49,7 +49,7 @@ class Auth extends BaseController
         // @request
         $password_req = $payload->password;
         // @db get user identity (including User ID, Full Name, Email, and Role) from database
-        $getUserIdentity = $this->userModel->select(["user.id" => "user_id", "nama_lengkap", "email", "role"])->join("user_meta", "user_meta.user_id = user.id")->join("roles_user", "roles_user.id = user.role_id")->where("email", $email_req)->first();
+        $getUserIdentity = $this->userModel->select(["user.id" => "user_id", "nama_lengkap", "email", "role", "is_verified"])->join("user_meta", "user_meta.user_id = user.id")->join("roles_user", "roles_user.id = user.role_id")->where("email", $email_req)->first();
         // @if: email tidak ditemukan
         if ($getUserIdentity === null) {
             // @return
@@ -76,10 +76,12 @@ class Auth extends BaseController
                     "message" => "Email atau Password tidak cocok. Coba lagi!"
                 ]);
         }
+        // get value on field is_verified
+        $is_account_verified = $getUserIdentity["is_verified"] === "true" ? true : false;
         // @request
         $remember_req = $payload->remember ?? false;
         // @if user requested remember me
-        if ($remember_req) {
+        if ($remember_req && $is_account_verified) {
             // create token login for user
             $token_login = bin2hex(random_bytes(32));
             // hash token login with sha256 algorithm
@@ -106,7 +108,16 @@ class Auth extends BaseController
             "userId" => $getUserIdentity["user_id"],
             "userFullName" => $getUserIdentity["nama_lengkap"],
             "role" => $getUserIdentity["role"],
+            "isAccountVerified" => $is_account_verified,
         ]);
+        // @if status akun user belum diverifikasi
+        if (! $is_account_verified) {
+            return $this->response->setStatusCode(403)->setJSON([
+                "status" => 403,
+                "message" => 'Akun belum diverifikasi.',
+                "redirect_to" => '/status-akun',
+            ]);
+        }
         // success
         return $this->response
             ->setJSON([
