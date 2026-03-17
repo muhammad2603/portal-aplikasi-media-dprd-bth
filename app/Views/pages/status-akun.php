@@ -19,8 +19,11 @@ helper('date');
             </span>
             <h1 class="text-xl">Sedang Menunggu Anda Melakukan Aktivasi Akun...</h1>
             <p class="text-base">Silahkan aktivasi akun anda terlebih dahulu untuk melanjutkan ke halaman Dashboard!</p>
-            <div class="aktivasi-akun p-3.5 text-gray-500/90 text-base border border-solid border-gray-500/90 rounded-md">
+            <div class="aktivasi-akun font-text p-3.5 text-gray-500/90 text-base border border-solid border-gray-500/90 rounded-md">
                 <p>Anda dapat melakukan aktivasi dari pesan yang masuk ke email anda dan klik link untuk melakukan aktivasi akun.</p>
+                <p class="mt-2 mb-3 text-sm">Jika pesan belum masuk ke-email anda, silahkan klik tombol dibawah ini:</p>
+                <a href="/aktivasi-ulang" class="py-1.5 px-3.5 bg-blue-400 text-sm text-white rounded-sm transition duration-150 ease-in hover:bg-blue-500" aria-label="Kirim ulang aktivasi ke email anda">Kirim Ulang Aktivasi</a>
+                <p class="mt-3 text-sm text-green-400"><?= session()->getFlashdata("message") ?></p>
             </div>
         </div>
         <!-- Akhir Top/Legend -->
@@ -72,7 +75,7 @@ helper('date');
                     </span>
                     <h3 class="mt-1.5 text-base">Status Akun</h3>
                 </div>
-                <p class="text-sm">Belum Diverifikasi</p>
+                <p class="text-sm">Belum diverifikasi</p>
             </div>
             <div class="tanggal-daftar">
                 <div class="title flex items-center gap-1.5">
