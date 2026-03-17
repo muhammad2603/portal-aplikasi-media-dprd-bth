@@ -8,6 +8,12 @@ use App\Filters\AuthenticatedFilter;
 /**
  * @var RouteCollection $routes
  */
+/**
+ * @routes group
+ * @filter
+ *      GuestFilter: route hanya bisa diakses oleh pengguna yang tidak memiliki kredensial
+ *                  jika pengguna telah memiliki kredensial, arahkan ke dashboard
+ */
 $routes->group('', ["filter" => GuestFilter::class], function ($routes) {
     // jika user masuk ke root publik (http://domain.com/), arahkan ke rute login
     $routes->get('/', fn() => redirect()->to('/login')->setStatusCode(301));
@@ -18,7 +24,13 @@ $routes->group('', ["filter" => GuestFilter::class], function ($routes) {
     // @GET register
     $routes->get('/daftar', 'Registrasi::index');
 });
-
+/**
+ * @route group
+ * @filter
+ *      AuthenticatedFilter: route hanya bisa diakses oleh pengguna yang sudah memiliki akun, tapi akun belum diverifikasi
+ *                          jika pengguna tidak memiliki kredensial, arahkan ke login
+ *                          jika pengguna memiliki kredensial, tapi akun pengguna telah terverifikasi, arahkan ke dashboard
+ */
 $routes->group('', ["filter" => AuthenticatedFilter::class], function ($routes) {
     // @GET account status
     $routes->get('/status-akun', 'StatusAkun::index');
@@ -27,7 +39,13 @@ $routes->group('', ["filter" => AuthenticatedFilter::class], function ($routes) 
     // @GET /aktivasi-ulang
     $routes->get('/aktivasi-ulang', 'Activation::resend');
 });
-
+/**
+ * @route group
+ * @filter
+ *      VerifiedFilter: route hanya bisa diakses oleh pengguna yang telah memiliki kredensial dan akun telah terverifikasi
+ *                      jika pengguna tidak memiliki kredensial, arahkan ke login
+ *                      jika pengguna memiliki kredensial, tapi akun pengguna belum diverifikasi, arahkan ke status akun
+ */
 $routes->group('', ["filter" => VerifiedFilter::class], function ($routes) {
     // @GET dashboard
     $routes->get('/dashboard', 'Dashboard::home');
