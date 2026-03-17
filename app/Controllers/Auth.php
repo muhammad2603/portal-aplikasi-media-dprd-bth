@@ -5,21 +5,20 @@ declare(strict_types=1);
 namespace App\Controllers;
 // use UserModel
 use App\Models\UserModel;
-
+// use Cookie from codeigniter
 use CodeIgniter\Cookie\Cookie;
-
+// use DateTime class
 use DateTime;
-
+// call helper text
 helper("text");
 // @class
 class Auth extends BaseController
 {
-    // @protected: Model
     protected $userModel;
     // @constructor
     public function __construct()
     {
-        $this->userModel = new UserModel();
+        $this->userModel        = new UserModel();
     }
     // @method attemptLogin
     public function attemptLogin()
