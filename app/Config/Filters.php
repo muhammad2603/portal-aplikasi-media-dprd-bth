@@ -12,9 +12,6 @@ use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\PageCache;
 use CodeIgniter\Filters\PerformanceMetrics;
 use CodeIgniter\Filters\SecureHeaders;
-use \App\Filters\NotLoggedIn;
-use \App\Filters\IsLoggedIn;
-use App\Filters\CheckAccountStatus;
 
 class Filters extends BaseFilters
 {
@@ -37,9 +34,6 @@ class Filters extends BaseFilters
         'forcehttps'            => ForceHTTPS::class,
         'pagecache'             => PageCache::class,
         'performance'           => PerformanceMetrics::class,
-        'notloggedin'           => NotLoggedIn::class,
-        'isloggedin'            => IsLoggedIn::class,
-        'checkaccountstatus'    => CheckAccountStatus::class,
     ];
 
     /**
@@ -81,28 +75,6 @@ class Filters extends BaseFilters
             'csrf',
             // 'honeypot',
             // 'invalidchars',
-            'notloggedin' => [ // filter ini dijalankan ketika user belum login dan mengakses route selain yang ada di @except
-                'except' => [
-                    "login",
-                    "daftar",
-                    "status-akun",
-                ]
-            ],
-            'isloggedin' => [ // filter ini dijalankan ketika user sudah login dan mengakses route selain yang ada di @except
-                'except' => [
-                    "status-akun",
-                    "daftar",
-                    "dashboard",
-                    "dashboard/*",
-                ]
-            ],
-            'checkaccountstatus' => [ // filter ini dijalankan ketika akun user belum diverifikasi dan ingin mengakses route selain yang ada di @except
-                'except' => [
-                    "status-akun",
-                    "login",
-                    "daftar",
-                ]
-            ],
         ],
         'after' => [
             // 'honeypot',
