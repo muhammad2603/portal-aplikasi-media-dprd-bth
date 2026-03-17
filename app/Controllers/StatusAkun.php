@@ -15,7 +15,7 @@ class StatusAkun extends Controller
         $this->userModel = new UserModel();
     }
     // @method: index
-    public function index(): string
+    public function index()
     {
         // get userId from session
         $get_user_id_from_session = session()->get('userId');
@@ -29,6 +29,13 @@ class StatusAkun extends Controller
         ];
         // get user meta from database
         $get_user_identity = $this->userModel->select($fields)->join('user_meta um', 'um.user_id = user.id')->where('user.id', $get_user_id_from_session)->first();
+        // @if akun pengguna sudah diverifikasi
+        if ($get_user_identity["is_verified"] === "true") {
+            // perbarui nilai session isAccountVerified menjadi true
+            session()->set("isAccountVerified", true);
+            // @return redirect pengguna ke-halaman dashboard
+            return redirect()->to("/dashboard");
+        }
         // @data page
         $data = [
             "user_data"         => $get_user_identity,
