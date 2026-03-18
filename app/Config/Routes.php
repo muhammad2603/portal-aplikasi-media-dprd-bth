@@ -4,6 +4,7 @@ use CodeIgniter\Router\RouteCollection;
 use App\Filters\GuestFilter;
 use App\Filters\VerifiedFilter;
 use App\Filters\AuthenticatedFilter;
+use App\Filters\LogoutFilter;
 
 /**
  * @var RouteCollection $routes
@@ -61,6 +62,15 @@ $routes->group('', ["filter" => VerifiedFilter::class], function ($routes) {
     $routes->get('/dashboard/aktivitas', 'Dashboard::aktivitas');
     // @GET dashboard/profil
     $routes->get('/dashboard/pengaturan/profil', 'Dashboard::profil');
+});
+
+/**
+ * @route group
+ * @filter
+ *      LogoutFilter: route hanya bisa diakses oleh pengguna yang telah memiliki kredensial login/autentikasi
+ *                  jika pengguna tidak memiliki kredensial, arahkan ke login
+ */
+$routes->group('', ["filter" => LogoutFilter::class], function ($routes) {
     // @POST dashboard/logout
     $routes->post('/dashboard/logout', 'Dashboard::logout');
 });
