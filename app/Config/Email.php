@@ -6,19 +6,19 @@ use CodeIgniter\Config\BaseConfig;
 
 class Email extends BaseConfig
 {
-    public string $fromEmail  = 'setwan@setwan-batangharikab.id';
-    public string $fromName   = 'Administrator';
+    public string $fromEmail  = '';
+    public string $fromName   = '';
     public string $recipients = '';
 
     /**
      * The "user agent"
      */
-    public string $userAgent = 'SiMELEK';
+    public string $userAgent = '';
 
     /**
      * The mail sending protocol: mail, sendmail, smtp
      */
-    public string $protocol = 'smtp';
+    public string $protocol = '';
 
     /**
      * The server path to Sendmail.
@@ -28,7 +28,7 @@ class Email extends BaseConfig
     /**
      * SMTP Server Hostname
      */
-    public string $SMTPHost = 'mail.setwan-batangharikab.id';
+    public string $SMTPHost = '';
 
     /**
      * Which SMTP authentication method to use: login, plain
@@ -38,12 +38,12 @@ class Email extends BaseConfig
     /**
      * SMTP Username
      */
-    public string $SMTPUser = 'noreply@setwan-batangharikab.id';
+    public string $SMTPUser = '';
 
     /**
      * SMTP Password
      */
-    public string $SMTPPass = 'Ml#I,12:78EhkR=T5l';
+    public string $SMTPPass = '';
 
     /**
      * SMTP Port
