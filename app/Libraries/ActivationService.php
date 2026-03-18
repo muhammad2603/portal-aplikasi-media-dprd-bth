@@ -1,4 +1,6 @@
 <?php
+// declare strict types
+declare(strict_types=1);
 // namespace Libraries
 namespace App\Libraries;
 // use Database from Config

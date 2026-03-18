@@ -8,6 +8,18 @@ helper('date');
 ?>
 <!-- Main -->
 <main class="py-12 px-6 sm:px-8 md:px-14 xl:px-0 tracking-wide">
+    <section class="w-full xl:w-2/4 mx-auto mb-3">
+        <!-- Logout Button -->
+        <form action="/dashboard/logout" method="post">
+            <?= csrf_field() ?>
+            <button type="submit" class="logout active font-text ml-auto p-3 w-fit flex items-center gap-1.5 text-red-500 rounded-lg transition duration-150 ease-in hover:bg-red-100 focus:outline-none focus:bg-red-100" aria-label="Keluar" title="Keluar">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5.636 5.636a9 9 0 1 0 12.728 0M12 3v9" />
+                </svg>
+                <span class="font-semibold truncate text-sm">Keluar</span>
+            </button>
+        </form>
+    </section>
     <!-- Section Status Akun -->
     <section class="status-akun p-8 sm:py-8 sm:px-10 w-full xl:w-2/4 mx-auto bg-white shadow-md rounded-lg">
         <!-- Top/Legend -->
@@ -20,8 +32,8 @@ helper('date');
             <h1 class="text-xl">Sedang Menunggu Anda Melakukan Aktivasi Akun...</h1>
             <p class="text-base">Silahkan aktivasi akun anda terlebih dahulu untuk melanjutkan ke halaman Dashboard!</p>
             <div class="aktivasi-akun font-text p-3.5 text-gray-500/90 text-base border border-solid border-gray-500/90 rounded-md">
-                <p>Anda dapat melakukan aktivasi dari pesan yang masuk ke email anda dan klik link untuk melakukan aktivasi akun.</p>
-                <p class="mt-2 mb-3 text-sm">Jika pesan belum masuk ke-email anda, silahkan klik tombol dibawah ini:</p>
+                <p>Anda dapat melakukan aktivasi dari pesan yang masuk ke Email anda dan klik link untuk melakukan aktivasi akun.</p>
+                <p class="mt-2 mb-3 text-sm">Jika pesan belum masuk ke Email anda, silahkan klik tombol dibawah ini:</p>
                 <a href="/aktivasi-ulang" class="py-1.5 px-3.5 bg-blue-400 text-sm text-white rounded-sm transition duration-150 ease-in hover:bg-blue-500" aria-label="Kirim ulang aktivasi ke email anda">Kirim Ulang Aktivasi</a>
                 <p class="mt-3 text-sm text-green-400"><?= session()->getFlashdata("message") ?></p>
             </div>
