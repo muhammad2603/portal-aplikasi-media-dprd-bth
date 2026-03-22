@@ -1,0 +1,2 @@
+1. Tambahkan opsi "Login setelah daftar" pada Form Pendaftaran.
+2. Tambahkan tampilan dark mode.
