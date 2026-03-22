@@ -24,6 +24,8 @@ $routes->group('', ["filter" => GuestFilter::class], function ($routes) {
     $routes->post('/login', 'Auth::attemptLogin');
     // @GET register
     $routes->get('/daftar', 'Registrasi::index');
+    // @POST register account
+    $routes->post('/daftar', 'RegisterAccount::add');
 });
 /**
  * @route group
