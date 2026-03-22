@@ -1,5 +1,6 @@
 <?= $this->extend('pages/main') ?>
 <?= $this->section('content') ?>
+<?php $get_message_from_register = session()->getFlashdata("message_from_register") ?>
 <main class="px-6 sm:px-14 xl:px-0 w-full min-h-screen flex items-center">
     <section class="login grid grid-cols-1 lg:grid-cols-2 gap-12 mx-auto p-8 md:p-12 lg:p-8 2xl:py-10 2xl:px-8 w-full xl:w-3/4 h-auto bg-white shadow-md rounded-xl">
         <aside class="background-login hidden lg:block w-full h-full p-4 bg-[url(https://cdn.antaranews.com/cache/1200x800/2023/02/01/IMG-20230201-WA0025_3.jpg)] bg-cover bg-center bg-no-repeat border-2 border-solid border-primary rounded-lg">
@@ -11,6 +12,9 @@
             <span class="text-3xl text-center tracking-wide">LOGIN | <h1 class="inline text-green">SiKEMA</h1></span>
             <p class="text-center text-sm text-pretty text-gray-500/90 tracking-wide">Selamat datang di Sistem Informasi Media Elektronik Setwan Kabupaten Batang Hari!</p>
             <div class="form-login mt-5 flex flex-col gap-5 md:gap-4">
+                <?php if ($get_message_from_register): ?>
+                    <p class="text-xs text-center text-green-500"><?= $get_message_from_register ?></p>
+                <?php endif ?>
                 <div class="input-email flex flex-col gap-1.5 text-sm">
                     <label for="email" class="font-text font-semibold"><span>Email</span></label>
                     <div class="input relative text-gray-500/90">
@@ -37,11 +41,11 @@
                         <input type="checkbox" id="rememberMe" class="align-middle mr-0.5 accent-green-600 focus:outline-none" />
                         <label for="rememberMe">Ingat Saya</label>
                     </span>
-                    <a href="/reset-password" class="text-green">Lupa kata sandi?</a>
+                    <!-- <a href="#" class="text-green">Lupa kata sandi?</a> -->
                 </div>
                 <button type="button" id="btnLogin" class="py-2.5 flex justify-center items-center gap-2 bg-green font-text font-semibold text-white tracking-wider rounded-md hover:shadow-lg active:shadow-lg disabled:bg-gray-200">
                     <span id="text">Login</span>
-                    <span id="icon" class="hidden">
+                    <span id="iconLoading" class="hidden">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5 animate-spin">
                             <path d="M12 2 A10 10 0 0 1 22 12" />
                         </svg>
