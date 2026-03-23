@@ -1,4 +1,4 @@
-<?php
+<?php // TODO Tambahkan pengiriman kode aktivasi ke Email yang terdaftar
 // namespace Controllers
 namespace App\Controllers;
 // use Controller from codeigniter

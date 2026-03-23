@@ -76,26 +76,33 @@ class Activation extends Controller
         return "<p>Aktivasi berhasil! Silahkan refresh halaman status-akun atau login kembali!</p>";
     }
     // @method: resend
-    public function resend(): RedirectResponse
+    public function resend()
     {
         // ambil value user id dari session, jika tidak ada, otomatis jadi null
         $get_user_id_session = session()->get("userId");
         $ip_addr_user = $this->request->getIPAddress();
-        $rate_limit_req_by_ip = $this->throttler->check(md5($ip_addr_user), 30, MINUTE);
-        $rate_limit_by_user_id = $this->throttler->check(md5($get_user_id_session), 5, MINUTE);
+        $rate_limit_req_by_ip = $this->throttler->check(md5($ip_addr_user), 3, MINUTE);
+        $rate_limit_by_user_id = $this->throttler->check(md5($get_user_id_session), 3, MINUTE);
         // @if pengguna terkena batas request
         if (! $rate_limit_req_by_ip || ! $rate_limit_by_user_id)
             // @return status kode 429 (Too Many Request)
-            return $this->response->setStatusCode(429);
+            return $this->response->setStatusCode(429)->setJSON([
+                "status" => 429,
+                "message" => "Terlalu banyak upaya! Coba lagi nanti."
+            ]);
         // send activation code
         $sendActivation = $this->activationService->sendCode($get_user_id_session, "fattahillahmuhammad48@gmail.com");
         // @if send activation code is fail
         if (! $sendActivation)
-            // @return redirect user back to before endpoint url and set flash data message
-            return redirect()->back()->with("message", "Gagal mengirim aktivasi! Coba lagi nanti.");
+            return $this->response->setStatusCode(400)->setJSON([
+                "status" => 400,
+                "message" => "Kode aktivasi gagal terkirim. Mohon kontak Administrator untuk solusi lebih lanjut!"
+            ]);
 
         // send activation code is success
-        // @return redirect user back to before endpoint url and set flash data message
-        return redirect()->back()->with("message", "Berhasil mengirim aktivasi! Cek email anda.");
+        return $this->response->setStatusCode(200)->setJSON([
+            "status" => 200,
+            "message" => "Kode aktivasi berhasil terkirim ke Email anda."
+        ]);
     }
 }

@@ -34,8 +34,15 @@ helper('date');
             <div class="aktivasi-akun font-text p-3.5 text-gray-500/90 text-base border border-solid border-gray-500/90 rounded-md">
                 <p>Anda dapat melakukan aktivasi dari pesan yang masuk ke Email anda dan klik link untuk melakukan aktivasi akun.</p>
                 <p class="mt-2 mb-3 text-sm">Jika pesan belum masuk ke Email anda, silahkan klik tombol dibawah ini:</p>
-                <a href="/aktivasi-ulang" class="py-1.5 px-3.5 bg-blue-400 text-sm text-white rounded-sm transition duration-150 ease-in hover:bg-blue-500" aria-label="Kirim ulang aktivasi ke email anda">Kirim Ulang Aktivasi</a>
-                <p class="mt-3 text-sm text-green-400"><?= session()->getFlashdata("message") ?></p>
+                <button id="btnAktivasi" class="w-fit mx-auto py-1.5 px-3.5 flex justify-center items-center gap-2 bg-blue-400 text-sm text-white rounded-sm transition duration-150 ease-in hover:bg-blue-500" aria-label="Kirim ulang aktivasi ke email anda">
+                    <span>Kirim Ulang Kode Aktivasi</span>
+                    <span id="iconLoading" class="hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5 animate-spin">
+                            <path d="M12 2 A10 10 0 0 1 22 12" />
+                        </svg>
+                    </span>
+                </button>
+                <p id="messageAktivasi" class="mt-3 text-sm"></p>
             </div>
         </div>
         <!-- Akhir Top/Legend -->
@@ -124,4 +131,6 @@ helper('date');
     <!-- Akhir Kontak Administrator -->
 </main>
 <!-- Akhir Main -->
+<!-- Script Status Akun JS -->
+<script type="module" src="<?= base_url("/assets/js/status-akun.js") ?>"></script>
 <?= $this->endSection() ?>
