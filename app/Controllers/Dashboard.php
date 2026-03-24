@@ -3,19 +3,25 @@
 namespace App\Controllers;
 // use controller from codeigniter
 use CodeIgniter\Controller;
+// load helper cookie
+helper("cookie");
 // @class
 class Dashboard extends Controller
 {
-    protected $role = 'User'; // Role ini hanya untuk debug, implementasi nyata lebih baik diambil dari database
+    protected $role;
     protected $pages_dashboard = "pages/dashboard";
-
+    // @constructor
+    public function __construct()
+    {
+        $this->role = session()->get("role");
+    }
     // @method: home
     public function home(): string
     {
         // @data
         $data_page = [
             "navigation" => "Dashboard",
-            "subtitle" => "Selamat datang kembali, Muhammad!",
+            "subtitle" => "Selamat datang kembali, " . session()->get("userFullName") . "!",
             "role" => $this->role,
         ];
         // @return: view home by role
@@ -92,5 +98,15 @@ class Dashboard extends Controller
         ];
         // @return: view home by role
         return view("$this->pages_dashboard/" . $this->role . "/profil", $data_page);
+    }
+    // @method: logout
+    public function logout()
+    {
+        // set cookie token_login to expired
+        setcookie("token_login", "", time() - 3600, "/", "");
+        // destroy current session
+        session()->destroy();
+        // @return with redirect to login
+        return redirect()->to('/login');
     }
 }

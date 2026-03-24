@@ -92,7 +92,7 @@ class InputValidator {
       isLongValue: function (max) {
         return this.value.length > max;
       },
-      isInvalidValue: function (charsInvalid = /[^a-z \.]/gi) {
+      isInvalidValue: function (charsInvalid = /[^a-z \.]/i) {
         return charsInvalid.test(this.value);
       },
     };
@@ -112,29 +112,40 @@ class InputValidator {
     return {
       value: input.value,
       isValidEmail: function () {
-        return /@gmail.com$/.test(this.value)
+        return /@gmail.com$/.test(this.value);
       }
     }
   }
   address(input) {
     return {
-      value: input.value,
+      val: input.value,
       isValidAddress: function () {
-        return !/[^a-z0-9\s,\.\/\-#\(\)]+/gi.test(this.value);
+        return !/[^a-z0-9\s,\.\/\-#\(\)]+/i.test(this.val);
       },
     };
   }
   telephone(input) {
     return {
-      tel: input.value,
+      val: input.value,
       // validasi nomor telpon jika formatnya tidak sesuai dan mengandung karakter selain digit angka
       isValidNumber: function () {
-        return /^08\d{8,11}$/g.test(this.tel);
+        return /^08\d{8,11}$/.test(this.val);
       },
       dashRemove: function () {
-        input.value = this.tel.replaceAll(/-/g, "");
+        input.value = this.val.replaceAll(/-/g, "")
       },
     };
+  }
+  password(input) {
+    return {
+      val: input.value,
+      isStrongPassword: function () {
+        return (/[A-Z]{1}/.test(this.val) && /\d/.test(this.val) && /[!@#$&*]/.test(this.val)) && this.val.length > 8;
+      },
+      confirmPasswordCheck: function (realPasswordValue) {
+        return this.val === realPasswordValue;
+      }
+    }
   }
 }
 

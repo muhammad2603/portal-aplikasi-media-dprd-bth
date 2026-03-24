@@ -1,3 +1,6 @@
+<?php
+helper("cookie");
+?>
 <!DOCTYPE html>
 <html lang="id" class="scrollbar-custom text-[14px] sm:text-[16px] 2xl:text-[20px]">
 <!-- HEAD -->
@@ -13,7 +16,16 @@
 </head>
 <!-- Akhir HEAD -->
 
+<?php if ($_ENV["CI_ENVIRONMENT"] === "development"): ?>
+    <style>
+        #debug-bar {
+            z-index: 99999999999999999999 !important;
+        }
+    </style>
+<?php endif ?>
+
 <body class="grid grid-cols-1 lg:grid-cols-12">
+    <!-- Modals -->
     <div id="modals" class="modals-overlay absolute top-0 left-0 w-screen h-screen px-6 sm:px-0 flex justify-center items-center bg-black/50 z-[9999999] invisible opacity-0 transition duration-250 ease-in">
         <div id="modalParent" class="modal-parent w-full sm:w-3/4 md:w-3/5 xl:w-[40%] 2xl:w-2/4 relative p-6 bg-white rounded-lg shadow-md transform-gpu scale-75 transition-transform duration-150 ease-in">
             <button type="button" id="btnCloseModal" class="btn-close-modal absolute top-3.5 right-4 text-gray-500/90 hover:text-black focus:outline-none focus:text-black" title="Tutup Jendela" aria-label="Tutup Jendela Popup">
@@ -140,7 +152,7 @@
             </div>
         </div>
     </div>
-
+    <!-- Akhir Modals -->
     <!-- Aside -->
     <aside id="navContainer" class="fixed lg:sticky top-0 w-screen lg:w-full lg:col-span-3 xl:col-span-2 border-r border-solid border-gray-200 z-[999999] transition duration-300 ease-out invisible lg:visible">
         <!-- Navigation Overlay -->
@@ -164,7 +176,7 @@
                     <img src="/assets/images/default-profile-image.webp" alt="Profil <nama_user>" class="size-11" />
                 </figure>
                 <div class="text-xs flex-1 min-w-0 flex flex-col justify-center gap-0.5">
-                    <p class="truncate text-sm font-semibold">fattahillah</p>
+                    <p class="truncate text-sm font-semibold"><?= session()->get('userFullName') ?></p>
                     <p class="text-xs text-gray-500/90"><?= $role ?></p>
                 </div>
             </div>
@@ -240,12 +252,15 @@
                     </div>
                 </div>
                 <!-- Navigasi Log Out -->
-                <a href="/dashboard/logout" class="logout active font-text p-3 flex items-center gap-1.5 text-red-500 rounded-lg transition duration-150 ease-in hover:bg-red-100 focus:outline-none focus:bg-red-100" aria-label="Keluar">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M5.636 5.636a9 9 0 1 0 12.728 0M12 3v9" />
-                    </svg>
-                    <span class="font-semibold truncate text-sm" title="Pengaturan">Keluar</span>
-                </a>
+                <form action="/dashboard/logout" method="post">
+                    <?= csrf_field() ?>
+                    <button type="submit" class="logout active font-text p-3 w-full flex items-center gap-1.5 text-red-500 rounded-lg transition duration-150 ease-in hover:bg-red-100 focus:outline-none focus:bg-red-100" aria-label="Keluar" title="Keluar">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5.636 5.636a9 9 0 1 0 12.728 0M12 3v9" />
+                        </svg>
+                        <span class="font-semibold truncate text-sm">Keluar</span>
+                    </button>
+                </form>
             </div>
         </div>
     </aside>
