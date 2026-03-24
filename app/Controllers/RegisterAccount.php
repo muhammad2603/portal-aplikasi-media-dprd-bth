@@ -1,4 +1,4 @@
-<?php // TODO Tambahkan pengiriman kode aktivasi ke Email yang terdaftar
+<?php
 // namespace Controllers
 namespace App\Controllers;
 // use Controller from codeigniter
@@ -7,6 +7,8 @@ use CodeIgniter\Controller;
 use App\Models\UserModel;
 // use UserMeta from Models
 use App\Models\UserMeta;
+// use ActivationService from Libraries
+use App\Libraries\ActivationService;
 // use Database from Config
 use Config\Database;
 // @class
@@ -16,15 +18,18 @@ class RegisterAccount extends Controller
     protected $db;
     protected $userModel;
     protected $userMeta;
+    protected $activationService;
     // @constructor
     public function __construct()
     {
         // @init Database connect
-        $this->db           = Database::connect();
+        $this->db                   = Database::connect();
         // @init UserModel
-        $this->userModel    = new UserModel();
+        $this->userModel            = new UserModel();
         // @init UserMeta
-        $this->userMeta     = new UserMeta();
+        $this->userMeta             = new UserMeta();
+        // @init ActivationService
+        $this->activationService    = new ActivationService();
     }
     // @method add
     public function add()
@@ -131,6 +136,8 @@ class RegisterAccount extends Controller
         }
         // commit transactions
         $this->db->transCommit();
+        // send activation code to email user from register
+        $this->activationService->sendCode($get_new_user_id, $email_req);
         // @set flash data with message
         session()->setFlashdata("message_from_register", "Akun berhasil didaftarkan. Silahkan login menggunakan akun yang telah terdaftar!");
         // @return message success and redirect uri

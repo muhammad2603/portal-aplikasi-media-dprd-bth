@@ -90,8 +90,14 @@ class Activation extends Controller
                 "status" => 429,
                 "message" => "Terlalu banyak upaya! Coba lagi nanti."
             ]);
+        // get email user by ID user
+        $email = $this->userModel->select("email")->where("id", $get_user_id_session)->first()["email"];
+        // @if email not found
+        if (! $email)
+            // @return status code http 400 (Bad Request)
+            return $this->response->setStatusCode(400);
         // send activation code
-        $sendActivation = $this->activationService->sendCode($get_user_id_session, "fattahillahmuhammad48@gmail.com");
+        $sendActivation = $this->activationService->sendCode($get_user_id_session, $email);
         // @if send activation code is fail
         if (! $sendActivation)
             return $this->response->setStatusCode(400)->setJSON([
