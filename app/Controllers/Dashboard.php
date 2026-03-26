@@ -22,7 +22,6 @@ class Dashboard extends Controller
         $data_page = [
             "navigation" => "Dashboard",
             "subtitle" => "Selamat datang kembali, " . session()->get("userFullName") . "!",
-            "role" => $this->role,
         ];
         // @return: view home by role
         return view("$this->pages_dashboard/" . $this->role . "/home", $data_page);
@@ -34,7 +33,6 @@ class Dashboard extends Controller
         $data_page = [
             "navigation" => "Pengajuan",
             "subtitle" => $this->role === "User" ? "Buat pengajuan baru" : "Kelola pengajuan yang belum diproses",
-            "role" => $this->role,
         ];
         // @return: view home by role
         return view("$this->pages_dashboard/" . $this->role . "/pengajuan", $data_page);
@@ -46,7 +44,6 @@ class Dashboard extends Controller
         $data_page = [
             "navigation" => "Riwayat Pengajuan",
             "subtitle" => $this->role === "User" ? "Buat pengajuan baru" : "Kelola pengajuan yang telah diproses",
-            "role" => $this->role,
         ];
         // @return: view home by role
         return view("$this->pages_dashboard/" . $this->role . "/riwayat_pengajuan", $data_page);
@@ -58,7 +55,6 @@ class Dashboard extends Controller
         $data_page = [
             "navigation" => "Riwayat Hapus",
             "subtitle" => "Kelola pengajuan yang terhapus",
-            "role" => $this->role,
         ];
         // @return: view home by role
         return view("$this->pages_dashboard/" . $this->role . "/riwayat_hapus", $data_page);
@@ -70,7 +66,6 @@ class Dashboard extends Controller
         $data_page = [
             "navigation" => "Riwayat Pembatalan",
             "subtitle" => "Kelola pengajuan yang dibatalkan",
-            "role" => $this->role,
         ];
         // @return: view home by role
         return view("$this->pages_dashboard/" . $this->role . "/riwayat_pembatalan", $data_page);
@@ -82,7 +77,6 @@ class Dashboard extends Controller
         $data_page = [
             "navigation" => "Aktivitas",
             "subtitle" => "Lihat riwayat aktivitas anda",
-            "role" => $this->role,
         ];
         // @return: view home by role
         return view("$this->pages_dashboard/" . $this->role . "/aktivitas", $data_page);
@@ -94,7 +88,6 @@ class Dashboard extends Controller
         $data_page = [
             "navigation" => "Profil",
             "subtitle" => "Edit data profil anda",
-            "role" => $this->role,
         ];
         // @return: view home by role
         return view("$this->pages_dashboard/" . $this->role . "/profil", $data_page);
