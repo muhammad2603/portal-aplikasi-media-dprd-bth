@@ -66,4 +66,28 @@ class Pengajuan extends Model
             ->orderBy("id", "DESC")
             ->first();
     }
+    /**
+     * Ambil riwayat pengajuan terakhir beserta data-nya
+     * 
+     * @param int $user_id
+     * 
+     * @return array
+     */
+    public function getLastHistoriesPengajuan(int $user_id): array
+    {
+        return $this
+            ->select([
+                "pengajuan.judul",
+                "um.nama_media AS media",
+                "status.nama AS status",
+                "pengajuan.created_at",
+            ])
+            ->join("status_pengajuan sp", "sp.id_pengajuan = pengajuan.id")
+            ->join("status", "status.id = sp.id_status")
+            ->join("user_meta um", "um.user_id = pengajuan.user_id")
+            ->where("pengajuan.user_id", $user_id)
+            ->orderBy("pengajuan.created_at", "DESC")
+            ->orderBy("pengajuan.id", "DESC")
+            ->findAll(4);
+    }
 }
