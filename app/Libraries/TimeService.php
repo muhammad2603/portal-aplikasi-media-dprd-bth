@@ -27,4 +27,15 @@ class TimeService
             "seconds" => $time_diff->seconds,
         ];
     }
+    /**
+     * Ubah format tanggal menjadi format user-friendly
+     * 
+     * @param string|array $date jika value date bukan diambil dari database, gunakan string. cth: 1990-01-01
+     * 
+     * @return string 01 Januari 1990
+     */
+    public function translateDate(string|array $date): string
+    {
+        return Time::parse($date)->toLocalizedString("dd MMMM YYYY");
+    }
 }
