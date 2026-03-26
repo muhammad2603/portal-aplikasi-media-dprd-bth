@@ -2306,6 +2306,10 @@ video {
   .xl\:pb-0 {
     padding-bottom: 0px;
   }
+
+  .xl\:pb-2\.5 {
+    padding-bottom: 0.625rem;
+  }
 }
 
 @media (min-width: 1536px) {
