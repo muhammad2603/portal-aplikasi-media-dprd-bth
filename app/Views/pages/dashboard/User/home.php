@@ -5,6 +5,7 @@ $timeService = new App\Libraries\TimeService;
 $pengajuanModel = new App\Models\Pengajuan;
 $user_id = session()->get("userId");
 ["total" => $total_pengajuan, "total_by_status" => $total_pengajuan_by_status] = $pengajuanModel->getTotalPengajuan($user_id);
+$get_histories_pengajuan = $pengajuanModel->getLastHistoriesPengajuan($user_id);
 $last_date_submit_pengajuan = $pengajuanModel->getLastSubmitPengajuan($user_id)["created_at"];
 $days_diff_last_pengajuan = abs($timeService->getDifference($last_date_submit_pengajuan)["days"]);
 ?>
@@ -107,120 +108,65 @@ $days_diff_last_pengajuan = abs($timeService->getDifference($last_date_submit_pe
                 <h2 class="text-lg">Pengajuan Terakhir</h2>
                 <p class="text-sm text-gray-500/90">Daftar pengajuan terakhir anda</p>
             </div>
-            <a href="/dashboard/pengajuan" class="font-text py-1.5 px-4 flex items-center gap-1.5 text-blue-600 text-sm rounded-full group transition duration-150 ease-in hover:bg-blue-100">
+            <a href="/dashboard/riwayat-pengajuan" class="font-text py-1.5 px-4 flex items-center gap-1.5 text-blue-600 text-sm rounded-full group transition duration-150 ease-in hover:bg-blue-100">
                 <span>Lihat semua</span>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-3 transition duration-200 ease-in group-hover:translate-x-1">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                 </svg>
             </a>
         </div>
-        <!-- List Pengajuan terakhir -->
-        <div class="list-pengajuan-terakhir mt-8 flex flex-col gap-4">
-            <article class="py-5 px-4 bg-primary rounded-md shadow-sm">
-                <div class="top flex items-center gap-4 justify-between">
-                    <h3 class="text-base">Liputan Pemilu 2025</h3>
-                    <span class="py-1 px-3 flex items-center gap-1 bg-green-100/80 font-semibold text-green-600 text-xs rounded-full">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
-                        <span class="font-text">Disetujui</span>
-                    </span>
-                </div>
-                <div class="info mt-2 flex gap-3">
-                    <span class="flex items-center gap-1 text-gray-500/90">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" />
-                        </svg>
-                        <span class="font-text text-sm">Kompas TV</span>
-                    </span>
-                    <span class="flex items-center gap-1 text-gray-500/90">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-                        </svg>
-                        <span class="font-text text-sm">22 Februari 2026</span>
-                    </span>
-                </div>
-            </article>
-            <article class="py-5 px-4 bg-primary rounded-md shadow-sm">
-                <div class="top flex items-center gap-4 justify-between">
-                    <h3 class="text-base">Investigasi Korupsi Daerah</h3>
-                    <span class="py-1 px-3 flex items-center gap-1 bg-amber-100/80 font-semibold text-amber-600 text-xs rounded-full">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
-                        <span class="font-text">Pending</span>
-                    </span>
-                </div>
-                <div class="info mt-2 flex gap-3">
-                    <span class="flex items-center gap-1 text-gray-500/90">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" />
-                        </svg>
-                        <span class="font-text text-sm">Kompas TV</span>
-                    </span>
-                    <span class="flex items-center gap-1 text-gray-500/90">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-                        </svg>
-                        <span class="font-text text-sm">20 Februari 2026</span>
-                    </span>
-                </div>
-            </article>
-            <article class="py-5 px-4 bg-primary rounded-md shadow-sm">
-                <div class="top flex items-center gap-4 justify-between">
-                    <h3 class="text-base">Festival Budaya Nusantara</h3>
-                    <span class="py-1 px-3 flex items-center gap-1 bg-red-100/80 font-semibold text-red-600 text-xs rounded-full">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
-                        <span class="font-text">Ditolak</span>
-                    </span>
-                </div>
-                <div class="info mt-2 flex gap-3">
-                    <span class="flex items-center gap-1 text-gray-500/90">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" />
-                        </svg>
-                        <span class="font-text text-sm">Kompas TV</span>
-                    </span>
-                    <span class="flex items-center gap-1 text-gray-500/90">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-                        </svg>
-                        <span class="font-text text-sm">19 Februari 2026</span>
-                    </span>
-                </div>
-            </article>
-            <article class="py-5 px-4 bg-primary rounded-md shadow-sm">
-                <div class="top flex items-center gap-4 justify-between">
-                    <h3 class="text-base truncate">Dewan Dorong Pemda dan APH Perkuat Pengawasan PETI</h3>
-                    <span class="py-1 px-3 flex items-center gap-1 bg-indigo-100/80 font-semibold text-indigo-600 text-xs rounded-full">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                        </svg>
-                        <span class="font-text">Perbaikan</span>
-                    </span>
-                </div>
-                <div class="info mt-2 flex gap-3">
-                    <span class="flex items-center gap-1 text-gray-500/90">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" />
-                        </svg>
-                        <span class="font-text text-sm">Kompas TV</span>
-                    </span>
-                    <span class="flex items-center gap-1 text-gray-500/90">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-                        </svg>
-                        <span class="font-text text-sm">18 Februari 2026</span>
-                    </span>
-                </div>
-            </article>
-        </div>
-        <!-- @note: tambahkan informasi pengajuan jika user belum mengajukan berita -->
-        <div class="informasi-pengajuan hidden mt-8 py-3 px-4 bg-amber-100/80 text-amber-600 rounded-md">
-            <p class="font-semibold text-sm">Anda belum melakukan pengajuan.</p>
-        </div>
+        <?php if ($total_pengajuan === 0): // @if total pengajuan kosong 
+        ?>
+            <div class="informasi-pengajuan mt-8 py-3 px-4 bg-amber-100/80 text-amber-600 rounded-md">
+                <p class="font-semibold text-sm">Anda belum melakukan pengajuan.</p>
+            </div>
+        <?php else: ?>
+            <!-- List Pengajuan terakhir -->
+            <div class="list-pengajuan-terakhir mt-8 flex flex-col gap-4">
+                <?php foreach ($get_histories_pengajuan as $hist): ?>
+                    <?php
+                    $judul = esc($hist["judul"]);
+                    $media = esc($hist["media"]);
+                    $status = esc($hist["status"]);
+                    $created_at = esc($hist["created_at"]);
+                    $set_color_status_icon = ($status === "Pending" ? "amber" : ($status === "Disetujui" ? "green" : ($status === "Perbaikan" ? "indigo" : "red")));
+                    ?>
+                    <article class="py-5 px-4 bg-primary rounded-md shadow-sm">
+                        <div class="top flex items-center gap-4 justify-between">
+                            <h3 class="text-base"><?= $judul ?></h3>
+                            <span class="py-1 px-3 flex items-center gap-1 bg-<?= $set_color_status_icon ?>-100/80 font-semibold text-<?= $set_color_status_icon ?>-600 text-xs rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                    <?php if ($status === "Disetujui"): ?>
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                    <?php elseif ($status === "Perbaikan"): ?>
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                    <?php elseif ($status === "Pending"): ?>
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                    <?php elseif ($status === "Ditolak"): ?>
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                    <?php endif ?>
+                                </svg>
+                                <span class="font-text"><?= $status ?></span>
+                            </span>
+                        </div>
+                        <div class="info mt-2 flex gap-3">
+                            <span class="flex items-center gap-1 text-gray-500/90">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" />
+                                </svg>
+                                <span class="font-text text-sm"><?= $media ?></span>
+                            </span>
+                            <span class="flex items-center gap-1 text-gray-500/90">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                                </svg>
+                                <span class="font-text text-sm"><?= $timeService->translateDate($created_at) ?></span>
+                            </span>
+                        </div>
+                    </article>
+                <?php endforeach ?>
+            </div>
+        <?php endif ?>
     </aside>
     <!-- Aside aksi cepat -->
     <aside class="lg:col-span-4 xl:col-span-3 py-10 md:py-5 px-7 bg-white rounded-lg shadow-md h-fit">
