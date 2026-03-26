@@ -1,12 +1,20 @@
 <?= $this->extend('pages/dashboard/main') ?>
 <?= $this->section('content') ?>
+<?php
+$timeService = new App\Libraries\TimeService;
+$pengajuanModel = new App\Models\Pengajuan;
+$user_id = session()->get("userId");
+["total" => $total_pengajuan, "total_by_status" => $total_pengajuan_by_status] = $pengajuanModel->getTotalPengajuan($user_id);
+$last_date_submit_pengajuan = $pengajuanModel->getLastSubmitPengajuan($user_id)["created_at"];
+$days_diff_last_pengajuan = abs($timeService->getDifference($last_date_submit_pengajuan)["days"]);
+?>
 <!-- Section Cards: informasi Pengajuan -->
-<section class="cards pb-3.5 xl:pb-0 px-2 xl:px-0 flex gap-6 overflow-x-scroll xl:overflow-visible">
+<section class="cards scrollbar-custom pb-3.5 xl:pb-2.5 px-2 flex gap-6 overflow-x-scroll">
     <?= view('components/card', [
         "items" => [
             [
                 "card_title" => 'Total Pengajuan',
-                "card_description" => '36',
+                "card_description" => $total_pengajuan,
                 "add_class" => 'shrink-0',
                 "card_icon" => [
                     "icon" => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14.25 18.28" class="size-5">
@@ -22,7 +30,7 @@
             ],
             [
                 "card_title" => 'Disetujui',
-                "card_description" => '24',
+                "card_description" => $total_pengajuan_by_status["disetujui"],
                 "add_class" => 'shrink-0',
                 "card_icon" => [
                     "icon" => '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -32,19 +40,8 @@
                 ]
             ],
             [
-                "card_title" => 'Pending',
-                "card_description" => '10',
-                "add_class" => 'shrink-0',
-                "card_icon" => [
-                    "icon" => '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                    </svg>',
-                    "icon_color" => 'bg-amber-100/80 text-amber-600'
-                ]
-            ],
-            [
                 "card_title" => 'Perbaikan',
-                "card_description" => '2',
+                "card_description" => $total_pengajuan_by_status["perbaikan"],
                 "add_class" => 'shrink-0',
                 "card_icon" => [
                     "icon" => '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -53,28 +50,53 @@
                     "icon_color" => 'bg-indigo-100/80 text-indigo-600'
                 ]
             ],
+            [
+                "card_title" => 'Ditolak',
+                "card_description" => $total_pengajuan_by_status["ditolak"],
+                "add_class" => 'shrink-0',
+                "card_icon" => [
+                    "icon" => '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>',
+                    "icon_color" => 'bg-red-100/80 text-red-600'
+                ]
+            ],
+            [
+                "card_title" => 'Pending',
+                "card_description" => $total_pengajuan_by_status["pending"],
+                "add_class" => 'shrink-0',
+                "card_icon" => [
+                    "icon" => '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>',
+                    "icon_color" => 'bg-amber-100/80 text-amber-600'
+                ]
+            ],
         ]
     ]) ?>
 </section>
 <!-- Akhir Section Cards -->
-<!-- Section Remainder -->
-<section class="remainder py-8 px-4 flex flex-col items-center gap-4 bg-white rounded-lg shadow-md">
-    <!-- Text Remainder -->
-    <p class="flex flex-col items-center gap-1 text-amber-600">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
-        </svg>
-        <span class="text-center">Anda belum melakukan pengajuan sejak 3 hari terakhir.</span>
-    </p>
-    <!-- Link Pengajuan -->
-    <a href="/dashboard/pengajuan" class="py-2.5 px-3 w-fit flex items-center gap-1.5 bg-blue-500 text-white rounded-md transition duration-150 hover:bg-blue-600">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-        </svg>
-        <span class="font-text font-semibold text-sm">Buat Pengajuan Baru</span>
-    </a>
-</section>
-<!-- Akhir Section Remainder -->
+<?php if ($days_diff_last_pengajuan >= 3): // @if pengajuan terakhir yang disubmit user telah melewati lebih dari 3 hari yang lalu 
+?>
+    <!-- Section Remainder -->
+    <section class="remainder py-8 px-4 flex flex-col items-center gap-4 bg-white rounded-lg shadow-md">
+        <!-- Text Remainder -->
+        <p class="flex flex-col items-center gap-1 text-amber-600">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+            </svg>
+            <span class="text-center">Anda belum melakukan pengajuan sejak <?= $days_diff_last_pengajuan ?> hari terakhir.</span>
+        </p>
+        <!-- Link Pengajuan -->
+        <a href="/dashboard/pengajuan" class="py-2.5 px-3 w-fit flex items-center gap-1.5 bg-blue-500 text-white rounded-md transition duration-150 hover:bg-blue-600">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
+            <span class="font-text font-semibold text-sm">Buat Pengajuan Baru</span>
+        </a>
+    </section>
+    <!-- Akhir Section Remainder -->
+<?php endif ?>
 <!-- Section Pengajuan terakhir & aksi cepat -->
 <section class="grid grid-cols-1 lg:grid-cols-9 gap-6">
     <!-- Aside Pengajuan terakhir -->
