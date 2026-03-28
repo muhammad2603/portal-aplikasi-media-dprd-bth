@@ -5,8 +5,12 @@ declare(strict_types=1);
 namespace App\Controllers;
 // use UserModel
 use App\Models\UserModel;
+// use UserMeta
+use App\Models\UserMeta;
 // use Cookie from codeigniter
 use CodeIgniter\Cookie\Cookie;
+// use Time from codeigniter
+use CodeIgniter\I18n\Time;
 // use DateTime class
 use DateTime;
 // call helper text
@@ -15,10 +19,12 @@ helper("text");
 class Auth extends BaseController
 {
     protected $userModel;
+    protected $userMeta;
     // @constructor
     public function __construct()
     {
         $this->userModel        = new UserModel();
+        $this->userMeta         = new UserMeta();
     }
     // @method attemptLogin
     public function attemptLogin()
@@ -101,6 +107,12 @@ class Auth extends BaseController
                 COOKIE::SAMESITE_STRICT
             );
         }
+        $get_last_login = $this->userMeta->select("last_login")->where("user_id", $getUserIdentity["user_id"])->first()["last_login"];
+        $is_first_login = $get_last_login === null ? true : false;
+        $this->userMeta
+            ->set("last_login", Time::now())
+            ->where("user_id", $getUserIdentity["user_id"])
+            ->update();
         // set session isLoggedIn
         session()->set([
             "isLoggedIn" => true,
@@ -108,6 +120,7 @@ class Auth extends BaseController
             "userFullName" => $getUserIdentity["nama_lengkap"],
             "role" => $getUserIdentity["role"],
             "isAccountVerified" => $is_account_verified,
+            "isFirstLogin" => $is_first_login,
         ]);
         // @if status akun user belum diverifikasi
         if (! $is_account_verified) {
@@ -121,7 +134,7 @@ class Auth extends BaseController
         return $this->response
             ->setJSON([
                 "status" => 200,
-                "message" => "Login berhasil. Sedang mengalihkan halaman...",
+                "message" => "Login berhasil. Sedang mengalihkan halaman..."
             ]);
     }
 }
