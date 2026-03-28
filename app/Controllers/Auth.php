@@ -3,6 +3,8 @@
 declare(strict_types=1);
 // namespace Controller
 namespace App\Controllers;
+// use Database from Config
+use Config\Database;
 // use UserModel
 use App\Models\UserModel;
 // use UserMeta
@@ -18,11 +20,13 @@ helper("text");
 // @class
 class Auth extends BaseController
 {
+    protected $db;
     protected $userModel;
     protected $userMeta;
     // @constructor
     public function __construct()
     {
+        $this->db               = Database::connect();
         $this->userModel        = new UserModel();
         $this->userMeta         = new UserMeta();
     }
@@ -109,10 +113,17 @@ class Auth extends BaseController
         }
         $get_last_login = $this->userMeta->select("last_login")->where("user_id", $getUserIdentity["user_id"])->first()["last_login"];
         $is_first_login = $get_last_login === null ? true : false;
-        $this->userMeta
+        $this->db->transBegin();
+        $update_last_login_on_user_meta = $this->userMeta
             ->set("last_login", Time::now())
             ->where("user_id", $getUserIdentity["user_id"])
             ->update();
+        if (! $update_last_login_on_user_meta) {
+            log_message("error", "Gagal melakukan update field last login ditable user meta!");
+            $this->db->transRollback();
+            return;
+        }
+        $this->db->transCommit();
         // set session isLoggedIn
         session()->set([
             "isLoggedIn" => true,
