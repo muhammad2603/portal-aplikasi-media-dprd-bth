@@ -8,6 +8,7 @@ $user_id = session()->get("userId");
 $get_histories_pengajuan = $pengajuanModel->getLastHistoriesPengajuan($user_id);
 $last_date_submit_pengajuan = $pengajuanModel->getLastSubmitPengajuan($user_id)["created_at"];
 $days_diff_last_pengajuan = abs($timeService->getDifference($last_date_submit_pengajuan)["days"]);
+$histories_pengajuan = $pengajuanModel->getHistoriesIn7Days($user_id);
 ?>
 <!-- Section Cards: informasi Pengajuan -->
 <section class="cards scrollbar-custom pb-3.5 xl:pb-2.5 px-2 flex gap-6 overflow-x-scroll">
@@ -198,75 +199,79 @@ $days_diff_last_pengajuan = abs($timeService->getDifference($last_date_submit_pe
         </a>
     </div>
     <!-- Catatan aktivitas terbaru -->
-    <div class="activities mt-8 flex flex-col gap-4">
-        <div class="flex gap-3.5">
-            <span class="py-1.5 px-1.5 h-fit bg-gray-200/60 text-green-600 rounded-lg">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                </svg>
-            </span>
-            <div class="flex flex-col gap-0.5">
-                <h3 class="text-base">Pengajuan disetujui</h3>
-                <p class="text-sm text-gray-500/90">Pengajuan "Liputan Pemilu 2026" Anda telah disetujui Admin</p>
-                <span class="mt-1 flex gap-1 text-gray-500/90 text-xs">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                    </svg>
-                    5 hari yang lalu
-                </span>
+    <div class="activities <?= count($histories_pengajuan) > 0 ? "mt-8" : "mt-4" ?> flex flex-col gap-4">
+        <?php if (count($histories_pengajuan) > 0): ?>
+            <?php foreach ($histories_pengajuan as $hist): ?>
+                <?php
+                ["status" => $status_hist, "judul" => $judul_hist, "created_at" => $created_hist] = $hist;
+                $accent_icon_hist = "";
+                $title_hist = "";
+                $message_hist = "";
+                switch ($status_hist) {
+                    case 'Pending':
+                        $accent_icon_hist = "amber";
+                        $title_hist = "Pengajuan terkirim";
+                        $message_hist = "Pengajuan \"" . $judul_hist . "\" Anda telah terkirim, mohon tunggu persetujuan dari Admin.";
+                        break;
+                    case 'Disetujui':
+                        $accent_icon_hist = "green";
+                        $title_hist = "Pengajuan disetujui";
+                        $message_hist = "Pengajuan \"" . $judul_hist . "\" Anda telah disetujui Admin.";
+                        break;
+                    case 'Perbaikan':
+                        $accent_icon_hist = "indigo";
+                        $title_hist = "Perbaikan pengajuan";
+                        $message_hist = "Pengajuan \"" . $judul_hist . "\" Anda butuh perbaikan. Lihat komentar Admin tentang perbaikan dipengajuan anda!";
+                        break;
+                    case 'Ditolak':
+                        $accent_icon_hist = "red";
+                        $title_hist = "Pengajuan ditolak";
+                        $message_hist = "Pengajuan \"" . $judul_hist . "\" Anda telah ditolak Admin. Lihat alasan penolakan di Pengajuan anda.";
+                        break;
+                }
+                $created_hist_diff = "";
+                ["days" => $days_diff, "hours" => $hours_diff, "minutes" => $minutes_diff, "seconds" => $seconds_diff] = $timeService->getDifference($created_hist, true);
+                // @if
+                if ($days_diff <= 7)
+                    $created_hist_diff = $hours_diff . " hari yang lalu";
+                elseif ($hours_diff <= 24)
+                    $created_hist_diff = $hours_diff . " jam yang lalu";
+                elseif ($minutes_diff <= 60)
+                    $created_hist_diff = $minutes_diff . " menit yang lalu";
+                elseif ($seconds_diff <= 60)
+                    $created_hist_diff = $seconds_diff . " detik yang lalu";
+                ?>
+                <div class="flex gap-3.5">
+                    <span class="py-1.5 px-1.5 h-fit bg-gray-200/60 text-<?= $accent_icon_hist ?>-600 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <?php if ($status_hist === "Pending"): ?>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            <?php elseif ($status_hist === "Disetujui"): ?>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            <?php elseif ($status_hist === "Perbaikan"): ?>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                            <?php elseif ($status_hist === "Ditolak"): ?>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            <?php endif ?>
+                        </svg>
+                    </span>
+                    <div class="flex flex-col gap-0.5">
+                        <h3 class="text-base"><?= $title_hist ?></h3>
+                        <p class="text-sm text-gray-500/90"><?= $message_hist ?></p>
+                        <span class="mt-1 flex gap-1 text-gray-500/90 text-xs">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                            <?= $created_hist_diff ?>
+                        </span>
+                    </div>
+                </div>
+            <?php endforeach ?>
+        <?php else: ?>
+            <div class="informasi-pengajuan py-3 px-4 bg-amber-100/80 text-amber-600 rounded-md">
+                <p class="font-semibold text-sm">Tidak ada catatan aktivitas dalam 7 hari terakhir.</p>
             </div>
-        </div>
-        <div class="flex gap-3.5">
-            <span class="py-1.5 px-1.5 h-fit bg-gray-200/60 text-red-500 rounded-lg">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                </svg>
-            </span>
-            <div class="flex flex-col gap-0.5">
-                <h3 class="text-base">Pengajuan ditolak</h3>
-                <p class="text-sm text-gray-500/90">Pengajuan "Festival Budaya Nusantara" Anda telah ditolak Admin. Lihat alasan penolakan di Pengajuan anda</p>
-                <span class="mt-1 flex gap-1 text-gray-500/90 text-xs">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                    </svg>
-                    7 hari yang lalu
-                </span>
-            </div>
-        </div>
-        <div class="flex gap-3.5">
-            <span class="py-1.5 px-1.5 h-fit bg-gray-200/60 text-amber-500 rounded-lg">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                </svg>
-            </span>
-            <div class="flex flex-col gap-0.5">
-                <h3 class="text-base">Pengajuan terkirim</h3>
-                <p class="text-sm text-gray-500/90">Pengajuan "Investigasi Korupsi Daerah" Anda telah terkirim, mohon tunggu persetujuan dari Admin</p>
-                <span class="mt-1 flex gap-1 text-gray-500/90 text-xs">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                    </svg>
-                    8 hari yang lalu
-                </span>
-            </div>
-        </div>
-        <div class="flex gap-3.5">
-            <span class="py-1.5 px-1.5 h-fit bg-gray-200/60 text-indigo-600 rounded-lg">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                </svg>
-            </span>
-            <div class="flex flex-col gap-0.5">
-                <h3 class="text-base">Perbaikan pengajuan</h3>
-                <p class="text-sm text-gray-500/90">Pengajuan "Dewan Dorong Pemda dan APH Perkuat Pengawasan PETI" Anda butuh perbaikan. Lihat komentar Admin tentang perbaikan!</p>
-                <span class="mt-1 flex gap-1 text-gray-500/90 text-xs">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                    </svg>
-                    9 hari yang lalu
-                </span>
-            </div>
-        </div>
+        <?php endif ?>
     </div>
 </section>
 <!-- Akhir Section aktivitas terbaru -->
