@@ -12,19 +12,20 @@ class TimeService
      * Membuat perbandingan waktu
      * 
      * @param string $target_datetime waktu yang dijadikan sebagai target. format YYYY-MM-DD H:M:S
+     * @param bool $to_abs ubah waktu dari hasil perbandingan menjadi angka positif.
      * 
      * @return array ["days", "hours", "minutes", "seconds"]
      */
-    public function getDifference(string $target_datetime): array
+    public function getDifference(string $target_datetime, bool $to_abs = false): array
     {
         $target_datetime = Time::parse($target_datetime);
         $current_datetime = Time::now();
         $time_diff = $current_datetime->difference($target_datetime);
         return [
-            "days" => $time_diff->days,
-            "hours" => $time_diff->hours,
-            "minutes" => $time_diff->minutes,
-            "seconds" => $time_diff->seconds,
+            "days" => $to_abs ? abs($time_diff->days) : $time_diff->days,
+            "hours" => $to_abs ? abs($time_diff->hours) : $time_diff->hours,
+            "minutes" => $to_abs ? abs($time_diff->minutes) : $time_diff->minutes,
+            "seconds" => $to_abs ? abs($time_diff->seconds) : $time_diff->seconds,
         ];
     }
     /**
