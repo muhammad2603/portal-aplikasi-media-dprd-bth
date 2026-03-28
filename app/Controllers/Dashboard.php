@@ -18,10 +18,13 @@ class Dashboard extends Controller
     // @method: home
     public function home(): string
     {
+        $get_is_first_login_from_sess = session("isFirstLogin");
+        $get_user_full_name_from_sess = session("userFullName");
+        $subtitle_by_status_login = $get_is_first_login_from_sess ? "Selamat datang, $get_user_full_name_from_sess! Silahkan buat pengajuan pertama anda." : "Selamat datang kembali, $get_user_full_name_from_sess!";
         // @data
         $data_page = [
             "navigation" => "Dashboard",
-            "subtitle" => "Selamat datang kembali, " . session()->get("userFullName") . "!",
+            "subtitle" => $subtitle_by_status_login,
         ];
         // @return: view home by role
         return view("$this->pages_dashboard/" . $this->role . "/home", $data_page);
