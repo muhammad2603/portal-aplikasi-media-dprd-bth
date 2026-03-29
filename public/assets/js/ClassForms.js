@@ -78,7 +78,6 @@ class ImageFile {
     if (!this.file) throw new Error("constructor fileObject tidak ditemukan.");
   }
 }
-
 class InputValidator {
   stringValidation(input) {
     return {
@@ -148,7 +147,6 @@ class InputValidator {
     }
   }
 }
-
 export {
   ImageFile,
   InputValidator,
