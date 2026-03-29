@@ -54,6 +54,7 @@ $routes->group('', ["filter" => VerifiedFilter::class], function ($routes) {
     $routes->get('/dashboard', 'Dashboard::home');
     // @GET dashboard/pengajuan
     $routes->get('/dashboard/pengajuan', 'Dashboard::pengajuan');
+    $routes->post('/dashboard/tambah-pengajuan', 'CreatePengajuan::add');
     // @GET dashboard/riwayat-pengajuan
     $routes->get('/dashboard/riwayat-pengajuan', 'Dashboard::riwayatPengajuan');
     // @GET dashboard/riwayat-hapus
