@@ -41,7 +41,7 @@
         <span id="errorInputDeskripsi" class="error pl-1.5 font-text font-semibold text-xs text-red-500 tracking-wide">Deskripsi wajib diisi.</span>
         <div class="input-wrapper text-gray-500/90">
             <textarea id="inputDeskripsi" name="_deskripsi" class="input scrollbar-custom py-2.5 px-3 font-text text-sm w-full h-32 bg-primary border border-solid border-gray-500/90 rounded-md resize-none focus:outline-none" placeholder="Jelaskan deskripsi dari pengajuan anda, Max: 300 karakter." aria-label="Masukkan Deskripsi Pengajuan" data-error-message-id="errorInputDeskripsi" autocomplete="off"></textarea>
-            <span class="font-text mt-1 mr-2.5 block text-right text-xs">Total: <span id="wordCount">0</span> karakter</span>
+            <span class="font-text mt-1 mr-2.5 block text-right text-xs">Total: <span id="wordCountDeskripsi">0</span> karakter</span>
         </div>
     </div>
 </section>
