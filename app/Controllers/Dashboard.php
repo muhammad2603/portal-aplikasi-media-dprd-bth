@@ -3,6 +3,7 @@
 namespace App\Controllers;
 // use controller from codeigniter
 use CodeIgniter\Controller;
+use App\Models\Pengajuan;
 // load helper cookie
 helper("cookie");
 // @class
@@ -10,10 +11,14 @@ class Dashboard extends Controller
 {
     protected $role;
     protected $pages_dashboard = "pages/dashboard";
+    protected $pengajuanModel;
+    protected $user_id;
     // @constructor
     public function __construct()
     {
-        $this->role = session()->get("role");
+        $this->role             = session()->get("role");
+        $this->pengajuanModel   = new Pengajuan();
+        $this->user_id          = session()->get("userId");
     }
     // @method: home
     public function home(): string
@@ -43,10 +48,12 @@ class Dashboard extends Controller
     // @method: riwayat pengajuan
     public function riwayatPengajuan(): string
     {
+        ["total_by_status" => $total_riwayat_pengajuan] = $this->pengajuanModel->getTotalPengajuan($this->user_id);
         // @data
         $data_page = [
             "navigation" => "Riwayat Pengajuan",
             "subtitle" => $this->role === "User" ? "Buat pengajuan baru" : "Kelola pengajuan yang telah diproses",
+            "riwayat_pengajuan" => $total_riwayat_pengajuan,
         ];
         // @return: view home by role
         return view("$this->pages_dashboard/" . $this->role . "/riwayat_pengajuan", $data_page);
