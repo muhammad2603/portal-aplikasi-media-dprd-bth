@@ -30,7 +30,7 @@ const inputsValidator = [
                 },
                 {
                     method: "isLongValue",
-                    param: 50,
+                    param: 255,
                     errorMessage: "Judul Pengajuan terlalu panjang.",
                     isNegate: false
                 },
@@ -115,8 +115,8 @@ const C_Modal = new Modal();
 const allowedExtensions = ["image/jpeg", "image/png", "image/webp"];
 document.addEventListener("DOMContentLoaded", () => {
     const inputsEl = document.querySelectorAll('.input');
-    const textarea = document.querySelector('textarea');
-    const wordCount = document.getElementById('wordCount');
+    const textarea = document.getElementById("inputDeskripsi");
+    const wordCount = document.getElementById('wordCountDeskripsi');
     const lampiranInput = document.getElementById('lampiran');
     const lampiranPreview = document.getElementById("lampiranPreview");
     const lampiranLabel = document.getElementById("lampiranLabel");
@@ -190,13 +190,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const contentModal = document.querySelector("#confirm .modal-content > article");
     const btnConfirm = document.getElementById("btnConfirm");
     const btnCloseModal = document.getElementById("btnCloseModal");
-    // payloads untuk request
-    let payloads;
     // @event
     btnCloseModal.addEventListener("click", () => C_Modal.closeModal(modalContainer, modalParent))
     // @event
     btnSubmit.addEventListener("click", function () {
-
         let isValid = true;
         // @for
         // @note: jika bisa, lakukan refactoring dengan membungkuskan eksekusi kode looping kedalam function
@@ -236,15 +233,37 @@ document.addEventListener("DOMContentLoaded", () => {
             true
         )
     });
+    const tokenCsrfMeta = document.querySelector("meta[name=X-CSRF-TOKEN]").getAttribute("content");
     // @event
     btnConfirm.addEventListener("click", () => {
-        payloads = {
-            judul: document.getElementById("judulPengajuan").value,
-            url: document.getElementById("urlBerita").value,
-            tanggalPublikasi: document.getElementById("tanggalPublikasi").value,
-            deskripsi: document.getElementById("deskripsi").value,
-            lampiran: lampiranInput.files[0] ?? null
-        };
-        /** Lanjutkan pengiriman data ke Database */
+        const is_lampiran_exist = lampiranInput.files[0];
+        const formData = new FormData();
+        formData.append("judul", document.getElementById("judulPengajuan").value)
+        formData.append("url", document.getElementById("urlBerita").value)
+        formData.append("tanggalPublikasi", document.getElementById("tanggalPublikasi").value)
+        formData.append("deskripsi", textarea.value)
+        if (is_lampiran_exist) {
+            formData.append("lampiran", lampiranInput.files[0])
+        }
+        fetch('/dashboard/tambah-pengajuan', {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": tokenCsrfMeta,
+            },
+            body: formData,
+        })
+            .then(resp => resp.json())
+            .then(data => {
+                const { status, message } = data;
+                if (status === 200) {
+                    alert(message)
+                    window.location.reload()
+                } else {
+                    alert(message)
+                }
+            })
+            .finally(() => {
+                C_Modal.closeModal(modalContainer, modalParent, btnConfirm)
+            })
     })
 })
