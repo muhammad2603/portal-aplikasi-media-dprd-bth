@@ -12,7 +12,7 @@ class Pengajuan extends Model
     protected $useAutoIncrement = true;
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ["judul", "url", "deskripsi", "berkas_pendukung", "user_id", "tanggal_publikasi"];
+    protected $allowedFields    = ["judul", "url", "deskripsi", "berkas_pendukung", "user_id", "tanggal_publikasi", "created_at", "updated_at", "deleted_at"];
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
     // Dates
@@ -31,7 +31,7 @@ class Pengajuan extends Model
      * 
      * @param int $user_id
      * 
-     * @return array
+     * @return array ["total" => int, "total_by_status" => array]
      */
     public function getTotalPengajuan(int $user_id): array
     {
