@@ -1263,6 +1263,11 @@ video {
   border-color: rgb(107 114 128 / 0.9);
 }
 
+.border-gray-600 {
+  --tw-border-opacity: 1;
+  border-color: rgb(75 85 99 / var(--tw-border-opacity, 1));
+}
+
 .border-primary {
   --tw-border-opacity: 1;
   border-color: rgb(249 250 251 / var(--tw-border-opacity, 1));
@@ -1709,6 +1714,11 @@ video {
 
 .text-gray-500\/90 {
   color: rgb(107 114 128 / 0.9);
+}
+
+.text-gray-600 {
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity, 1));
 }
 
 .text-green {
