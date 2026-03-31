@@ -47,6 +47,8 @@ class Modal {
     }
     // @method: modal informasi
     setInformationModal(elementsObject, dataObject) {
+        const { status } = dataObject;
+        const setMessageConfirmedStatus = dataObject.confirmedBy !== "null" ? `Pengajuan ${status === "Perbaikan" ? "direvisi" : status.toLowerCase()} oleh Admin ${dataObject.confirmedBy} pada tanggal ${dataObject.confirmedDate}.` : "Pengajuan belum dikonfirmasi oleh Admin.";
         elementsObject.judulInfoElement.textContent = dataObject.judul;
         elementsObject.statusInfoElement.textContent = dataObject.status;
         elementsObject.deskripsiInfoElement.textContent = dataObject.deskripsi;
@@ -54,8 +56,7 @@ class Modal {
         elementsObject.tanggalUploadInfoElement.textContent = dataObject.tanggalUpload;
         elementsObject.urlInfoElement.textContent = dataObject.url;
         elementsObject.revisiInfoElement.textContent = dataObject.revisiCount;
-        elementsObject.confirmedByInfoElement.textContent = dataObject.confirmedBy;
-        elementsObject.confirmedDateInfoElement.textContent = dataObject.confirmedDate;
+        elementsObject.confirmedStatus.textContent = setMessageConfirmedStatus;
         classManipulation(elementsObject.modalContainerElement).remove("invisible")
         classManipulation(elementsObject.modalContainerElement).remove("opacity-0")
         classManipulation(elementsObject.modalContainerElement).add("visible")
