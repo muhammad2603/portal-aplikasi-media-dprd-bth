@@ -17,12 +17,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const tanggalUpload = document.getElementById("tanggalUpload");
     const url = document.getElementById("url");
     const revisi = document.getElementById("revisi");
-    const confirmedBy = document.getElementById("confirmedBy");
-    const confirmedDate = document.getElementById("confirmedDate");
-    const inputJudul = document.getElementById("inputJudul");
-    const inputUrl = document.getElementById("inputUrl");
-    const inputTanggalPublikasi = document.getElementById("inputTanggalPublikasi");
-    const inputDeskripsi = document.getElementById("inputDeskripsi");
+    const confirmedStatus = document.getElementById("confirmedStatus");
+    const inputJudul = document.getElementById("updateJudul");
+    const inputUrl = document.getElementById("updateUrl");
+    const inputTanggalPublikasi = document.getElementById("updateTanggalPublikasi");
+    const inputDeskripsi = document.getElementById("updateDeskripsi");
     const modalElementsObject = {
         modalContainerElement: modals,
         modalParentElement: modalParent
@@ -44,8 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 tanggalUploadInfoElement: tanggalUpload,
                 mediaInfoElement: media,
                 revisiInfoElement: revisi,
-                confirmedByInfoElement: confirmedBy,
-                confirmedDateInfoElement: confirmedDate
+                confirmedStatus: confirmedStatus
             }
             C_Modal.setInformationModal(elementsObject, dataPengajuanObj)
         })
