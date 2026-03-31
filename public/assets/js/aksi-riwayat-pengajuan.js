@@ -1,7 +1,5 @@
 import { Modal } from "./modal-class.js";
-
 const C_Modal = new Modal();
-
 document.addEventListener("DOMContentLoaded", () => {
     const listRiwayatPengajuan = document.getElementById("listRiwayatPengajuan");
     const btnSeeDetails = document.querySelectorAll(".btn-see-details");
