@@ -45,11 +45,8 @@ helper("cookie");
                     <article class="py-5 px-4 border-[1.5px] border-solid border-gray-200 rounded-md shadow-sm">
                         <div class="top flex items-center gap-4">
                             <h3 class="text-base" id="judul"></h3>
-                            <span class="py-1 px-3 flex items-center gap-1 bg-green-100/80 font-semibold text-green-600 text-xs rounded-full">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                </svg>
-                                <span class="font-text" id="status"></span>
+                            <span class="py-1 px-3 flex items-center gap-1 font-semibold bg-primary border border-solid border-gray-600 text-xs rounded-full">
+                                <span class="font-text text-gray-600" id="status"></span>
                             </span>
                         </div>
                         <div class="deskripsi mt-2 text-sm text-gray-500/90">
@@ -73,7 +70,7 @@ helper("cookie");
                             <p class="text-sm font-medium">Informasi Lainnya:</p>
                             <span>URL/Link: <span id="url"></span></span>
                             <span>Pengajuan telah direvisi sebanyak <span id="revisi"></span>x.</span>
-                            <span>Disetujui oleh Admin (<span id="confirmedBy"></span>) pada tanggal <span id="confirmedDate"></span>.</span>
+                            <span id="confirmedStatus"></span>
                         </div>
                     </article>
                 </div>
@@ -104,7 +101,6 @@ helper("cookie");
                         <p class="font-text text-sm font-medium">Deskripsi</p>
                         <span class="error pl-1.5 font-text font-semibold text-xs text-red-500 tracking-wide"></span>
                         <textarea id="updateDeskripsi" class="input scrollbar-custom py-2.5 px-3 font-text text-sm w-full h-32 bg-primary border border-solid border-gray-500/90 rounded-md resize-none focus:outline-none" placeholder="Jelaskan deskripsi dari pengajuan anda, Max: 300 karakter." aria-label="Edit Deskripsi" autocomplete="off"></textarea>
-                        <span class="font-text mt-1 mr-2.5 block text-right text-xs">Total: <span id="wordCount">0</span> karakter</span>
                     </div>
                 </div>
                 <div class="actions mt-3.5 pt-3 flex justify-end gap-2.5 border-t-[1.5px] border-solid border-gray-200">
