@@ -7,9 +7,9 @@ use CodeIgniter\HTTP\ResponseInterface;
 use Config\Database;
 use App\Models\Pengajuan;
 // @class
-class CreatePengajuan extends BaseController
+class API_CRUD extends BaseController
 {
-    public function add()
+    public function createPengajuan()
     {
         $lampiran           = $this->request->getFile("lampiran");
         $rules = [
@@ -71,8 +71,8 @@ class CreatePengajuan extends BaseController
         $tanggalPublikasi   = $this->request->getPost("tanggalPublikasi");
         $deskripsi          = $this->request->getPost("deskripsi");
         $user_id            = session()->get("userId");
-        $targetPath = WRITEPATH . 'uploads';
-        $fullPath = null;
+        $targetPath         = WRITEPATH . 'uploads';
+        $fullPath           = null;
         // @if cek jika judul pengajuan sudah ada didatabase
         if (count($pengajuanModel->select()->where("judul", $judul)->find()) > 0)
             return $this->response
