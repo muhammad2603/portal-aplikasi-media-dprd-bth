@@ -5,8 +5,6 @@ namespace App\Controllers;
 use CodeIgniter\Controller;
 use App\Models\Pengajuan;
 use App\Models\StatusPengajuan;
-use Config\Database;
-
 // load helper cookie
 helper("cookie");
 // @class
