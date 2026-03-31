@@ -4,6 +4,9 @@ namespace App\Controllers;
 // use controller from codeigniter
 use CodeIgniter\Controller;
 use App\Models\Pengajuan;
+use App\Models\StatusPengajuan;
+use Config\Database;
+
 // load helper cookie
 helper("cookie");
 // @class
@@ -12,13 +15,15 @@ class Dashboard extends Controller
     protected $role;
     protected $pages_dashboard = "pages/dashboard";
     protected $pengajuanModel;
+    protected $statusPengajuanModel;
     protected $user_id;
     // @constructor
     public function __construct()
     {
-        $this->role             = session()->get("role");
-        $this->pengajuanModel   = new Pengajuan();
-        $this->user_id          = session()->get("userId");
+        $this->role                     = session()->get("role");
+        $this->pengajuanModel           = new Pengajuan();
+        $this->statusPengajuanModel     = new StatusPengajuan();
+        $this->user_id                  = session()->get("userId");
     }
     // @method: home
     public function home(): string
@@ -48,12 +53,59 @@ class Dashboard extends Controller
     // @method: riwayat pengajuan
     public function riwayatPengajuan(): string
     {
-        ["total_by_status" => $total_riwayat_pengajuan] = $this->pengajuanModel->getTotalPengajuan($this->user_id);
+        /**
+         * WARN:
+         * subquery ini dijadikan penentu atau hasil akhir untuk
+         * mendapatkan komentar pengajuan terakhir berdasarkan status-nya,
+         * nanti akan dipakai di main query
+         */
+        $rsp_comment = "(
+            SELECT
+                t1.id_pengajuan,
+                t1.komentar
+            FROM riwayat_status_pengajuan t1
+            JOIN (
+                SELECT
+                    MAX(id) as max_id
+                FROM riwayat_status_pengajuan
+                WHERE id_status IN (2, 4)
+                GROUP BY id_pengajuan
+            ) t2 ON t1.id = t2.max_id
+        ) rsp_sort_comments";
+        $list_riwayat_pengajuan_by_status = $this->statusPengajuanModel
+            ->select([
+                "pgj.id",
+                "rsp_sort_comments.komentar AS catatan_perbaikan_terakhir",
+                "pgj.judul",
+                "pgj.deskripsi",
+                "pgj.url",
+                "pgj.tanggal_publikasi",
+                "um.nama_media AS media",
+                "status.nama AS status",
+                "COUNT(CASE WHEN rsp.id_status = 2 THEN 1 END) AS total_status_perbaikan",
+                "(CASE WHEN status.nama != 'Pending' THEN adm.username END) AS confirmed_by",
+                "rsp.created_at AS confirmed_date",
+                "pgj.created_at",
+            ])
+            ->join("pengajuan pgj", "pgj.id = sp.id_pengajuan")
+            ->join("riwayat_status_pengajuan rsp", "rsp.id_pengajuan = sp.id_pengajuan")
+            ->join("admin adm", "adm.id = sp.admin_id")
+            ->join("user_meta um", "um.user_id = pgj.user_id")
+            ->join("status", "status.id = sp.id_status")
+            ->join($rsp_comment, "rsp_sort_comments.id_pengajuan = pgj.id", "LEFT")
+            ->groupBy("sp.id_pengajuan")
+            ->where("pgj.user_id", $this->user_id)
+            ->orderBy("pgj.id", "DESC")
+            ->orderBy("pgj.created_at", "DESC")
+            ->findAll();
+        ["total" => $total_pengajuan, "total_by_status" => $total_riwayat_pengajuan] = $this->pengajuanModel->getTotalPengajuan($this->user_id);
         // @data
         $data_page = [
             "navigation" => "Riwayat Pengajuan",
             "subtitle" => $this->role === "User" ? "Buat pengajuan baru" : "Kelola pengajuan yang telah diproses",
             "riwayat_pengajuan" => $total_riwayat_pengajuan,
+            "total_pengajuan" => $total_pengajuan,
+            "list_pengajuan" => $list_riwayat_pengajuan_by_status,
         ];
         // @return: view home by role
         return view("$this->pages_dashboard/" . $this->role . "/riwayat_pengajuan", $data_page);
