@@ -5,7 +5,6 @@ class Modal {
      * class belum sempurna, untuk kedepannya, lakukan:
      * constructor init: gunakan constructor untuk inisialisasi element yang penting, cth: title modal, warning message modal, dsb.
      */
-
     // @method: modal konfirmasi
     setConfirmModal(title, warningMessage, elementsObject, dataObject = false, buttonConfirmStyle = "red", hideContent = false) {
         // @note: dataObject opsional, tidak semua modal butuh dataObject
