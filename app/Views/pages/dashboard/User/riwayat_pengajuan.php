@@ -1,7 +1,7 @@
 <?= $this->extend('pages/dashboard/main') ?>
 <?= $this->section('content') ?>
 <?php
-
+// TODO perbaiki pengambilan pengajuan, jangan ambil pengajuan yang sudah dihapus (soft delete)
 use App\Libraries\TimeService;
 
 $timeService = new TimeService();
