@@ -6,9 +6,11 @@ use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Database;
 use App\Models\Pengajuan;
+use App\Models\StatusPengajuan;
 // @class
 class API_CRUD extends BaseController
 {
+    // TODO perbaiki saat setelah menambah pengajuan, pengajuan juga harus dibuat data status_pengajuan dan riwayat_status_pengajuannya
     public function createPengajuan()
     {
         $lampiran           = $this->request->getFile("lampiran");
@@ -116,5 +118,70 @@ class API_CRUD extends BaseController
             }
             return log_message("error", $e->getMessage());
         }
+    }
+    public function deletePengajuan()
+    {
+        $payload = $this->request->getJSON();
+        $rules = [
+            "idPengajuan" => [
+                "rules" => "required|is_natural_no_zero",
+                "errors" => [
+                    "required" => "Pengajuan gagal terhapus!",
+                    "is_natural_no_zero" => "Pengajuan gagal terhapus!"
+                ]
+            ]
+        ];
+        if (! $this->validate($rules))
+            return $this->response
+                ->setStatusCode(400)
+                ->setJSON([
+                    "status" => 400,
+                    "message" => $this->validator->getErrors(),
+                ]);
+
+        $get_id_pengajuan = (int) $payload->idPengajuan;
+        $get_user_id_from_session = (int) session()->get("userId");
+        // @list status pengajuan yang boleh dihapus
+        $allowedStatus = ["Pending", "Ditolak"];
+        $statusPengajuanModel = new StatusPengajuan();
+        ["status" => $status_pengajuan, "judul" => $judul_pengajuan] = $statusPengajuanModel
+            ->select([
+                "pgj.judul AS judul",
+                "status.nama AS status"
+            ])
+            ->join("status", "status.id = sp.id_status")
+            ->join("pengajuan pgj", "pgj.id = sp.id_pengajuan")
+            ->where("sp.id_pengajuan", $get_id_pengajuan)
+            ->where("pgj.user_id", $get_user_id_from_session)
+            ->first();
+        // @if cek jika pengajuan tidak ditemukan
+        if (! $judul_pengajuan)
+            return $this->response
+                ->setStatusCode(404)
+                ->setJSON([
+                    "status" => 404,
+                    "message" => "Pengajuan tidak ditemukan!",
+                ]);
+        // @if cek jika pengajuan memiliki status yang tidak boleh terhapus
+        if (! in_array($status_pengajuan, $allowedStatus))
+            return $this->response
+                ->setStatusCode(400)
+                ->setJSON([
+                    "status" => 400,
+                    "message" => "Pengajuan gagal terhapus!",
+                ]);
+        $pengajuanModel = new Pengajuan();
+        $db = Database::connect();
+        $db->transBegin();
+        $pengajuanModel->delete($get_id_pengajuan);
+        if ($db->transStatus === false) {
+            log_message("error", "Pengajuan gagal dihapus tanpa sebab.");
+            return $db->transRollback();
+        }
+        $db->transCommit();
+        return $this->response->setJSON([
+            "status" => 200,
+            "message" => "Pengajuan dengan judul '$judul_pengajuan' berhasil terhapus"
+        ]);
     }
 }
