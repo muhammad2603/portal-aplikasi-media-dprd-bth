@@ -72,6 +72,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const deskripsiConfirm = document.getElementById("deskripsiInfoConfirm");
     const mediaConfirm = document.getElementById("mediaInfoConfirm");
     const tanggalUploadConfirm = document.getElementById("tanggalUploadInfoConfirm");
+    const metaCsrfToken = document.querySelector("meta[name=X-CSRF-TOKEN]").getAttribute("content");
+    let deletedIdPengajuan;
     // @loop
     btnDelete.forEach((btn, btnIdx) => {
         // @event
@@ -92,7 +94,26 @@ document.addEventListener("DOMContentLoaded", () => {
                 tanggalUploadElement: tanggalUploadConfirm
             }
             C_Modal.setConfirmModal("Penghapusan", "Apakah anda yakin ingin menghapus pengajuan ini?", elementsObject, dataPengajuanObj)
+            deletedIdPengajuan = this.parentElement.dataset.idPengajuan;
         })
+    })
+    btnConfirm.addEventListener("click", () => {
+        fetch("/dashboard/hapus-pengajuan", {
+            method: "DELETE",
+            headers: {
+                "X-CSRF-TOKEN": metaCsrfToken,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ idPengajuan: deletedIdPengajuan })
+        })
+            .then(success => success.json())
+            .then(resp => {
+                const { status, message } = resp;
+                if (status !== 200) return alert(message);
+                alert(message)
+                window.location.reload();
+            })
+            .catch(e => console.error(e.message));
     })
     // @event
     btnCloseModal.addEventListener("click", () => C_Modal.closeModal(modals, modalParent))
