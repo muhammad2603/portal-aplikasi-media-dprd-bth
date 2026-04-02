@@ -43,9 +43,10 @@ class Pengajuan extends Model
                 SUM(status.nama = 'Perbaikan') AS perbaikan,
                 SUM(status.nama = 'Ditolak') AS ditolak"
             ])
-                ->join("riwayat_status_pengajuan rsp", "rsp.id_pengajuan = pengajuan.id")
-                ->join("status", "status.id = rsp.id_status")
+                ->join("status_pengajuan sp", "sp.id_pengajuan = pengajuan.id")
+                ->join("status", "status.id = sp.id_status")
                 ->where("pengajuan.user_id", $user_id)
+                ->where("pengajuan.deleted_at IS NULL")
                 ->get()
                 ->getRowArray(),
         ];
