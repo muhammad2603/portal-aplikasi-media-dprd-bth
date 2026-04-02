@@ -70,31 +70,31 @@ class Dashboard extends Controller
                 GROUP BY id_pengajuan
             ) t2 ON t1.id = t2.max_id
         ) rsp_sort_comments";
-        $list_riwayat_pengajuan_by_status = $this->statusPengajuanModel
+        $list_riwayat_pengajuan_by_status = $this->pengajuanModel
             ->select([
-                "pgj.id",
+                "pengajuan.id",
                 "rsp_sort_comments.komentar AS catatan_perbaikan_terakhir",
-                "pgj.judul",
-                "pgj.deskripsi",
-                "pgj.url",
-                "pgj.tanggal_publikasi",
+                "pengajuan.judul",
+                "pengajuan.deskripsi",
+                "pengajuan.url",
+                "pengajuan.tanggal_publikasi",
                 "um.nama_media AS media",
                 "status.nama AS status",
                 "COUNT(CASE WHEN rsp.id_status = 2 THEN 1 END) AS total_status_perbaikan",
                 "(CASE WHEN status.nama != 'Pending' THEN adm.username END) AS confirmed_by",
                 "rsp.created_at AS confirmed_date",
-                "pgj.created_at",
+                "pengajuan.created_at",
             ])
-            ->join("pengajuan pgj", "pgj.id = sp.id_pengajuan")
-            ->join("riwayat_status_pengajuan rsp", "rsp.id_pengajuan = sp.id_pengajuan")
+            ->join("riwayat_status_pengajuan rsp", "rsp.id_pengajuan = pengajuan.id")
+            ->join("status_pengajuan sp", "sp.id_pengajuan = pengajuan.id")
             ->join("admin adm", "adm.id = sp.admin_id")
-            ->join("user_meta um", "um.user_id = pgj.user_id")
+            ->join("user_meta um", "um.user_id = pengajuan.user_id")
             ->join("status", "status.id = sp.id_status")
-            ->join($rsp_comment, "rsp_sort_comments.id_pengajuan = pgj.id", "LEFT")
-            ->groupBy("sp.id_pengajuan")
-            ->where("pgj.user_id", $this->user_id)
-            ->orderBy("pgj.id", "DESC")
-            ->orderBy("pgj.created_at", "DESC")
+            ->join($rsp_comment, "rsp_sort_comments.id_pengajuan = pengajuan.id", "LEFT")
+            ->groupBy("pengajuan.id")
+            ->where("pengajuan.user_id", $this->user_id)
+            ->orderBy("pengajuan.id", "DESC")
+            ->orderBy("pengajuan.created_at", "DESC")
             ->findAll();
         ["total" => $total_pengajuan, "total_by_status" => $total_riwayat_pengajuan] = $this->pengajuanModel->getTotalPengajuan($this->user_id);
         // @data
