@@ -87,7 +87,7 @@ class Dashboard extends Controller
             ->join("status", "status.id = sp.id_status")
             ->join("user_meta um", "um.user_id = pengajuan.user_id")
             ->join("riwayat_status_pengajuan rsp", "rsp.id_pengajuan = pengajuan.id")
-            ->join("admin adm", "adm.id = sp.admin_id")
+            ->join("admin adm", "adm.id = sp.admin_id", "LEFT")
             ->join($rsp_last, "rsp_last.id_pengajuan = pengajuan.id", "LEFT")
             ->groupBy("rsp.id_pengajuan")
             ->where("pengajuan.user_id", $this->user_id)
