@@ -21,6 +21,19 @@ class API_CRUD extends BaseController
             ) rsp_child ON rsp_child.last_id = rsp_parent.id
         ) rsp_last";
     // TODO perbaiki saat setelah menambah pengajuan, pengajuan juga harus dibuat data status_pengajuan dan riwayat_status_pengajuannya
+    /**
+     * table dan field yang harus diisi saat menambah pengajuan:
+     * @table status_pengajuan
+     *  @fields
+     *      id_pengajuan
+     *      id_status -> biarkan kosong, defaultnya akan diisi dengan status "Pending" saat pengajuan dibuat
+     *      admin_id -> biarkan kosong, karena pending pengajuan tidak memiliki admin yang mengkonfirmasi
+     * @table riwayat_status_pengajuan
+     *  @fields
+     *      id_pengajuan
+     *      id_status -> biarkan kosong, defaultnya akan diisi dengan status "Pending
+     *      admin_id -> biarkan kosong, karena pending pengajuan tidak memiliki admin yang mengkonfirmasi
+     */
     public function createPengajuan()
     {
         $lampiran           = $this->request->getFile("lampiran");
@@ -76,15 +89,16 @@ class API_CRUD extends BaseController
                 "message" => $this->validator->getErrors()
             ]);
         }
-        $db                 = Database::connect();
-        $pengajuanModel     = new Pengajuan();
-        $judul              = $this->request->getPost("judul");
-        $url                = $this->request->getPost("url");
-        $tanggalPublikasi   = $this->request->getPost("tanggalPublikasi");
-        $deskripsi          = $this->request->getPost("deskripsi");
-        $user_id            = session()->get("userId");
-        $targetPath         = WRITEPATH . 'uploads';
-        $fullPath           = null;
+        $db                     = Database::connect();
+        $pengajuanModel         = new Pengajuan();
+        $statusPengajuanModel   = new StatusPengajuan();
+        $judul                  = $this->request->getPost("judul");
+        $url                    = $this->request->getPost("url");
+        $tanggalPublikasi       = $this->request->getPost("tanggalPublikasi");
+        $deskripsi              = $this->request->getPost("deskripsi");
+        $user_id                = session()->get("userId");
+        $targetPath             = WRITEPATH . 'uploads';
+        $fullPath               = null;
         // @if cek jika judul pengajuan sudah ada didatabase
         if (count($pengajuanModel->select()->where("judul", $judul)->find()) > 0)
             return $this->response
@@ -112,7 +126,11 @@ class API_CRUD extends BaseController
                     throw new \Exception("Upload file berkas pendukung user gagal!");
                 $pengajuanModel->set("berkas_pendukung", $name);
             }
-            $pengajuanModel->insert();
+            $new_pengajuan_id = $pengajuanModel->insert();
+            $statusPengajuanModel->insert([
+                "id_pengajuan" => $new_pengajuan_id
+            ]);
+            
             if ($db->transStatus() === false) {
                 throw new \Exception("Upload pengajuan user ke database gagal!");
             }
