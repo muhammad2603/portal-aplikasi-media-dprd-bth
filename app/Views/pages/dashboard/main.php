@@ -117,11 +117,8 @@ helper("cookie");
                     <article class="py-5 px-4 border-[1.5px] border-solid border-gray-200 rounded-md shadow-sm">
                         <div class="top flex items-center gap-4">
                             <h3 class="text-base" id="judulInfoConfirm"></h3>
-                            <span class="py-1 px-3 flex items-center gap-1 bg-green-100/80 font-semibold text-green-600 text-xs rounded-full">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                </svg>
-                                <span class="font-text" id="statusInfoConfirm"></span>
+                            <span class="py-1 px-3 flex items-center gap-1 font-semibold bg-primary border border-solid border-gray-600 text-xs rounded-full">
+                                <span class="font-text text-gray-600" id="statusInfoConfirm"></span>
                             </span>
                         </div>
                         <div class="deskripsi mt-2 text-sm text-gray-500/90">
