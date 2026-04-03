@@ -63,7 +63,7 @@ class Dashboard extends Controller
                 SELECT
                     MAX(id) AS last_id
                 FROM riwayat_status_pengajuan
-                WHERE id_status = 2
+                WHERE id_status IN (2, 4)
                 GROUP BY id_pengajuan
             ) rsp_child ON rsp_child.last_id = rsp_parent.id
         ) rsp_last
