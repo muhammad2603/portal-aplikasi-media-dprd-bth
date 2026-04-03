@@ -7,6 +7,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 use Config\Database;
 use App\Models\Pengajuan;
 use App\Models\StatusPengajuan;
+use CodeIgniter\I18n\Time;
 // @class
 class API_CRUD extends BaseController
 {
@@ -20,20 +21,6 @@ class API_CRUD extends BaseController
                 GROUP BY id_pengajuan
             ) rsp_child ON rsp_child.last_id = rsp_parent.id
         ) rsp_last";
-    // TODO perbaiki saat setelah menambah pengajuan, pengajuan juga harus dibuat data status_pengajuan dan riwayat_status_pengajuannya
-    /**
-     * table dan field yang harus diisi saat menambah pengajuan:
-     * @table status_pengajuan
-     *  @fields
-     *      id_pengajuan
-     *      id_status -> biarkan kosong, defaultnya akan diisi dengan status "Pending" saat pengajuan dibuat
-     *      admin_id -> biarkan kosong, karena pending pengajuan tidak memiliki admin yang mengkonfirmasi
-     * @table riwayat_status_pengajuan
-     *  @fields
-     *      id_pengajuan
-     *      id_status -> biarkan kosong, defaultnya akan diisi dengan status "Pending
-     *      admin_id -> biarkan kosong, karena pending pengajuan tidak memiliki admin yang mengkonfirmasi
-     */
     public function createPengajuan()
     {
         $lampiran           = $this->request->getFile("lampiran");
@@ -109,13 +96,14 @@ class API_CRUD extends BaseController
                 ]);
         $db->transBegin();
         try {
-            $pengajuanModel
+            $data_pengajuan = $db->table("pengajuan")
                 ->set([
                     "judul" => $judul,
                     "url" => $url,
                     "deskripsi" => $deskripsi,
                     "user_id" => $user_id,
-                    "tanggal_publikasi" => $tanggalPublikasi
+                    "tanggal_publikasi" => $tanggalPublikasi,
+                    "created_at" => Time::now(),
                 ]);
             // @if cek jika lampiran tersedia dan lampiran valid dan lampiran belum dipindahkan
             if ($lampiran !== null && ($lampiran->isValid() && ! $lampiran->hasMoved())) {
@@ -124,13 +112,12 @@ class API_CRUD extends BaseController
                 $move_uploaded_file = $lampiran->move($targetPath, $name);
                 if (! $move_uploaded_file)
                     throw new \Exception("Upload file berkas pendukung user gagal!");
-                $pengajuanModel->set("berkas_pendukung", $name);
+                $data_pengajuan->set("berkas_pendukung", $name);
             }
-            $new_pengajuan_id = $pengajuanModel->insert();
-            $statusPengajuanModel->insert([
-                "id_pengajuan" => $new_pengajuan_id
-            ]);
-
+            $data_pengajuan->insert();
+            $insert_id = $db->insertID();
+            $db->table("status_pengajuan")->insert(["id_pengajuan" => $insert_id]);
+            $db->table("riwayat_status_pengajuan")->insert(["id_pengajuan" => $insert_id, "created_at" => Time::now()]);
             if ($db->transStatus() === false) {
                 throw new \Exception("Upload pengajuan user ke database gagal!");
             }
