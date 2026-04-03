@@ -78,9 +78,9 @@ class Dashboard extends Controller
                 "um.nama_media AS media",
                 "status.nama AS status",
                 "rsp_last.komentar AS catatan_perbaikan_terakhir",
-                "COUNT(CASE WHEN rsp.id_status = 2 THEN 1 END) AS total_status_perbaikan",
+                "COUNT(CASE WHEN rsp.id_status = 2 THEN 1 END) AS total_perbaikan",
                 "(CASE WHEN status.nama != 'Pending' THEN adm.username END) AS confirmed_by",
-                "rsp_last.created_at AS confirmed_date",
+                "rsp_last.created_at AS last_confirmed_date",
                 "pengajuan.created_at",
             ])
             ->join("status_pengajuan sp", "sp.id_pengajuan = pengajuan.id")
