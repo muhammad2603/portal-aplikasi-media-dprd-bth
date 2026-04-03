@@ -1,5 +1,6 @@
 import { Modal } from "./modal-class.js";
 const C_Modal = new Modal();
+let deletedIdPengajuan = null;
 document.addEventListener("DOMContentLoaded", () => {
     const listRiwayatPengajuan = document.getElementById("listRiwayatPengajuan");
     const btnSeeDetails = document.querySelectorAll(".btn-see-details");
@@ -25,31 +26,26 @@ document.addEventListener("DOMContentLoaded", () => {
         modalContainerElement: modals,
         modalParentElement: modalParent
     }
-    searchInput.addEventListener("change", function () {
-        const keyword = this.value.toLowerCase();
-        fetch("/dashboard/search-pengajuan", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": document.querySelector("meta[name=X-CSRF-TOKEN]").getAttribute("content")
-            },
-            body: JSON.stringify({ keyword })
-        })
-            .then(resp => resp.json())
-            .then(resp => {
-                const { status, message, data_view } = resp;
-                if (status !== 200) return alert(message);
-                listRiwayatPengajuan.innerHTML = data_view
-            })
-            .catch(e => console.error(e.message))
-    })
-    // @loop
-    btnSeeDetails.forEach((btn, btnIdx) => {
-        // @event
-        btn.addEventListener("click", listRiwayatPengajuan, function () {
-            const dataPengajuanObj = JSON.parse(listRiwayatPengajuan.querySelectorAll(`article`)[btnIdx].dataset.metaPengajuan);
-            const dataModal = this.dataset.modal;
-            const modalChildEl = modalParent.querySelector(dataModal);
+    const titleModalConfirm = document.getElementById("titleConfirm");
+    const warnModalConfirmMessage = document.getElementById("warnConfirmMessage");
+    const btnConfirm = document.getElementById("btnConfirm");
+    const judulConfirm = document.getElementById("judulInfoConfirm");
+    const statusConfirm = document.getElementById("statusInfoConfirm");
+    const deskripsiConfirm = document.getElementById("deskripsiInfoConfirm");
+    const mediaConfirm = document.getElementById("mediaInfoConfirm");
+    const tanggalUploadConfirm = document.getElementById("tanggalUploadInfoConfirm");
+    const metaCsrfToken = document.querySelector("meta[name=X-CSRF-TOKEN]").getAttribute("content");
+    listRiwayatPengajuan.addEventListener("click", e => {
+        const btnSeeDetails = e.target.closest("button.btn-see-details");
+        const btnEdit = e.target.closest("button.btn-edit");
+        const btnDelete = e.target.closest("button.btn-delete");
+        // @if jika yang di klik bukan btnSeeDetails, btnEdit, dan btnDelete maka return
+        if (!btnSeeDetails && !btnEdit && !btnDelete) return;
+        const currPengajuan = e.target.closest("article");
+        const dataPengajuanObj = JSON.parse(currPengajuan.dataset.metaPengajuan);
+        const dataModal = btnSeeDetails ? btnSeeDetails.dataset.modal : btnEdit ? btnEdit.dataset.modal : btnDelete.dataset.modal;
+        const modalChildEl = modalParent.querySelector(dataModal);
+        if (dataModal === "#informations") {
             const elementsObject = {
                 ...modalElementsObject,
                 modalChildElement: modalChildEl,
@@ -63,46 +59,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 confirmedStatus: confirmedStatus
             }
             C_Modal.setInformationModal(elementsObject, dataPengajuanObj)
-        })
-    })
-    // @loop
-    btnEdit.forEach((btn, btnIdx) => {
-        // @event
-        btn.addEventListener("click", function () {
-            const dataPengajuanObj = JSON.parse(listRiwayatPengajuan.querySelectorAll(`article`)[btnIdx].dataset.metaPengajuan);
-            const dataModal = this.dataset.modal;
-            const modalChild = modalParent.querySelector(dataModal);
+        } else if (dataModal === "#edit") {
             const elementsObject = {
                 ...modalElementsObject,
-                modalChildElement: modalChild,
+                modalChildElement: modalChildEl,
                 inputJudul: inputJudul,
                 inputUrl: inputUrl,
                 inputTanggalPublikasi: inputTanggalPublikasi,
-                inputDeskripsi: inputDeskripsi,
+                inputDeskripsi: inputDeskripsi
             }
             C_Modal.setEditModal(elementsObject, dataPengajuanObj)
-        })
-    })
-    const titleModalConfirm = document.getElementById("titleConfirm");
-    const warnModalConfirmMessage = document.getElementById("warnConfirmMessage");
-    const btnConfirm = document.getElementById("btnConfirm");
-    const judulConfirm = document.getElementById("judulInfoConfirm");
-    const statusConfirm = document.getElementById("statusInfoConfirm");
-    const deskripsiConfirm = document.getElementById("deskripsiInfoConfirm");
-    const mediaConfirm = document.getElementById("mediaInfoConfirm");
-    const tanggalUploadConfirm = document.getElementById("tanggalUploadInfoConfirm");
-    const metaCsrfToken = document.querySelector("meta[name=X-CSRF-TOKEN]").getAttribute("content");
-    let deletedIdPengajuan;
-    // @loop
-    btnDelete.forEach((btn, btnIdx) => {
-        // @event
-        btn.addEventListener("click", function () {
-            const dataPengajuanObj = JSON.parse(listRiwayatPengajuan.querySelectorAll(`article`)[btnIdx].dataset.metaPengajuan);
-            const dataModal = this.dataset.modal;
-            const modalChild = modalParent.querySelector(dataModal);
+        } else if (dataModal === "#confirm") {
             const elementsObject = {
                 ...modalElementsObject,
-                modalChildElement: modalChild,
+                modalChildElement: modalChildEl,
                 buttonConfirm: btnConfirm,
                 titleElement: titleModalConfirm,
                 warningMessageElement: warnModalConfirmMessage,
@@ -113,8 +83,31 @@ document.addEventListener("DOMContentLoaded", () => {
                 tanggalUploadElement: tanggalUploadConfirm
             }
             C_Modal.setConfirmModal("Penghapusan", "Apakah anda yakin ingin menghapus pengajuan ini?", elementsObject, dataPengajuanObj)
-            deletedIdPengajuan = this.parentElement.dataset.idPengajuan;
+            const idPengajuanForDelete = btnDelete ? btnDelete.parentElement.dataset.idPengajuan : null;
+            deletedIdPengajuan = idPengajuanForDelete;
+        }
+    })
+    searchInput.addEventListener("change", function () {
+        const keyword = this.value.toLowerCase();
+        fetch("/dashboard/search-pengajuan", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": document.querySelector("meta[name=X-CSRF-TOKEN]").getAttribute("content")
+            },
+            body: JSON.stringify({ keyword })
         })
+            .then(resp => resp.json())
+            .then(resp => {
+                const { status, message, total_pengajuan, data_view } = resp;
+                if (status !== 200) return alert(message);
+                if (total_pengajuan === 0)
+                    return listRiwayatPengajuan.innerHTML = `<div class="informasi-pengajuan py-3 px-4 bg-amber-100/80 text-amber-600 rounded-md">
+                        <p class="font-semibold text-sm">Tidak ada pengajuan yang ditemukan.</p>
+                    </div>`;
+                listRiwayatPengajuan.innerHTML = data_view;
+            })
+            .catch(e => console.error(e.message))
     })
     btnConfirm.addEventListener("click", () => {
         fetch("/dashboard/hapus-pengajuan", {
