@@ -20,14 +20,33 @@ document.addEventListener("DOMContentLoaded", () => {
     const inputUrl = document.getElementById("updateUrl");
     const inputTanggalPublikasi = document.getElementById("updateTanggalPublikasi");
     const inputDeskripsi = document.getElementById("updateDeskripsi");
+    const searchInput = document.getElementById("searchInput");
     const modalElementsObject = {
         modalContainerElement: modals,
         modalParentElement: modalParent
     }
+    searchInput.addEventListener("change", function () {
+        const keyword = this.value.toLowerCase();
+        fetch("/dashboard/search-pengajuan", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": document.querySelector("meta[name=X-CSRF-TOKEN]").getAttribute("content")
+            },
+            body: JSON.stringify({ keyword })
+        })
+            .then(resp => resp.json())
+            .then(resp => {
+                const { status, message, data_view } = resp;
+                if (status !== 200) return alert(message);
+                listRiwayatPengajuan.innerHTML = data_view
+            })
+            .catch(e => console.error(e.message))
+    })
     // @loop
     btnSeeDetails.forEach((btn, btnIdx) => {
         // @event
-        btn.addEventListener("click", function () {
+        btn.addEventListener("click", listRiwayatPengajuan, function () {
             const dataPengajuanObj = JSON.parse(listRiwayatPengajuan.querySelectorAll(`article`)[btnIdx].dataset.metaPengajuan);
             const dataModal = this.dataset.modal;
             const modalChildEl = modalParent.querySelector(dataModal);
