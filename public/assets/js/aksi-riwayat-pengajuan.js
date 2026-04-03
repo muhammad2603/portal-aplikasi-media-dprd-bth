@@ -3,9 +3,6 @@ const C_Modal = new Modal();
 let deletedIdPengajuan = null;
 document.addEventListener("DOMContentLoaded", () => {
     const listRiwayatPengajuan = document.getElementById("listRiwayatPengajuan");
-    const btnSeeDetails = document.querySelectorAll(".btn-see-details");
-    const btnEdit = document.querySelectorAll(".btn-edit");
-    const btnDelete = document.querySelectorAll(".btn-delete");
     const modals = document.getElementById("modals");
     const modalParent = document.getElementById("modalParent");
     const btnCloseModal = document.getElementById("btnCloseModal");
@@ -126,6 +123,29 @@ document.addEventListener("DOMContentLoaded", () => {
                 window.location.reload();
             })
             .catch(e => console.error(e.message));
+    })
+    const filterSelect = document.getElementById("filterSelect");
+    filterSelect.addEventListener("click", e => {
+        searchInput.value = "";
+        const filterBy = e.target.closest("button.filter-option").dataset.filterBy;
+        fetch("/dashboard/filter-pengajuan?filterBy=" + filterBy, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-CSRF-TOKEN": metaCsrfToken
+            }
+        })
+            .then(resp => resp.json())
+            .then(resp => {
+                const { status, message, data_view, total_pengajuan } = resp;
+                if (status !== 200) return alert(message);
+                if (total_pengajuan === 0)
+                    return listRiwayatPengajuan.innerHTML = `<div class="informasi-pengajuan py-3 px-4 bg-amber-100/80 text-amber-600 rounded-md">
+                        <p class="font-semibold text-sm">Tidak ada pengajuan yang ditemukan.</p>
+                    </div>`;
+                listRiwayatPengajuan.innerHTML = data_view;
+            })
+            .catch(e => console.error(e.message))
     })
     // @event
     btnCloseModal.addEventListener("click", () => C_Modal.closeModal(modals, modalParent))
