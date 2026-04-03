@@ -56,8 +56,7 @@ $routes->group('', ["filter" => VerifiedFilter::class], function ($routes) {
     $routes->get('/dashboard/pengajuan', 'Dashboard::pengajuan');
     $routes->post('/dashboard/tambah-pengajuan', 'API_CRUD::createPengajuan');
     $routes->delete('/dashboard/hapus-pengajuan', 'API_CRUD::deletePengajuan');
-    // TODO ubah method search-pengajuan jadi GET, dan ubah cara pengiriman data keyword dari body ke query parameter
-    $routes->post('/dashboard/search-pengajuan', 'API_CRUD::searchPengajuan');
+    $routes->get('/dashboard/search-pengajuan', 'API_CRUD::searchPengajuan');
     $routes->get('/dashboard/filter-pengajuan', 'API_CRUD::filterPengajuan');
     // @GET dashboard/riwayat-pengajuan
     $routes->get('/dashboard/riwayat-pengajuan', 'Dashboard::riwayatPengajuan');

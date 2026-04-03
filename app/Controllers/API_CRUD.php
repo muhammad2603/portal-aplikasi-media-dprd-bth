@@ -195,11 +195,9 @@ class API_CRUD extends BaseController
             "message" => "Pengajuan dengan judul '$judul_pengajuan' berhasil terhapus"
         ]);
     }
-    // TODO buat template untuk menampilkan data pengajuan yang akan digunakan saat mencari pengajuan dihalaman riwayat pengajuan
-    // TODO ubah cara pengambilan payload keyword dari body ke query parameter karena method search seharusnya menggunakan method GET, bukan POST
     public function searchPengajuan()
     {
-        $keyword = $this->request->getJSON()->keyword ?? "Dinas";
+        $keyword = $this->request->getGet("keyword") ?? "";
         $pengajuanModel = new Pengajuan();
         $user_id = session()->get("userId");
         $search_pengajuan = $pengajuanModel

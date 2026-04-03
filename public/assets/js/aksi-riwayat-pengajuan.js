@@ -86,13 +86,12 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     searchInput.addEventListener("change", function () {
         const keyword = this.value.toLowerCase();
-        fetch("/dashboard/search-pengajuan", {
-            method: "POST",
+        fetch(`/dashboard/search-pengajuan?keyword=${encodeURIComponent(keyword)}`, {
+            method: "GET",
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "application/x-www-form-urlencoded",
                 "X-CSRF-TOKEN": document.querySelector("meta[name=X-CSRF-TOKEN]").getAttribute("content")
-            },
-            body: JSON.stringify({ keyword })
+            }
         })
             .then(resp => resp.json())
             .then(resp => {
