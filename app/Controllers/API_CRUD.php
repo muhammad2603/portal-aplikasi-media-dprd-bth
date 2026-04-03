@@ -130,7 +130,7 @@ class API_CRUD extends BaseController
             $statusPengajuanModel->insert([
                 "id_pengajuan" => $new_pengajuan_id
             ]);
-            
+
             if ($db->transStatus() === false) {
                 throw new \Exception("Upload pengajuan user ke database gagal!");
             }
@@ -248,7 +248,6 @@ class API_CRUD extends BaseController
         return $this->response->setJSON([
             "status" => 200,
             "message" => "Pengajuan ditemukan",
-            "total_pengajuan" => count($search_pengajuan),
             "data_view" => view("components/data_pengajuan", ["pengajuan" => $search_pengajuan]),
         ]);
     }
@@ -297,7 +296,6 @@ class API_CRUD extends BaseController
         return $this->response->setJSON([
             "status" => 200,
             "message" => "Filter pengajuan berhasil",
-            "total_pengajuan" => count($result),
             "data_view" => view("components/data_pengajuan", ["pengajuan" => $result]),
         ]);
     }

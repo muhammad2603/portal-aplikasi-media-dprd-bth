@@ -95,12 +95,8 @@ document.addEventListener("DOMContentLoaded", () => {
         })
             .then(resp => resp.json())
             .then(resp => {
-                const { status, message, total_pengajuan, data_view } = resp;
+                const { status, message, data_view } = resp;
                 if (status !== 200) return alert(message);
-                if (total_pengajuan === 0)
-                    return listRiwayatPengajuan.innerHTML = `<div class="informasi-pengajuan py-3 px-4 bg-amber-100/80 text-amber-600 rounded-md">
-                        <p class="font-semibold text-sm">Tidak ada pengajuan yang ditemukan.</p>
-                    </div>`;
                 listRiwayatPengajuan.innerHTML = data_view;
             })
             .catch(e => console.error(e.message))
@@ -136,12 +132,8 @@ document.addEventListener("DOMContentLoaded", () => {
         })
             .then(resp => resp.json())
             .then(resp => {
-                const { status, message, data_view, total_pengajuan } = resp;
+                const { status, message, data_view } = resp;
                 if (status !== 200) return alert(message);
-                if (total_pengajuan === 0)
-                    return listRiwayatPengajuan.innerHTML = `<div class="informasi-pengajuan py-3 px-4 bg-amber-100/80 text-amber-600 rounded-md">
-                        <p class="font-semibold text-sm">Tidak ada pengajuan yang ditemukan.</p>
-                    </div>`;
                 listRiwayatPengajuan.innerHTML = data_view;
             })
             .catch(e => console.error(e.message))
