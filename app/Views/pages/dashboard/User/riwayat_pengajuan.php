@@ -1,7 +1,7 @@
 <?= $this->extend('pages/dashboard/main') ?>
 <?= $this->section('content') ?>
 <?php
-// TODO perbaiki pengambilan pengajuan, jangan ambil pengajuan yang sudah dihapus (soft delete)
+
 use App\Libraries\TimeService;
 
 $timeService = new TimeService();
@@ -70,7 +70,7 @@ $timeService = new TimeService();
                 <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
             </svg>
             <!-- Input:text search -->
-            <input type="text" name="_search" id="search" class="py-2.5 px-10 w-full bg-gray-100 focus:outline-none" placeholder="Cari judul pengajuan anda" aria-label="Cari judul pengajuan anda" autocomplete="off" />
+            <input type="text" name="_search" id="searchInput" class="py-2.5 px-10 w-full bg-gray-100 focus:outline-none" placeholder="Cari judul pengajuan anda" aria-label="Cari judul pengajuan anda" autocomplete="off" />
         </div>
     </div>
     <!-- Filter Box wrapper -->
@@ -138,7 +138,7 @@ $timeService = new TimeService();
             $set_icon_by_status = ($pgj["status"] === 'Pending' ? 'amber' : ($pgj["status"] === 'Perbaikan' ? 'indigo' : ($pgj["status"] === 'Disetujui' ? 'green' : 'red')));
             ?>
             <article class="py-5 px-4 border-[1.5px] border-solid border-gray-200 rounded-md shadow-sm"
-                data-meta-pengajuan='{"confirmedBy": "<?= $pgj["confirmed_by"] ?? "null" ?>", "confirmedDate": "<?= $timeService->translateDate($pgj["confirmed_date"]) ?>", "status": "<?= $pgj["status"] ?>", "judul": "<?= $pgj["judul"] ?>", "url": "<?= $pgj["url"] ?>", "tanggalPublikasi": "<?= $pgj["tanggal_publikasi"] ?>", "deskripsi": "<?= $pgj["deskripsi"] ?>", "media": "<?= $pgj["media"] ?>", "revisiCount": "<?= $pgj["total_status_perbaikan"] ?>", "tanggalUpload": "<?= $timeService->translateDate($pgj["created_at"]) ?>"}'>
+                data-meta-pengajuan='{"confirmedBy": "<?= $pgj["confirmed_by"] ?? "null" ?>", "confirmedDate": "<?= $pgj["confirmed_date"] !== null ? $timeService->translateDate($pgj["confirmed_date"]) : "" ?>", "status": "<?= $pgj["status"] ?>", "judul": "<?= $pgj["judul"] ?>", "url": "<?= $pgj["url"] ?>", "tanggalPublikasi": "<?= $pgj["tanggal_publikasi"] ?>", "deskripsi": "<?= $pgj["deskripsi"] ?>", "media": "<?= $pgj["media"] ?>", "revisiCount": "<?= $pgj["total_status_perbaikan"] ?>", "tanggalUpload": "<?= $timeService->translateDate($pgj["created_at"]) ?>"}'>
                 <div class="top flex items-center gap-4">
                     <h3 class="text-base"><?= $pgj["judul"] ?></h3>
                     <span class="py-1 px-3 flex items-center gap-1 bg-<?= $set_icon_by_status ?>-100/80 font-semibold text-<?= $set_icon_by_status ?>-600 text-xs rounded-full">
@@ -199,7 +199,7 @@ $timeService = new TimeService();
                         </span>
                         <span>Edit</span>
                     </button>
-                    <?php if ($pgj["status"] === "Pending"): ?>
+                    <?php if ($pgj["status"] === "Pending" || $pgj["status"] === "Ditolak"): ?>
                         <button type="button" data-modal="#confirm" class="btn-delete font-text ml-auto p-2 flex items-center gap-1.5 font-semibold text-red-600 text-xs border-[1.5px] border-solid border-gray-100 rounded-md transition duration-150 ease-in hover:bg-red-50 hover:border-red-200">
                             <span>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
