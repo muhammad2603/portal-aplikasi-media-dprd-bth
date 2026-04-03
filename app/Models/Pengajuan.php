@@ -38,10 +38,10 @@ class Pengajuan extends Model
         return [
             "total" => $this->select()->where("user_id", $user_id)->countAllResults(),
             "total_by_status" => $this->select([
-                "SUM(status.nama = 'Pending') AS pending,
-                SUM(status.nama = 'Disetujui') AS disetujui,
-                SUM(status.nama = 'Perbaikan') AS perbaikan,
-                SUM(status.nama = 'Ditolak') AS ditolak"
+                "COALESCE(SUM(status.nama = 'Pending'), 0) AS pending,
+                COALESCE(SUM(status.nama = 'Disetujui'), 0) AS disetujui,
+                COALESCE(SUM(status.nama = 'Perbaikan'), 0) AS perbaikan,
+                COALESCE(SUM(status.nama = 'Ditolak'), 0) AS ditolak"
             ])
                 ->join("status_pengajuan sp", "sp.id_pengajuan = pengajuan.id")
                 ->join("status", "status.id = sp.id_status")
@@ -81,7 +81,7 @@ class Pengajuan extends Model
      * 
      * @return array
      */
-    public function getLastSubmitPengajuan(int $user_id): array
+    public function getLastSubmitPengajuan(int $user_id): array|null
     {
         return $this
             ->select(["judul", "created_at"])
