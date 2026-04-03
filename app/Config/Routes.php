@@ -56,6 +56,7 @@ $routes->group('', ["filter" => VerifiedFilter::class], function ($routes) {
     $routes->get('/dashboard/pengajuan', 'Dashboard::pengajuan');
     $routes->post('/dashboard/tambah-pengajuan', 'API_CRUD::createPengajuan');
     $routes->delete('/dashboard/hapus-pengajuan', 'API_CRUD::deletePengajuan');
+    $routes->post('/dashboard/search-pengajuan', 'API_CRUD::searchPengajuan');
     // @GET dashboard/riwayat-pengajuan
     $routes->get('/dashboard/riwayat-pengajuan', 'Dashboard::riwayatPengajuan');
     // @GET dashboard/riwayat-hapus
