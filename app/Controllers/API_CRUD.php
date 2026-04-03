@@ -10,6 +10,16 @@ use App\Models\StatusPengajuan;
 // @class
 class API_CRUD extends BaseController
 {
+    private $rsp_last = "(
+            SELECT id_pengajuan, komentar, id_status, created_at FROM riwayat_status_pengajuan rsp_parent
+            JOIN (
+                SELECT
+                    MAX(id) AS last_id
+                FROM riwayat_status_pengajuan
+                WHERE id_status IN (2, 4)
+                GROUP BY id_pengajuan
+            ) rsp_child ON rsp_child.last_id = rsp_parent.id
+        ) rsp_last";
     // TODO perbaiki saat setelah menambah pengajuan, pengajuan juga harus dibuat data status_pengajuan dan riwayat_status_pengajuannya
     public function createPengajuan()
     {
@@ -186,21 +196,12 @@ class API_CRUD extends BaseController
         ]);
     }
     // TODO buat template untuk menampilkan data pengajuan yang akan digunakan saat mencari pengajuan dihalaman riwayat pengajuan
+    // TODO ubah cara pengambilan payload keyword dari body ke query parameter karena method search seharusnya menggunakan method GET, bukan POST
     public function searchPengajuan()
     {
         $keyword = $this->request->getJSON()->keyword ?? "Dinas";
         $pengajuanModel = new Pengajuan();
         $user_id = session()->get("userId");
-        $rsp_last = "(
-            SELECT id_pengajuan, komentar, created_at FROM riwayat_status_pengajuan rsp_parent
-            JOIN (
-                SELECT
-                    MAX(id) AS last_id
-                FROM riwayat_status_pengajuan
-                WHERE id_status = 2
-                GROUP BY id_pengajuan
-            ) rsp_child ON rsp_child.last_id = rsp_parent.id
-        ) rsp_last";
         $search_pengajuan = $pengajuanModel
             ->select([
                 "pengajuan.id",
@@ -221,7 +222,7 @@ class API_CRUD extends BaseController
             ->join("user_meta um", "um.user_id = pengajuan.user_id")
             ->join("riwayat_status_pengajuan rsp", "rsp.id_pengajuan = pengajuan.id")
             ->join("admin adm", "adm.id = sp.admin_id")
-            ->join($rsp_last, "rsp_last.id_pengajuan = pengajuan.id", "LEFT")
+            ->join($this->rsp_last, "rsp_last.id_pengajuan = pengajuan.id", "LEFT")
             ->groupBy("rsp.id_pengajuan")
             ->where("pengajuan.user_id", $user_id)
             ->like("pengajuan.judul", $keyword)
@@ -233,6 +234,55 @@ class API_CRUD extends BaseController
             "message" => "Pengajuan ditemukan",
             "total_pengajuan" => count($search_pengajuan),
             "data_view" => view("components/data_pengajuan", ["pengajuan" => $search_pengajuan]),
+        ]);
+    }
+    public function filterPengajuan()
+    {
+        $filter_by = $this->request->getGet("filterBy") ?? "Terbaru";
+        // @note: filter yang diizinkan, jika ada status atau jenis filter baru, pastikan untuk menambahkannya ke dalam array $filters_allowed
+        $filters_allowed = ["Terbaru", "Disetujui", "Pending", "Perbaikan", "Ditolak"];
+        if (!in_array($filter_by, $filters_allowed)) {
+            return $this->response->setJSON([
+                "status" => 400,
+                "message" => "Filter tidak diizinkan!"
+            ]);
+        }
+        $pengajuanModel = new Pengajuan();
+        $get_pengajuan_by_filter = $pengajuanModel
+            ->select([
+                "pengajuan.id",
+                "pengajuan.judul",
+                "pengajuan.deskripsi",
+                "pengajuan.url",
+                "pengajuan.tanggal_publikasi",
+                "um.nama_media AS media",
+                "status.nama AS status",
+                "rsp_last.komentar AS catatan_perbaikan_terakhir",
+                "COUNT(CASE WHEN rsp.id_status = 2 THEN 1 END) AS total_perbaikan",
+                "(CASE WHEN status.nama != 'Pending' THEN adm.username END) AS last_confirmed_by",
+                "rsp_last.created_at AS last_confirmed_date",
+                "pengajuan.created_at",
+            ])
+            ->join("status_pengajuan sp", "sp.id_pengajuan = pengajuan.id")
+            ->join("status", "status.id = sp.id_status")
+            ->join("user_meta um", "um.user_id = pengajuan.user_id")
+            ->join("riwayat_status_pengajuan rsp", "rsp.id_pengajuan = pengajuan.id")
+            ->join("admin adm", "adm.id = sp.admin_id")
+            ->join($this->rsp_last, "rsp_last.id_pengajuan = pengajuan.id", "LEFT")
+            ->groupBy("rsp.id_pengajuan")
+            ->where("pengajuan.user_id", session()->get("userId"));
+        $result = match ($filter_by) {
+            "Terbaru" => $get_pengajuan_by_filter->orderBy("pengajuan.id", "DESC")->orderBy("pengajuan.created_at", "DESC")->findAll(),
+            "Disetujui" => $get_pengajuan_by_filter->where("status.nama", "Disetujui")->orderBy("pengajuan.id", "DESC")->orderBy("pengajuan.created_at", "DESC")->findAll(),
+            "Pending" => $get_pengajuan_by_filter->where("status.nama", "Pending")->orderBy("pengajuan.id", "DESC")->orderBy("pengajuan.created_at", "DESC")->findAll(),
+            "Perbaikan" => $get_pengajuan_by_filter->where("status.nama", "Perbaikan")->orderBy("pengajuan.id", "DESC")->orderBy("pengajuan.created_at", "DESC")->findAll(),
+            "Ditolak" => $get_pengajuan_by_filter->where("status.nama", "Ditolak")->orderBy("pengajuan.id", "DESC")->orderBy("pengajuan.created_at", "DESC")->findAll(),
+        };
+        return $this->response->setJSON([
+            "status" => 200,
+            "message" => "Filter pengajuan berhasil",
+            "total_pengajuan" => count($result),
+            "data_view" => view("components/data_pengajuan", ["pengajuan" => $result]),
         ]);
     }
 }
