@@ -57,41 +57,39 @@ class Dashboard extends Controller
          * mendapatkan komentar pengajuan terakhir berdasarkan status-nya,
          * nanti akan dipakai di main query
          */
-        $rsp_comment = "(
-            SELECT
-                t1.id_pengajuan,
-                t1.komentar
-            FROM riwayat_status_pengajuan t1
+        $rsp_last = "(
+            SELECT id_pengajuan, komentar, created_at FROM riwayat_status_pengajuan rsp_parent
             JOIN (
                 SELECT
-                    MAX(id) as max_id
+                    MAX(id) AS last_id
                 FROM riwayat_status_pengajuan
-                WHERE id_status IN (2, 4)
+                WHERE id_status = 2
                 GROUP BY id_pengajuan
-            ) t2 ON t1.id = t2.max_id
-        ) rsp_sort_comments";
+            ) rsp_child ON rsp_child.last_id = rsp_parent.id
+        ) rsp_last
+        ";
         $list_riwayat_pengajuan_by_status = $this->pengajuanModel
             ->select([
                 "pengajuan.id",
-                "rsp_sort_comments.komentar AS catatan_perbaikan_terakhir",
                 "pengajuan.judul",
                 "pengajuan.deskripsi",
                 "pengajuan.url",
                 "pengajuan.tanggal_publikasi",
                 "um.nama_media AS media",
                 "status.nama AS status",
+                "rsp_last.komentar AS catatan_perbaikan_terakhir",
                 "COUNT(CASE WHEN rsp.id_status = 2 THEN 1 END) AS total_status_perbaikan",
                 "(CASE WHEN status.nama != 'Pending' THEN adm.username END) AS confirmed_by",
-                "rsp.created_at AS confirmed_date",
+                "rsp_last.created_at AS confirmed_date",
                 "pengajuan.created_at",
             ])
-            ->join("riwayat_status_pengajuan rsp", "rsp.id_pengajuan = pengajuan.id")
             ->join("status_pengajuan sp", "sp.id_pengajuan = pengajuan.id")
-            ->join("admin adm", "adm.id = sp.admin_id")
-            ->join("user_meta um", "um.user_id = pengajuan.user_id")
             ->join("status", "status.id = sp.id_status")
-            ->join($rsp_comment, "rsp_sort_comments.id_pengajuan = pengajuan.id", "LEFT")
-            ->groupBy("pengajuan.id")
+            ->join("user_meta um", "um.user_id = pengajuan.user_id")
+            ->join("riwayat_status_pengajuan rsp", "rsp.id_pengajuan = pengajuan.id")
+            ->join("admin adm", "adm.id = sp.admin_id")
+            ->join($rsp_last, "rsp_last.id_pengajuan = pengajuan.id", "LEFT")
+            ->groupBy("rsp.id_pengajuan")
             ->where("pengajuan.user_id", $this->user_id)
             ->orderBy("pengajuan.id", "DESC")
             ->orderBy("pengajuan.created_at", "DESC")
