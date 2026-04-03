@@ -119,6 +119,7 @@ class API_CRUD extends BaseController
             return log_message("error", $e->getMessage());
         }
     }
+    // TODO setelah menghapus pengajuan, pastikan berkas pendukung juga ikut terhapus (jika ada)
     public function deletePengajuan()
     {
         $payload = $this->request->getJSON();
@@ -182,6 +183,56 @@ class API_CRUD extends BaseController
         return $this->response->setJSON([
             "status" => 200,
             "message" => "Pengajuan dengan judul '$judul_pengajuan' berhasil terhapus"
+        ]);
+    }
+    // TODO buat template untuk menampilkan data pengajuan yang akan digunakan saat mencari pengajuan dihalaman riwayat pengajuan
+    public function searchPengajuan()
+    {
+        $keyword = $this->request->getJSON()->keyword ?? "Dinas";
+        $pengajuanModel = new Pengajuan();
+        $user_id = session()->get("userId");
+        $rsp_last = "(
+            SELECT id_pengajuan, komentar, created_at FROM riwayat_status_pengajuan rsp_parent
+            JOIN (
+                SELECT
+                    MAX(id) AS last_id
+                FROM riwayat_status_pengajuan
+                WHERE id_status = 2
+                GROUP BY id_pengajuan
+            ) rsp_child ON rsp_child.last_id = rsp_parent.id
+        ) rsp_last";
+        $search_pengajuan = $pengajuanModel
+            ->select([
+                "pengajuan.id",
+                "pengajuan.judul",
+                "pengajuan.deskripsi",
+                "pengajuan.url",
+                "pengajuan.tanggal_publikasi",
+                "um.nama_media AS media",
+                "status.nama AS status",
+                "rsp_last.komentar AS catatan_perbaikan_terakhir",
+                "COUNT(CASE WHEN rsp.id_status = 2 THEN 1 END) AS total_perbaikan",
+                "(CASE WHEN status.nama != 'Pending' THEN adm.username END) AS last_confirmed_by",
+                "rsp_last.created_at AS last_confirmed_date",
+                "pengajuan.created_at",
+            ])
+            ->join("status_pengajuan sp", "sp.id_pengajuan = pengajuan.id")
+            ->join("status", "status.id = sp.id_status")
+            ->join("user_meta um", "um.user_id = pengajuan.user_id")
+            ->join("riwayat_status_pengajuan rsp", "rsp.id_pengajuan = pengajuan.id")
+            ->join("admin adm", "adm.id = sp.admin_id")
+            ->join($rsp_last, "rsp_last.id_pengajuan = pengajuan.id", "LEFT")
+            ->groupBy("rsp.id_pengajuan")
+            ->where("pengajuan.user_id", $user_id)
+            ->like("pengajuan.judul", $keyword)
+            ->orderBy("pengajuan.id", "DESC")
+            ->orderBy("pengajuan.created_at", "DESC")
+            ->findAll();
+        return $this->response->setJSON([
+            "status" => 200,
+            "message" => "Pengajuan ditemukan",
+            "total_pengajuan" => count($search_pengajuan),
+            "data_view" => view("components/data_pengajuan", ["pengajuan" => $search_pengajuan]),
         ]);
     }
 }
