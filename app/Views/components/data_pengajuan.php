@@ -57,6 +57,7 @@
                 </span>
                 <span>Lihat Detail</span>
             </button>
+            <?php if ($pgj["status"] !== "Ditolak"): ?>
             <button type="button" data-modal="#edit" class="btn-edit font-text p-2 flex items-center gap-1.5 font-semibold text-xs border-[1.5px] border-solid border-gray-100 rounded-md transition duration-150 ease-in hover:bg-gray-200">
                 <span>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
@@ -65,6 +66,7 @@
                 </span>
                 <span>Edit</span>
             </button>
+            <?php endif ?>
             <?php if ($pgj["status"] === "Pending" || $pgj["status"] === "Ditolak"): ?>
                 <button type="button" data-modal="#confirm" class="btn-delete font-text ml-auto p-2 flex items-center gap-1.5 font-semibold text-red-600 text-xs border-[1.5px] border-solid border-gray-100 rounded-md transition duration-150 ease-in hover:bg-red-50 hover:border-red-200">
                     <span>
