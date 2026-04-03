@@ -6,8 +6,7 @@ $pengajuanModel = new App\Models\Pengajuan;
 $user_id = session()->get("userId");
 ["total" => $total_pengajuan, "total_by_status" => $total_pengajuan_by_status] = $pengajuanModel->getTotalPengajuan($user_id);
 $get_histories_pengajuan = $pengajuanModel->getLastHistoriesPengajuan($user_id);
-$last_date_submit_pengajuan = $pengajuanModel->getLastSubmitPengajuan($user_id)["created_at"];
-$days_diff_last_pengajuan = abs($timeService->getDifference($last_date_submit_pengajuan)["days"]);
+$last_date_submit_pengajuan = $pengajuanModel->getLastSubmitPengajuan($user_id);
 $histories_pengajuan = $pengajuanModel->getHistoriesIn7Days($user_id);
 ?>
 <!-- Section Cards: informasi Pengajuan -->
@@ -78,7 +77,7 @@ $histories_pengajuan = $pengajuanModel->getHistoriesIn7Days($user_id);
     ]) ?>
 </section>
 <!-- Akhir Section Cards -->
-<?php if ($days_diff_last_pengajuan >= 3): // @if pengajuan terakhir yang disubmit user telah melewati lebih dari 3 hari yang lalu 
+<?php if ($last_date_submit_pengajuan && abs($timeService->getDifference($last_date_submit_pengajuan["created_at"])["days"]) >= 3): // @if pengajuan terakhir yang disubmit user telah melewati lebih dari 3 hari yang lalu 
 ?>
     <!-- Section Remainder -->
     <section class="remainder py-8 px-4 flex flex-col items-center gap-4 bg-white rounded-lg shadow-md">
