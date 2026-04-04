@@ -137,7 +137,7 @@ $timeService = new TimeService();
     <div class="legend">
         <h2 class="text-base">Daftar Riwayat Pengajuan</h2>
         <p class="text-sm text-gray-500/90">Menampilkan <span class="font-semibold text-black"><?= count($list_pengajuan) ?></span> dari <span class="font-semibold text-black"><?= $total_pengajuan ?></span> total pengajuan</p>
-        <p class="text-sm text-gray-500/90">Catatan: Pengajuan bisa dihapus hanya jika statusnya masih Pending.</p>
+        <p class="text-sm text-gray-500/90">Catatan: Pengajuan bisa dihapus hanya jika statusnya masih Pending dan Ditolak.</p>
     </div>
     <!-- List Riwayat Pengajuan -->
     <div id="listRiwayatPengajuan" class="list-riwayat-pengajuan mt-8 flex flex-col gap-4">
