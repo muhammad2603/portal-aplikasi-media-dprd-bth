@@ -60,6 +60,7 @@ $routes->group('', ["filter" => VerifiedFilter::class], function ($routes) {
     $routes->get('/dashboard/filter-pengajuan', 'API_CRUD::filterPengajuan');
     $routes->get('/dashboard/log-aktivitas', 'API_CRUD::userActivities');
     $routes->post('/dashboard/pulihkan-pengajuan', 'API_CRUD::recoveryPengajuan');
+    $routes->delete('/dashboard/hapus-pengajuan-permanen', 'API_CRUD::deletePengajuan');
     // @GET dashboard/riwayat-pengajuan
     $routes->get('/dashboard/riwayat-pengajuan', 'Dashboard::riwayatPengajuan');
     // @GET dashboard/riwayat-hapus
