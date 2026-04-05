@@ -48,6 +48,7 @@ class Pengajuan extends Model
         if ($withDelete) {
             $builder->select("pengajuan.deleted_at");
             $builder->onlyDeleted();
+            $builder->orderBy("pengajuan.deleted_at", "DESC");
         }
         return $builder
             ->join("user_meta um", "um.user_id = pengajuan.user_id")
