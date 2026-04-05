@@ -286,4 +286,16 @@ class API_CRUD extends BaseController
             "data_view" => view("components/data_pengajuan", ["pengajuan" => $result]),
         ]);
     }
+    public function userActivities()
+    {
+        $filter_by = $this->request->getGet("filterBy") ?? "desc";
+        $user_id = session()->get("userId");
+        $userActivitiesModel = new \App\Models\UserActivities();
+        $activityHistories = $userActivitiesModel->getUserActivities($user_id, $filter_by);
+        return $this->response->setJSON([
+            "status" => 200,
+            "message" => "Aktivitas pengguna berhasil diambil",
+            "data_view" => view("components/activities", ["activities" => $activityHistories]),
+        ]);
+    }
 }
