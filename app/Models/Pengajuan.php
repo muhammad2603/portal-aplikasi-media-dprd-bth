@@ -27,6 +27,34 @@ class Pengajuan extends Model
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
     /**
+     * @param int $user_id
+     * @param bool $withDelete opsional, jika ingin mengambil data pengajuan yang sudah dihapus (soft delete)
+     * 
+     * @return array
+     * 
+     * @description jika ingin mengambil semua data pengajuan user,
+     * gunakan method ini dan set parameter $withDelete tergantung kebutuhan
+     */
+    public function getPengajuan(int $user_id, bool $withDelete = false): array
+    {
+        $builder = $this
+            ->select([
+                "pengajuan.id",
+                "pengajuan.judul",
+                "pengajuan.deskripsi",
+                "um.nama_media AS media",
+                "pengajuan.created_at",
+            ]);
+        if ($withDelete) {
+            $builder->select("pengajuan.deleted_at");
+            $builder->onlyDeleted();
+        }
+        return $builder
+            ->join("user_meta um", "um.user_id = pengajuan.user_id")
+            ->where("pengajuan.user_id", $user_id)
+            ->findAll();
+    }
+    /**
      * Mengambil total pengajuan dan total pengajuan berdasarkan statusnya
      * 
      * @param int $user_id
@@ -113,5 +141,23 @@ class Pengajuan extends Model
             ->orderBy("pengajuan.created_at", "DESC")
             ->orderBy("pengajuan.id", "DESC")
             ->findAll(4);
+    }
+    /**
+     * Memulihkan pengajuan yang sudah dihapus (soft delete)
+     * 
+     * @param int $user_id
+     * @param int $pengajuan_id
+     * 
+     * @return bool
+     */
+    public function recoveryPengajuan(int $user_id, int $pengajuan_id): bool
+    {
+        return $this
+            ->set(["deleted_at" => null])
+            ->where([
+                "id" => $pengajuan_id,
+                "user_id" => $user_id
+            ])
+            ->update();
     }
 }

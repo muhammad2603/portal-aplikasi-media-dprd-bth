@@ -8,7 +8,10 @@ use Config\Database;
 use App\Models\Pengajuan;
 use App\Models\StatusPengajuan;
 use CodeIgniter\I18n\Time;
+use CodeIgniter\Session\Handlers\DatabaseHandler;
+
 // @class
+// TODO jangan lupa untuk memberikan limitasi pada semua method agar server tidak kewalahan ketika menerima banyak request
 class API_CRUD extends BaseController
 {
     private $rsp_last = "(
@@ -135,6 +138,7 @@ class API_CRUD extends BaseController
         }
     }
     // TODO setelah menghapus pengajuan, pastikan berkas pendukung juga ikut terhapus (jika ada)
+    // TODO semua jenis dalam penghapusan pengajuan, baik itu soft delete maupun hard delete, dilakukan dimethod ini. pisahkan logicnya dengan private method.
     public function deletePengajuan()
     {
         $payload = $this->request->getJSON();
@@ -296,6 +300,31 @@ class API_CRUD extends BaseController
             "status" => 200,
             "message" => "Aktivitas pengguna berhasil diambil",
             "data_view" => view("components/activities", ["activities" => $activityHistories]),
+        ]);
+    }
+    public function recoveryPengajuan()
+    {
+        $user_id = (int) session()->get("userId");
+        $pengajuan_id = $this->request->getJSON()->pengajuanId;
+        $pengajuanModel = new Pengajuan();
+        $isPengajuanDeleted = $pengajuanModel->onlyDeleted()->find($pengajuan_id);
+        if (! $isPengajuanDeleted) {
+            return $this->response->setStatusCode(404)->setJSON([
+                "status" => 404,
+                "message" => "Pengajuan tidak ditemukan atau tidak dalam kondisi dihapus."
+            ]);
+        }
+        $db = Database::connect();
+        $db->transBegin();
+        $pengajuanModel->recoveryPengajuan($user_id, $pengajuan_id);
+        if ($db->transStatus() === false) {
+            log_message("error", "Pengajuan gagal dipulihkan tanpa sebab.");
+            return $db->transRollback();
+        }
+        $db->transCommit();
+        return $this->response->setJSON([
+            "status" => 200,
+            "message" => "Pengajuan berhasil dipulihkan",
         ]);
     }
 }

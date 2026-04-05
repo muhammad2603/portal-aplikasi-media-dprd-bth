@@ -112,10 +112,12 @@ class Dashboard extends Controller
     // @method: riwayat hapus, method ini dikhususkan untuk User
     public function riwayatHapus(): string
     {
+        $deleted_pengajuan = $this->pengajuanModel->getPengajuan($this->user_id, true);
         // @data
         $data_page = [
             "navigation" => "Riwayat Hapus",
             "subtitle" => "Kelola pengajuan yang terhapus",
+            "deleted_pengajuan" => $deleted_pengajuan
         ];
         // @return: view home by role
         return view("$this->pages_dashboard/" . $this->role . "/riwayat_hapus", $data_page);

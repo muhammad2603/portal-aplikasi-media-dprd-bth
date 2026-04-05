@@ -1,3 +1,4 @@
+<!-- TODO berikan informasi state jika tidak ada aktivitas yang tercatat -->
 <?php foreach ($activities as $activity): ?>
     <?php
     $timeService = new \App\Libraries\TimeService;
