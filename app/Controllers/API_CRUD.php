@@ -127,7 +127,7 @@ class API_CRUD extends BaseController
             $db->transCommit();
             return $this->response->setStatusCode(201)->setJSON([
                 "status" => 201,
-                "message" => "Pengajuan berhasil.",
+                "message" => "Pengajuan berhasil diupload.",
             ]);
         } catch (\Throwable $e) {
             $db->transRollback();
@@ -161,13 +161,16 @@ class API_CRUD extends BaseController
 
         $get_id_pengajuan = (int) $payload->idPengajuan;
         $get_user_id_from_session = (int) session()->get("userId");
+        $is_hard_delete = $payload->isPermanent ?? false;
         // @list status pengajuan yang boleh dihapus
         $allowedStatus = ["Pending", "Ditolak"];
         $statusPengajuanModel = new StatusPengajuan();
-        ["status" => $status_pengajuan, "judul" => $judul_pengajuan] = $statusPengajuanModel
+        ["status" => $status_pengajuan, "judul" => $judul_pengajuan, "berkas_pendukung" => $berkas_pendukung, "deleted_at" => $deleted_at] = $statusPengajuanModel
             ->select([
                 "pgj.judul AS judul",
-                "status.nama AS status"
+                "pgj.berkas_pendukung",
+                "status.nama AS status",
+                "pgj.deleted_at"
             ])
             ->join("status", "status.id = sp.id_status")
             ->join("pengajuan pgj", "pgj.id = sp.id_pengajuan")
@@ -190,18 +193,37 @@ class API_CRUD extends BaseController
                     "status" => 400,
                     "message" => "Pengajuan gagal terhapus!",
                 ]);
+        if ($is_hard_delete && $deleted_at === null) {
+            return $this->response
+                ->setStatusCode(400)
+                ->setJSON([
+                    "status" => 400,
+                    "message" => "Pengajuan gagal dihapus secara permanen karena pengajuan belum dihapus terlebih dahulu.",
+                ]);
+        }
         $pengajuanModel = new Pengajuan();
         $db = Database::connect();
         $db->transBegin();
-        $pengajuanModel->delete($get_id_pengajuan);
+        $pengajuanModel->delete($get_id_pengajuan, $is_hard_delete);
         if ($db->transStatus === false) {
             log_message("error", "Pengajuan gagal dihapus tanpa sebab.");
             return $db->transRollback();
         }
         $db->transCommit();
+        if ($is_hard_delete && $berkas_pendukung !== null) {
+            $target_file_upload = WRITEPATH . "uploads/$berkas_pendukung";
+            if (file_exists($target_file_upload)) {
+                $delete_file_upload = unlink($target_file_upload);
+                if (! $delete_file_upload) {
+                    log_message("error", "Berkas pendukung pengajuan dengan judul '$judul_pengajuan' gagal dihapus tanpa sebab.");
+                }
+            } else {
+                log_message("error", "Berkas pendukung pengajuan dengan judul '$judul_pengajuan' tidak ditemukan ketika akan dihapus secara permanen.");
+            }
+        }
         return $this->response->setJSON([
             "status" => 200,
-            "message" => "Pengajuan dengan judul '$judul_pengajuan' berhasil terhapus"
+            "message" => $is_hard_delete ? "Pengajuan berhasil dihapus secara permanen!" : "Pengajuan berhasil dihapus!"
         ]);
     }
     public function searchPengajuan()
