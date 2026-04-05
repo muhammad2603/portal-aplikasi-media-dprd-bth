@@ -5,6 +5,7 @@ namespace App\Controllers;
 use CodeIgniter\Controller;
 use App\Models\Pengajuan;
 use App\Models\StatusPengajuan;
+use App\Models\UserActivities;
 // load helper cookie
 helper("cookie");
 // @class
@@ -14,14 +15,16 @@ class Dashboard extends Controller
     protected $pages_dashboard = "pages/dashboard";
     protected $pengajuanModel;
     protected $statusPengajuanModel;
+    protected $userActivitiesModel;
     protected $user_id;
     // @constructor
     public function __construct()
     {
+        $this->user_id                  = session()->get("userId");
         $this->role                     = session()->get("role");
         $this->pengajuanModel           = new Pengajuan();
         $this->statusPengajuanModel     = new StatusPengajuan();
-        $this->user_id                  = session()->get("userId");
+        $this->userActivitiesModel      = new UserActivities();
     }
     // @method: home
     public function home(): string
@@ -131,10 +134,12 @@ class Dashboard extends Controller
     // @method: aktivitas
     public function aktivitas(): string
     {
+        $activityHistories = $this->userActivitiesModel->getUserActivities($this->user_id);
         // @data
         $data_page = [
             "navigation" => "Aktivitas",
             "subtitle" => "Lihat riwayat aktivitas anda",
+            "activities" => $activityHistories
         ];
         // @return: view home by role
         return view("$this->pages_dashboard/" . $this->role . "/aktivitas", $data_page);
