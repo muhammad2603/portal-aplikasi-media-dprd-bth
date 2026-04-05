@@ -76,7 +76,6 @@ document.addEventListener("DOMContentLoaded", () => {
             pengajuanId = getTargetPengajuanId;
         })
     })
-
     btnConfirmModal.addEventListener("click", () => {
         const isStateRecovery = (stateRecovery === true && stateDeletePermanent === false);
         const isStateDeletePermanent = (stateDeletePermanent === true && stateRecovery === false);
@@ -108,12 +107,37 @@ document.addEventListener("DOMContentLoaded", () => {
                     C_Modal.closeModal(modals, modalParent, btnTextConfirm)
                 })
         }
-
         if (isStateDeletePermanent && isPengajuanIdValid) {
-
+            fetch('/dashboard/hapus-pengajuan-permanen', {
+                method: 'DELETE',
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": metaCsrfToken
+                },
+                body: JSON.stringify({
+                    idPengajuan: pengajuanId,
+                    isPermanent: true
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const { status, message } = data;
+                    if (status === 200) {
+                        alert(message);
+                        location.reload();
+                    } else {
+                        throw new Error()
+                    }
+                })
+                .catch(() => alert("Terjadi kesalahan saat menghapus pengajuan."))
+                .finally(() => {
+                    stateRecovery = false;
+                    stateDeletePermanent = false;
+                    pengajuanId = null;
+                    C_Modal.closeModal(modals, modalParent, btnTextConfirm)
+                })
         }
     })
-
     // @event
     btnCloseModal.addEventListener("click", () => {
         C_Modal.closeModal(modals, modalParent, btnTextConfirm)
