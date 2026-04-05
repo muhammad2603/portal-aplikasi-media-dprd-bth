@@ -52,6 +52,7 @@ class Dashboard extends Controller
         return view("$this->pages_dashboard/" . $this->role . "/pengajuan", $data_page);
     }
     // @method: riwayat pengajuan
+    // TODO masukkan pengambilan riwayat pengajuan ke method Pengajuan::getPengajuan() agar lebih rapi
     public function riwayatPengajuan(): string
     {
         /**
