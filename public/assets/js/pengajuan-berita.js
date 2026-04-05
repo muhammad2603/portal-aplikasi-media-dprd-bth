@@ -34,11 +34,6 @@ const inputsValidator = [
                     errorMessage: "Judul Pengajuan terlalu panjang.",
                     isNegate: false
                 },
-                {
-                    method: "isInvalidValue",
-                    param: /[^a-z\d\-\(\)\.\,?!'"#%\+\/ ]/gi,
-                    errorMessage: "Format Judul Pengajuan tidak valid. Pastikan diisi dengan format umum."
-                },
             ],
         }
     },
