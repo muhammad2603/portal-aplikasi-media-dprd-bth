@@ -9,3 +9,6 @@ Fixed:
 3. Pisahkan data pengajuan berdasarkan waktu dihalaman Home dan Riwayat Pengajuan pada Dashboard.
  - Home: ambil data pengajuan dalam minggu ini.
  - Riwayat Pengajuan: ambil seluruh data pengajuan.
+
+Refactoring:
+1. Buat function khusus untuk fetch agar lebih mudah digunakan
