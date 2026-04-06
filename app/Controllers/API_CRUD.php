@@ -8,10 +8,7 @@ use Config\Database;
 use App\Models\Pengajuan;
 use App\Models\StatusPengajuan;
 use CodeIgniter\I18n\Time;
-use CodeIgniter\Session\Handlers\DatabaseHandler;
-
 // @class
-// TODO jangan lupa untuk memberikan limitasi pada semua method agar server tidak kewalahan ketika menerima banyak request
 class API_CRUD extends BaseController
 {
     private $rsp_last = "(
@@ -156,7 +153,6 @@ class API_CRUD extends BaseController
                     "status" => 400,
                     "message" => $this->validator->getErrors(),
                 ]);
-
         $get_id_pengajuan = (int) $payload->idPengajuan;
         $get_user_id_from_session = (int) session()->get("userId");
         $is_hard_delete = $payload->isPermanent ?? false;

@@ -5,6 +5,7 @@ use App\Filters\GuestFilter;
 use App\Filters\VerifiedFilter;
 use App\Filters\AuthenticatedFilter;
 use App\Filters\LogoutFilter;
+use App\Filters\APIFilter;
 
 /**
  * @var RouteCollection $routes
@@ -55,13 +56,6 @@ $routes->group('', ["filter" => VerifiedFilter::class], function ($routes) {
     // @GET dashboard/pengajuan
     // TODO route bagian soft delete, hard delete, dan recovery harus dibuat log-nya agar bisa dipantau di halaman aktivitas
     $routes->get('/dashboard/pengajuan', 'Dashboard::pengajuan');
-    $routes->post('/dashboard/tambah-pengajuan', 'API_CRUD::createPengajuan');
-    $routes->delete('/dashboard/hapus-pengajuan', 'API_CRUD::deletePengajuan');
-    $routes->get('/dashboard/search-pengajuan', 'API_CRUD::searchPengajuan');
-    $routes->get('/dashboard/filter-pengajuan', 'API_CRUD::filterPengajuan');
-    $routes->get('/dashboard/log-aktivitas', 'API_CRUD::userActivities');
-    $routes->post('/dashboard/pulihkan-pengajuan', 'API_CRUD::recoveryPengajuan');
-    $routes->delete('/dashboard/hapus-pengajuan-permanen', 'API_CRUD::deletePengajuan');
     // @GET dashboard/riwayat-pengajuan
     $routes->get('/dashboard/riwayat-pengajuan', 'Dashboard::riwayatPengajuan');
     // @GET dashboard/riwayat-hapus
@@ -72,8 +66,16 @@ $routes->group('', ["filter" => VerifiedFilter::class], function ($routes) {
     $routes->get('/dashboard/aktivitas', 'Dashboard::aktivitas');
     // @GET dashboard/profil
     $routes->get('/dashboard/pengaturan/profil', 'Dashboard::profil');
+    $routes->get('/dashboard/search-pengajuan', 'API_CRUD::searchPengajuan');
+    $routes->get('/dashboard/filter-pengajuan', 'API_CRUD::filterPengajuan');
+    $routes->get('/dashboard/log-aktivitas', 'API_CRUD::userActivities');
 });
-
+$routes->group('', ["filter" => [VerifiedFilter::class, APIFilter::class]], function ($routes) {
+    $routes->post('/dashboard/tambah-pengajuan', 'API_CRUD::createPengajuan');
+    $routes->post('/dashboard/pulihkan-pengajuan', 'API_CRUD::recoveryPengajuan');
+    $routes->delete('/dashboard/hapus-pengajuan', 'API_CRUD::deletePengajuan');
+    $routes->delete('/dashboard/hapus-pengajuan-permanen', 'API_CRUD::deletePengajuan');
+});
 /**
  * @route group
  * @filter

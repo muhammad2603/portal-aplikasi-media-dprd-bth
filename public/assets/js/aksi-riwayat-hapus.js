@@ -126,10 +126,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         alert(message);
                         location.reload();
                     } else {
-                        throw new Error()
+                        alert(message)
                     }
                 })
-                .catch(() => alert("Terjadi kesalahan saat menghapus pengajuan."))
+                .catch(() => console.log("Terjadi kesalahan saat menghapus pengajuan."))
                 .finally(() => {
                     stateRecovery = false;
                     stateDeletePermanent = false;
