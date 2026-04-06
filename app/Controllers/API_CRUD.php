@@ -4,13 +4,15 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\I18n\Time;
 use Config\Database;
 use App\Models\Pengajuan;
 use App\Models\StatusPengajuan;
-use CodeIgniter\I18n\Time;
+use App\Models\UserActivities;
 // @class
 class API_CRUD extends BaseController
 {
+    protected $userActivitiesModel;
     private $rsp_last = "(
             SELECT id_pengajuan, komentar, id_status, created_at FROM riwayat_status_pengajuan rsp_parent
             JOIN (
@@ -21,6 +23,10 @@ class API_CRUD extends BaseController
                 GROUP BY id_pengajuan
             ) rsp_child ON rsp_child.last_id = rsp_parent.id
         ) rsp_last";
+    public function __construct()
+    {
+        $this->userActivitiesModel = new UserActivities();
+    }
     public function createPengajuan()
     {
         $lampiran           = $this->request->getFile("lampiran");
@@ -310,8 +316,7 @@ class API_CRUD extends BaseController
     {
         $filter_by = $this->request->getGet("filterBy") ?? "desc";
         $user_id = session()->get("userId");
-        $userActivitiesModel = new \App\Models\UserActivities();
-        $activityHistories = $userActivitiesModel->getUserActivities($user_id, $filter_by);
+        $activityHistories = $this->userActivitiesModel->getUserActivities($user_id, $filter_by);
         return $this->response->setJSON([
             "status" => 200,
             "message" => "Aktivitas pengguna berhasil diambil",
@@ -323,8 +328,8 @@ class API_CRUD extends BaseController
         $user_id = (int) session()->get("userId");
         $pengajuan_id = $this->request->getJSON()->pengajuanId;
         $pengajuanModel = new Pengajuan();
-        $isPengajuanDeleted = $pengajuanModel->onlyDeleted()->find($pengajuan_id);
-        if (! $isPengajuanDeleted) {
+        $isPengajuanDeletedExist = $pengajuanModel->onlyDeleted()->find($pengajuan_id);
+        if (! $isPengajuanDeletedExist) {
             return $this->response->setStatusCode(404)->setJSON([
                 "status" => 404,
                 "message" => "Pengajuan tidak ditemukan atau tidak dalam kondisi dihapus."
@@ -333,6 +338,14 @@ class API_CRUD extends BaseController
         $db = Database::connect();
         $db->transBegin();
         $pengajuanModel->recoveryPengajuan($user_id, $pengajuan_id);
+        $this->userActivitiesModel->insert([
+            "actor_id" => $user_id,
+            "actor_role" => 2,
+            "entity" => "pengajuan",
+            "entity_id" => $pengajuan_id,
+            "action" => 7,
+            "description" => "Pengajuan \"" . $isPengajuanDeletedExist['judul'] . "\" berhasil dipulihkan.",
+        ]);
         if ($db->transStatus() === false) {
             log_message("error", "Pengajuan gagal dipulihkan tanpa sebab.");
             return $db->transRollback();
