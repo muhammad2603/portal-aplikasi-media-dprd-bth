@@ -99,7 +99,8 @@ class Dashboard extends Controller
         $data_page = [
             "navigation" => "Aktivitas",
             "subtitle" => "Lihat riwayat aktivitas anda",
-            "activities" => $activityHistories
+            // "activities" => $activityHistories
+            "activities" => []
         ];
         // @return: view home by role
         return view("$this->pages_dashboard/" . $this->role . "/aktivitas", $data_page);
