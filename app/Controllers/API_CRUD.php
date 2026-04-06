@@ -137,8 +137,6 @@ class API_CRUD extends BaseController
             return log_message("error", $e->getMessage());
         }
     }
-    // TODO setelah menghapus pengajuan, pastikan berkas pendukung juga ikut terhapus (jika ada)
-    // TODO semua jenis dalam penghapusan pengajuan, baik itu soft delete maupun hard delete, dilakukan dimethod ini. pisahkan logicnya dengan private method.
     public function deletePengajuan()
     {
         $payload = $this->request->getJSON();
