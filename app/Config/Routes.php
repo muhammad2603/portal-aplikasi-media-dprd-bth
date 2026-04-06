@@ -53,6 +53,7 @@ $routes->group('', ["filter" => VerifiedFilter::class], function ($routes) {
     // @GET dashboard
     $routes->get('/dashboard', 'Dashboard::home');
     // @GET dashboard/pengajuan
+    // TODO route bagian soft delete, hard delete, dan recovery harus dibuat log-nya agar bisa dipantau di halaman aktivitas
     $routes->get('/dashboard/pengajuan', 'Dashboard::pengajuan');
     $routes->post('/dashboard/tambah-pengajuan', 'API_CRUD::createPengajuan');
     $routes->delete('/dashboard/hapus-pengajuan', 'API_CRUD::deletePengajuan');
