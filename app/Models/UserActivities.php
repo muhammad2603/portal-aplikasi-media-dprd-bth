@@ -48,9 +48,9 @@ class UserActivities extends Model
      * @param string $filter_by "asc" atau "desc", "desc" sebagai default untuk menampilkan aktivitas terbaru
      * @return array
      */
-    public function getUserActivities(int $user_id, string $filter_by = "desc"): array
+    public function getUserActivities(int $user_id, string $filter_by = "desc", $is_seven_days_before = false): array
     {
-        return $this
+        $builder = $this
             ->select([
                 "pgj.judul AS judul_pengajuan",
                 "CASE
@@ -69,7 +69,11 @@ class UserActivities extends Model
             ->join("user_actions ua", "ua.id = user_activities.action")
             ->join("riwayat_status_pengajuan rsp", "rsp.id_pengajuan = user_activities.entity_id")
             ->join("status", "status.id = rsp.id_status")
-            ->where("actor_id", $user_id)
+            ->where("actor_id", $user_id);
+        if ($is_seven_days_before) {
+            $builder->where("user_activities.created_at >=", date("Y-m-d H:i:s", strtotime("-7 days")));
+        }
+        return $builder
             ->orderBy("user_activities.created_at", $filter_by)
             ->findAll();
     }

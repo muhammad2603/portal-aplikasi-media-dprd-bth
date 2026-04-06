@@ -1,6 +1,7 @@
+<?php $is_custom_message_data_not_found = $custom_message_data_not_found ?? null; ?>
 <?php if (count($activities)  === 0): ?>
     <div class="informasi-pengajuan py-3 px-4 bg-amber-100/80 text-amber-600 rounded-md">
-        <p class="font-semibold text-sm">Tidak ada aktivitas yang tercatat.</p>
+        <p class="font-semibold text-sm"><?= $is_custom_message_data_not_found ? $custom_message_data_not_found : "Tidak ada aktivitas yang tercatat." ?></p>
     </div>
 <?php else: ?>
     <?php foreach ($activities as $activity): ?>
