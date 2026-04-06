@@ -52,52 +52,9 @@ class Dashboard extends Controller
         return view("$this->pages_dashboard/" . $this->role . "/pengajuan", $data_page);
     }
     // @method: riwayat pengajuan
-    // TODO masukkan pengambilan riwayat pengajuan ke method Pengajuan::getPengajuan() agar lebih rapi
     public function riwayatPengajuan(): string
     {
-        /**
-         * WARN:
-         * subquery ini dijadikan penentu atau hasil akhir untuk
-         * mendapatkan komentar pengajuan terakhir berdasarkan status-nya,
-         * nanti akan dipakai di main query
-         */
-        $rsp_last = "(
-            SELECT id_pengajuan, komentar, created_at FROM riwayat_status_pengajuan rsp_parent
-            JOIN (
-                SELECT
-                    MAX(id) AS last_id
-                FROM riwayat_status_pengajuan
-                WHERE id_status IN (2, 4)
-                GROUP BY id_pengajuan
-            ) rsp_child ON rsp_child.last_id = rsp_parent.id
-        ) rsp_last
-        ";
-        $list_riwayat_pengajuan_by_status = $this->pengajuanModel
-            ->select([
-                "pengajuan.id",
-                "pengajuan.judul",
-                "pengajuan.deskripsi",
-                "pengajuan.url",
-                "pengajuan.tanggal_publikasi",
-                "um.nama_media AS media",
-                "status.nama AS status",
-                "rsp_last.komentar AS catatan_perbaikan_terakhir",
-                "COUNT(CASE WHEN rsp.id_status = 2 THEN 1 END) AS total_perbaikan",
-                "(CASE WHEN status.nama != 'Pending' THEN adm.username END) AS confirmed_by",
-                "rsp_last.created_at AS last_confirmed_date",
-                "pengajuan.created_at",
-            ])
-            ->join("status_pengajuan sp", "sp.id_pengajuan = pengajuan.id")
-            ->join("status", "status.id = sp.id_status")
-            ->join("user_meta um", "um.user_id = pengajuan.user_id")
-            ->join("riwayat_status_pengajuan rsp", "rsp.id_pengajuan = pengajuan.id")
-            ->join("admin adm", "adm.id = sp.admin_id", "LEFT")
-            ->join($rsp_last, "rsp_last.id_pengajuan = pengajuan.id", "LEFT")
-            ->groupBy("rsp.id_pengajuan")
-            ->where("pengajuan.user_id", $this->user_id)
-            ->orderBy("pengajuan.id", "DESC")
-            ->orderBy("pengajuan.created_at", "DESC")
-            ->findAll();
+        $list_riwayat_pengajuan_by_status = $this->pengajuanModel->getPengajuan($this->user_id);
         ["total" => $total_pengajuan, "total_by_status" => $total_riwayat_pengajuan] = $this->pengajuanModel->getTotalPengajuan($this->user_id);
         // @data
         $data_page = [

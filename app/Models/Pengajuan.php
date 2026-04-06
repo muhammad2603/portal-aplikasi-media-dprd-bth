@@ -27,6 +27,23 @@ class Pengajuan extends Model
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
     /**
+     * CODE_EXPLAIN:
+     * subquery ini dijadikan penentu atau hasil akhir untuk
+     * mendapatkan komentar pengajuan terakhir berdasarkan status-nya,
+     * nanti akan dipakai di main query
+     */
+    private $rsp_last = "(
+            SELECT id_pengajuan, komentar, created_at FROM riwayat_status_pengajuan rsp_parent
+            JOIN (
+                SELECT
+                    MAX(id) AS last_id
+                FROM riwayat_status_pengajuan
+                WHERE id_status IN (2, 4)
+                GROUP BY id_pengajuan
+            ) rsp_child ON rsp_child.last_id = rsp_parent.id
+        ) rsp_last
+        ";
+    /**
      * @param int $user_id
      * @param bool $withDelete opsional, jika ingin mengambil data pengajuan yang sudah dihapus (soft delete)
      * 
@@ -49,6 +66,27 @@ class Pengajuan extends Model
             $builder->select("pengajuan.deleted_at");
             $builder->onlyDeleted();
             $builder->orderBy("pengajuan.deleted_at", "DESC");
+        } else {
+            $builder
+                ->select([
+                    "pengajuan.url",
+                    "pengajuan.tanggal_publikasi",
+                    "status.nama AS status",
+                    "rsp_last.komentar AS catatan_perbaikan_terakhir",
+                    "COUNT(CASE WHEN rsp.id_status = 2 THEN 1 END) AS total_perbaikan",
+                    "(CASE WHEN status.nama != 'Pending' THEN adm.username END) AS confirmed_by",
+                    "rsp_last.created_at AS last_confirmed_date",
+                    "pengajuan.created_at",
+                ])
+                ->join("status_pengajuan sp", "sp.id_pengajuan = pengajuan.id")
+                ->join("status", "status.id = sp.id_status")
+                ->join("riwayat_status_pengajuan rsp", "rsp.id_pengajuan = pengajuan.id")
+                ->join("admin adm", "adm.id = sp.admin_id", "LEFT")
+                ->join($this->rsp_last, "rsp_last.id_pengajuan = pengajuan.id", "LEFT")
+                ->groupBy("rsp.id_pengajuan")
+                ->where("pengajuan.user_id", $user_id)
+                ->orderBy("pengajuan.id", "DESC")
+                ->orderBy("pengajuan.created_at", "DESC");
         }
         return $builder
             ->join("user_meta um", "um.user_id = pengajuan.user_id")
