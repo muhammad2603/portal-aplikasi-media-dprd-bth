@@ -29,7 +29,7 @@
         ?>
         <div class="flex gap-3.5">
             <!--  __COMMENT__ kondisi ini dilakukan untuk memisahkan warna berdasarkan actionnya memiliki icon khusus. jika tidak khusus, maka true, jika khusus, maka false -->
-            <span class="py-1.5 px-1.5 h-fit bg-gray-200/60 text-<?= (! $is_spesificy_icon && $is_pengajuan_exist ? $set_status_color : (in_array($activity["action"], $actions_for_custom_icon) && ($is_pengajuan_exist || $activity["action"] === "hard delete") ? $color_actions[$activity["action"]] : "slate")) ?>-600 rounded-lg">
+            <span class="py-1.5 px-1.5 h-fit bg-gray-200/60 text-<?= (! $is_spesificy_icon && $is_pengajuan_exist ? $set_status_color : (in_array($activity["action"], $actions_for_custom_icon) && ($is_pengajuan_exist || $activity["action"] === "hard delete") ? $color_actions[$activity["action"]] : "slatew")) ?>-600 rounded-lg">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                     <?php if ($activity["status"] === "Disetujui" && ! $is_spesificy_icon): ?>
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
