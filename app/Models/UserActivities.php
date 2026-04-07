@@ -44,6 +44,12 @@ class UserActivities extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
     /**
+     * 
+       TODO buat id action otomatis agar lebih mudah saat melakukan insert atau update aktivitas difield action
+       ^^^^^^^^^
+       jika sudah dilakukan, jangan lupa diimplementasikan di Controller API_CRUD pada method yang menggunakan Model ini
+     */
+    /**
      * @param int $user_id ID pengguna yang ingin diambil aktivitasnya
      * @param string $filter_by "asc" atau "desc", "desc" sebagai default untuk menampilkan aktivitas terbaru
      * @return array
@@ -57,6 +63,7 @@ class UserActivities extends Model
                     WHEN ua.action = 'create' THEN 'Pengajuan terkirim'
                     WHEN ua.action = 'update' THEN 'Memperbarui data pengajuan'
                     WHEN ua.action = 'soft delete' THEN 'Pengajuan dihapus'
+                    WHEN ua.action = 'hard delete' THEN 'Pengajuan dihapus permanen'
                     WHEN ua.action = 'approved' THEN 'Pengajuan disetujui'
                     WHEN ua.action = 'revised' THEN 'Memperbarui data pengajuan'
                     WHEN ua.action = 'recovery' THEN 'Pengajuan dipulihkan'
@@ -69,8 +76,8 @@ class UserActivities extends Model
             ])
             ->join("pengajuan pgj", "pgj.id = user_activities.entity_id", "LEFT")
             ->join("user_actions ua", "ua.id = user_activities.action")
-            ->join("riwayat_status_pengajuan rsp", "rsp.id_pengajuan = user_activities.entity_id")
-            ->join("status", "status.id = rsp.id_status")
+            ->join("riwayat_status_pengajuan rsp", "rsp.id_pengajuan = user_activities.entity_id", "LEFT")
+            ->join("status", "status.id = rsp.id_status", "LEFT")
             ->where("actor_id", $user_id);
         if ($is_seven_days_before) {
             $builder->where("user_activities.created_at >=", date("Y-m-d H:i:s", strtotime("-7 days")));
