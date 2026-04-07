@@ -119,29 +119,6 @@ class Pengajuan extends Model
         ];
     }
     /**
-     * Mengambil data pengajuan user sejak 7 hari terakhir
-     * 
-     * @param int $user_id
-     * 
-     * @return array
-     */
-    // public function getHistoriesIn7Days(int $user_id): array
-    // {
-    //     $histories_date = date("Y-m-d H:i:s", strtotime('-7 days'));
-    //     return $this
-    //         ->select([
-    //             "pengajuan.judul",
-    //             "status.nama AS status",
-    //             "pengajuan.created_at"
-    //         ])
-    //         ->join("riwayat_status_pengajuan rsp", "rsp.id_pengajuan = pengajuan.id")
-    //         ->join("status", "status.id = rsp.id_status")
-    //         ->where("pengajuan.user_id", $user_id)
-    //         ->where("rsp.created_at >=", $histories_date)
-    //         ->orderBy("rsp.created_at", "DESC")
-    //         ->findAll();
-    // }
-    /**
      * Mengambil pengajuan yang disubmit terakhir kali oleh user
      * 
      * @param int $user_id
