@@ -125,22 +125,22 @@ class Pengajuan extends Model
      * 
      * @return array
      */
-    public function getHistoriesIn7Days(int $user_id): array
-    {
-        $histories_date = date("Y-m-d H:i:s", strtotime('-7 days'));
-        return $this
-            ->select([
-                "pengajuan.judul",
-                "status.nama AS status",
-                "pengajuan.created_at"
-            ])
-            ->join("riwayat_status_pengajuan rsp", "rsp.id_pengajuan = pengajuan.id")
-            ->join("status", "status.id = rsp.id_status")
-            ->where("pengajuan.user_id", $user_id)
-            ->where("rsp.created_at >=", $histories_date)
-            ->orderBy("rsp.created_at", "DESC")
-            ->findAll();
-    }
+    // public function getHistoriesIn7Days(int $user_id): array
+    // {
+    //     $histories_date = date("Y-m-d H:i:s", strtotime('-7 days'));
+    //     return $this
+    //         ->select([
+    //             "pengajuan.judul",
+    //             "status.nama AS status",
+    //             "pengajuan.created_at"
+    //         ])
+    //         ->join("riwayat_status_pengajuan rsp", "rsp.id_pengajuan = pengajuan.id")
+    //         ->join("status", "status.id = rsp.id_status")
+    //         ->where("pengajuan.user_id", $user_id)
+    //         ->where("rsp.created_at >=", $histories_date)
+    //         ->orderBy("rsp.created_at", "DESC")
+    //         ->findAll();
+    // }
     /**
      * Mengambil pengajuan yang disubmit terakhir kali oleh user
      * 
@@ -155,6 +155,7 @@ class Pengajuan extends Model
             ->where("user_id", $user_id)
             ->orderBy("created_at", "DESC")
             ->orderBy("id", "DESC")
+            ->withDeleted()
             ->first();
     }
     /**
