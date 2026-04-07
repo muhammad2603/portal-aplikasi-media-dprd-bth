@@ -19,19 +19,28 @@
             $created_diff = "beberapa detik yang lalu";
         else
             $created_diff = $timeService->translateDate($activity['created_at']);
+        // __FIX__ perhatikan bagian blok if status dan action, kode terlihat ambigu dan sulit dipahami. lebih baik buat helper untuk pemanggilan icon
         $set_status_color = ($activity["status"] === "Disetujui") ? "green" : (($activity["status"] === "Ditolak") ? "red" : (($activity["status"] === "Perbaikan") ? "indigo" : "amber"));
+        // __COMMENT__ list action memiliki icon tersendiri
+        $actions_for_custom_icon = ["recovery", "soft delete"];
+        $color_actions = ["recovery" => "blue", "soft delete" => "red"];
         ?>
         <div class="flex gap-3.5">
-            <span class="py-1.5 px-1.5 h-fit bg-gray-200/60 text-<?= $set_status_color ?>-600 rounded-lg">
+            <!--  __COMMENT__ kondisi ini dilakukan untuk memisahkan warna berdasarkan actionnya memiliki icon khusus. jika tidak khusus, maka true, jika khusus, maka false -->
+            <span class="py-1.5 px-1.5 h-fit bg-gray-200/60 text-<?= !in_array($activity["action"], $actions_for_custom_icon) ? $set_status_color : $color_actions[$activity["action"]] ?>-600 rounded-lg">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                    <?php if ($activity["status"] === "Disetujui"): ?>
+                    <?php if ($activity["status"] === "Disetujui" && !in_array($activity["action"], $actions_for_custom_icon)): ?>
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                    <?php elseif ($activity["status"] === "Ditolak"): ?>
+                    <?php elseif ($activity["status"] === "Ditolak" && !in_array($activity["action"], $actions_for_custom_icon)): ?>
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                    <?php elseif ($activity["status"] === "Perbaikan"): ?>
+                    <?php elseif ($activity["status"] === "Perbaikan" && !in_array($activity["action"], $actions_for_custom_icon)): ?>
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                    <?php else: ?>
+                    <?php elseif ($activity["status"] === "Pending" && !in_array($activity["action"], $actions_for_custom_icon)): ?>
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    <?php elseif (in_array($activity["action"], $actions_for_custom_icon) && $activity["action"] === "recovery"): ?>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                    <?php elseif (in_array($activity["action"], $actions_for_custom_icon) && $activity["action"] === "soft delete"): ?>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636" />
                     <?php endif; ?>
                 </svg>
             </span>
