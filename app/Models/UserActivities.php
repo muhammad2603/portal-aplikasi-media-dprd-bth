@@ -56,12 +56,14 @@ class UserActivities extends Model
                 "CASE
                     WHEN ua.action = 'create' THEN 'Pengajuan terkirim'
                     WHEN ua.action = 'update' THEN 'Memperbarui data pengajuan'
-                    WHEN ua.action = 'delete' THEN 'Pengajuan dihapus'
+                    WHEN ua.action = 'soft delete' THEN 'Pengajuan dihapus'
                     WHEN ua.action = 'approved' THEN 'Pengajuan disetujui'
                     WHEN ua.action = 'revised' THEN 'Memperbarui data pengajuan'
+                    WHEN ua.action = 'recovery' THEN 'Pengajuan dipulihkan'
                     ELSE 'Pengajuan ditolak' -- ua.action = 'rejected'
                 END AS title",
                 "status.nama AS status",
+                "ua.action",
                 "user_activities.description",
                 "user_activities.created_at",
             ])
