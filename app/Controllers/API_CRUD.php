@@ -209,18 +209,18 @@ class API_CRUD extends BaseController
                 ]);
         }
         $pengajuanModel = new Pengajuan();
-        $set_activity_description = "Pengajuan \"$judul_pengajuan\" berhasil dihapus." . ($is_hard_delete ? " secara permanen" : "") . ".";
+        $set_activity_description = "Pengajuan \"$judul_pengajuan\" berhasil dihapus" . ($is_hard_delete ? " secara permanen." : ". Anda dapat memulihkan pengajuan kembali dihalaman Riwayat Hapus.");
         $db = Database::connect();
         $db->transBegin();
-        $pengajuanModel->delete($get_id_pengajuan, $is_hard_delete);
         $this->userActivitiesModel->insert([
             "actor_id" => $get_user_id_from_session,
             "actor_role" => 2,
             "entity" => "pengajuan",
             "entity_id" => $get_id_pengajuan,
-            "action" => 3,
+            "action" => $is_hard_delete ? 8 : 3,
             "description" => $set_activity_description,
         ]);
+        $pengajuanModel->delete($get_id_pengajuan, $is_hard_delete);
         if ($db->transStatus === false) {
             log_message("error", "Pengajuan gagal dihapus tanpa sebab.");
             return $db->transRollback();
