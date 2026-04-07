@@ -84,7 +84,6 @@ class API_CRUD extends BaseController
         }
         $db                     = Database::connect();
         $pengajuanModel         = new Pengajuan();
-        $statusPengajuanModel   = new StatusPengajuan();
         $judul                  = $this->request->getPost("judul");
         $url                    = $this->request->getPost("url");
         $tanggalPublikasi       = $this->request->getPost("tanggalPublikasi");
@@ -124,6 +123,14 @@ class API_CRUD extends BaseController
             $insert_id = $db->insertID();
             $db->table("status_pengajuan")->insert(["id_pengajuan" => $insert_id]);
             $db->table("riwayat_status_pengajuan")->insert(["id_pengajuan" => $insert_id, "created_at" => Time::now()]);
+            $this->userActivitiesModel->insert([
+                "actor_id" => $user_id,
+                "actor_role" => 2,
+                "entity" => "pengajuan",
+                "entity_id" => $insert_id,
+                "action" => 1,
+                "description" => "Pengajuan \"$judul\" Anda telah terkirim, mohon tunggu persetujuan dari Admin."
+            ]);
             if ($db->transStatus() === false) {
                 throw new \Exception("Upload pengajuan user ke database gagal!");
             }
@@ -202,9 +209,18 @@ class API_CRUD extends BaseController
                 ]);
         }
         $pengajuanModel = new Pengajuan();
+        $set_activity_description = "Pengajuan \"$judul_pengajuan\" berhasil dihapus." . ($is_hard_delete ? " secara permanen" : "") . ".";
         $db = Database::connect();
         $db->transBegin();
         $pengajuanModel->delete($get_id_pengajuan, $is_hard_delete);
+        $this->userActivitiesModel->insert([
+            "actor_id" => $get_user_id_from_session,
+            "actor_role" => 2,
+            "entity" => "pengajuan",
+            "entity_id" => $get_id_pengajuan,
+            "action" => 3,
+            "description" => $set_activity_description,
+        ]);
         if ($db->transStatus === false) {
             log_message("error", "Pengajuan gagal dihapus tanpa sebab.");
             return $db->transRollback();
