@@ -9,6 +9,7 @@ $user_id = session()->get("userId");
 $get_histories_pengajuan = $pengajuanModel->getLastHistoriesPengajuan($user_id);
 $last_date_submit_pengajuan = $pengajuanModel->getLastSubmitPengajuan($user_id);
 $histories_pengajuan = $getUserActivities->getUserActivities($user_id, "desc", true);
+$days_diff_last_pengajuan = $timeService->getDifference($last_date_submit_pengajuan["created_at"], true)["days"];
 ?>
 <!-- Section Cards: informasi Pengajuan -->
 <section class="cards scrollbar-custom pb-3.5 xl:pb-2.5 px-2 flex gap-6 overflow-x-scroll">
@@ -78,7 +79,7 @@ $histories_pengajuan = $getUserActivities->getUserActivities($user_id, "desc", t
     ]) ?>
 </section>
 <!-- Akhir Section Cards -->
-<?php if ($last_date_submit_pengajuan && abs($timeService->getDifference($last_date_submit_pengajuan["created_at"])["days"]) >= 3): // @if pengajuan terakhir yang disubmit user telah melewati lebih dari 3 hari yang lalu 
+<?php if ($last_date_submit_pengajuan && $days_diff_last_pengajuan >= 3): // @if pengajuan terakhir yang disubmit user telah melewati lebih dari 3 hari yang lalu 
 ?>
     <!-- Section Remainder -->
     <section class="remainder py-8 px-4 flex flex-col items-center gap-4 bg-white rounded-lg shadow-md">
@@ -102,6 +103,7 @@ $histories_pengajuan = $getUserActivities->getUserActivities($user_id, "desc", t
 <!-- Section Pengajuan terakhir & aksi cepat -->
 <section class="grid grid-cols-1 lg:grid-cols-9 gap-6">
     <!-- Aside Pengajuan terakhir -->
+    <!-- __FIX__ perbaiki div.list-pengajuan-terakhir yang dimana saat hanya ada 1-2 data, ada ruang kosong yang tidak enak dilihat. solusi, ganti flex ke grid -->
     <aside class="lg:col-span-5 xl:col-span-6 h-fit py-10 md:py-5 px-7 bg-white rounded-lg shadow-md">
         <!-- Legend -->
         <div class="legend flex justify-between items-center">
