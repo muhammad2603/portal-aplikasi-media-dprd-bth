@@ -245,6 +245,7 @@ class API_CRUD extends BaseController
     public function searchPengajuan()
     {
         $keyword = $this->request->getGet("keyword") ?? "";
+        $isOnlyDeleted = ((int) $this->request->getGet("onlyDeleted") === 1);
         $pengajuanModel = new Pengajuan();
         $user_id = session()->get("userId");
         $search_pengajuan = $pengajuanModel
@@ -272,8 +273,11 @@ class API_CRUD extends BaseController
             ->where("pengajuan.user_id", $user_id)
             ->like("pengajuan.judul", $keyword)
             ->orderBy("pengajuan.id", "DESC")
-            ->orderBy("pengajuan.created_at", "DESC")
-            ->findAll();
+            ->orderBy("pengajuan.created_at", "DESC");
+        if ($isOnlyDeleted) {
+            $search_pengajuan = $search_pengajuan->onlyDeleted();
+        }
+        $search_pengajuan = $search_pengajuan->findAll();
         return $this->response->setJSON([
             "status" => 200,
             "message" => "Pengajuan ditemukan",
