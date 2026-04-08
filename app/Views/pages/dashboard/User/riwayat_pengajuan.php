@@ -136,6 +136,10 @@ $timeService = new TimeService();
     <!-- Legend -->
     <div class="legend">
         <h2 class="text-base">Daftar Riwayat Pengajuan</h2>
+        <!-- __FIX__ pesan dibawah ini harus disesuaikan dengan jumlah data yang diambil.
+                jika data yang diambil memiliki total <= 6, maka pesan harus: Menampilkan {total} pengajuan
+                jika data yang diambil memiliki total > 6, maka pesan harus: Menampilkan {pager} dari {total} total pengajuan
+                digunakan saat penerapan pagination nanti -->
         <p class="text-sm text-gray-500/90">Menampilkan <span class="font-semibold text-black"><?= count($list_pengajuan) ?></span> dari <span class="font-semibold text-black"><?= $total_pengajuan ?></span> total pengajuan</p>
         <p class="text-sm text-gray-500/90">Catatan: Pengajuan bisa dihapus hanya jika statusnya masih Pending dan Ditolak.</p>
     </div>

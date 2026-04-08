@@ -22,10 +22,14 @@
     <!-- Legend -->
     <div class="legend">
         <h2 class="text-base">Daftar Pengajuan yang Terhapus</h2>
+        <!-- __FIX__ pesan dibawah ini harus disesuaikan dengan jumlah data yang diambil.
+                jika data yang diambil memiliki total <= 6, maka pesan harus: Menampilkan {total} pengajuan
+                jika data yang diambil memiliki total > 6, maka pesan harus: Menampilkan {pager} dari {total} total pengajuan
+                digunakan saat penerapan pagination nanti -->
         <p class="text-sm text-gray-500/90">Menampilkan <span class="font-semibold text-black">6</span> dari <span class="font-semibold text-black">8</span> total pengajuan terhapus</p>
     </div>
     <!-- List Riwayat Pengajuan -->
-    <div id="listRiwayatPengajuan" class="list-riwayat-pengajuan mt-8 flex flex-col gap-4">
+    <div id="listRiwayatHapusPengajuan" class="list-riwayat-pengajuan mt-8 flex flex-col gap-4">
         <?= view("components/riwayat-hapus", ["deleted_pengajuan" => $deleted_pengajuan]) ?>
     </div>
 </section>
