@@ -21,6 +21,25 @@ document.addEventListener("DOMContentLoaded", () => {
     const tanggalUpload = document.getElementById("tanggalUploadInfoConfirm");
     const btnConfirmModal = document.getElementById("btnConfirm");
     const metaCsrfToken = document.querySelector("meta[name='X-CSRF-TOKEN']").getAttribute("content");
+    const searchInput = document.getElementById("search");
+    const listRiwayatHapusPengajuan = document.getElementById("listRiwayatHapusPengajuan");
+    searchInput.addEventListener("change", function () {
+        const keyword = this.value.toLowerCase();
+        fetch(`/dashboard/search-pengajuan?keyword=${encodeURIComponent(keyword)}&onlyDeleted=1`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-CSRF-TOKEN": document.querySelector("meta[name=X-CSRF-TOKEN]").getAttribute("content")
+            }
+        })
+            .then(resp => resp.json())
+            .then(resp => {
+                const { status, message, data_view } = resp;
+                if (status !== 200) return alert(message);
+                listRiwayatHapusPengajuan.innerHTML = data_view;
+            })
+            .catch(e => console.error(e.message))
+    })
     // @loop
     btnRecovery.forEach((btn, btnIdx) => {
         // @event
