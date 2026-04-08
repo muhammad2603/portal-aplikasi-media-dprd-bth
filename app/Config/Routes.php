@@ -70,7 +70,6 @@ $routes->group('', ["filter" => VerifiedFilter::class], function ($routes) {
     $routes->get('/dashboard/log-aktivitas', 'API_CRUD::userActivities');
 });
 $routes->group('', ["filter" => [VerifiedFilter::class, APIFilter::class]], function ($routes) {
-    // TODO route bagian soft delete, hard delete, dan recovery harus dibuat log-nya agar bisa dipantau di halaman aktivitas
     $routes->post('/dashboard/tambah-pengajuan', 'API_CRUD::createPengajuan');
     $routes->post('/dashboard/pulihkan-pengajuan', 'API_CRUD::recoveryPengajuan');
     $routes->delete('/dashboard/hapus-pengajuan', 'API_CRUD::deletePengajuan');
