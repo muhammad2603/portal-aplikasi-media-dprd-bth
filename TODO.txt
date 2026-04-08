@@ -2,6 +2,7 @@ Features Update:
 1. Tambahkan opsi "Login setelah daftar" pada Form Pendaftaran.
 2. Tambahkan tampilan dark mode.
 3. Tambahkan pengalihan saat pengguna berhasil mendaftar, alihkan ke-halaman baru dengan permintaan aktivasi akun melalui Email
+4. Tambahkan visual chart dalam timeline aktivitas dihalaman home agar UI/UX lebih baik.
 
 Fixed:
 1. Icon masih berantakan, perbaiki icon agar lebih mudah dalam penggunaan tanpa perlu menulis secara manual.

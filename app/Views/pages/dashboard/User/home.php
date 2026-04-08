@@ -103,7 +103,6 @@ $days_diff_last_pengajuan = $timeService->getDifference($last_date_submit_pengaj
 <!-- Section Pengajuan terakhir & aksi cepat -->
 <section class="grid grid-cols-1 lg:grid-cols-9 gap-6">
     <!-- Aside Pengajuan terakhir -->
-    <!-- __FIX__ perbaiki div.list-pengajuan-terakhir yang dimana saat hanya ada 1-2 data, ada ruang kosong yang tidak enak dilihat. solusi, ganti flex ke grid -->
     <aside class="lg:col-span-5 xl:col-span-6 h-fit py-10 md:py-5 px-7 bg-white rounded-lg shadow-md">
         <!-- Legend -->
         <div class="legend flex justify-between items-center">
