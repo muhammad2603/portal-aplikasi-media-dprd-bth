@@ -39,4 +39,22 @@ class TimeService
     {
         return Time::parse($date)->toLocalizedString("dd MMMM YYYY");
     }
+    /**
+     * Mengubah urutan tanggal dari DD-MM-YYYY menjadi YYYY-MM-DD
+     * 
+     * @param string $date
+     * 
+     * @return string
+     * 
+     // __FIX__ perbaiki logika perubahan urutannya menjadi lebih kustom. contohnya:
+     * y-m-d: untuk format default
+     * d-m-y: untuk format lain
+     * m-d-y: untuk format kustom
+     * 
+     */
+    public function reverseDate(string $date): string
+    {
+        $reverse_array = array_reverse(explode("-", $date));
+        return implode("-", $reverse_array);
+    }
 }
