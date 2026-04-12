@@ -8,6 +8,7 @@ import {
   InputValidator,
   removeErrorMessage,
 } from "./ClassForms.js";
+import { Modal } from "/assets/js/modal-class.js";
 const C_InputValidator = new InputValidator();
 const inputElements = [
   {
@@ -164,8 +165,11 @@ const inputElements = [
     },
   },
 ];
+const C_Modal = new Modal();
 // daftar mime file yang diizinkan
 const allowedExtensions = ["image/jpeg", "image/png", "image/webp"];
+let stateChangeProfiles = false;
+let payloadChangeProfiles = {};
 // @event
 document.addEventListener("DOMContentLoaded", () => {
   const btnChangeData = document.getElementById("btnChangeData");
@@ -177,6 +181,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const currentProfileImage = document.getElementById("currentProfileImage");
   const messageError = document.querySelector(".error-message");
   const cancelChangeProfile = document.getElementById("cancelChangeProfile");
+  const btnConfirmModal = document.getElementById("btnConfirm");
+  const objectElements = {
+    modalContainerElement: document.getElementById("modals"),
+    modalParentElement: document.getElementById("modalParent"),
+    modalChildElement: document.getElementById("confirm"),
+    titleElement: document.getElementById("titleConfirm"),
+    warningMessageElement: document.getElementById("warnConfirmMessage"),
+    contentModalElement: document.querySelector("#modals #confirm > .modal-content > article"),
+    buttonConfirm: btnConfirmModal
+  }
+  const btnCloseModal = document.getElementById("btnCloseModal");
+  const tokenCsrf = document.querySelector("meta[name=X-CSRF-TOKEN]").getAttribute("content");
   // @event
   btnChangeData.addEventListener("click", function () {
     classManipulation(this).add("hidden");
@@ -265,7 +281,39 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
       }
+      const currValue = inputEl.dataset.defaultValue;
+      if (inputEl.value !== "" && inputEl.value !== currValue) {
+        payloadChangeProfiles[inputId] = inputEl.value;
+      }
     }
-    /** Save Data Profile to Database **/
+    C_Modal.setConfirmModal("Perubahan Profil", "Apakah anda yakin ingin mengubah data profil anda?", objectElements, false, "blue", true)
   });
+  btnConfirmModal.addEventListener("click", () => {
+    stateChangeProfiles = true;
+    const isPayloadFilled = Object.keys(payloadChangeProfiles).length === 0;
+    if (isPayloadFilled) return alert("Pastikan semua input tidak sama dengan data yang tersimpan!");
+    if (!stateChangeProfiles) return alert("Sepertinya ada kesalahan. Silahkan refresh halaman dan coba lagi!");
+    fetch("/dashboard/ubah-data-profil", {
+      method: "PUT",
+      headers: {
+        "Content-Type": 'application/json',
+        "X-CSRF-TOKEN": tokenCsrf
+      },
+      body: JSON.stringify(payloadChangeProfiles)
+    })
+      .then(xhr => xhr.json())
+      .then(resp => {
+        const { status, message } = resp;
+        if (status === 200) {
+          alert(message)
+          return location.reload();
+        } else {
+          return alert(message)
+        }
+      })
+  })
+  btnCloseModal.addEventListener("click", () => {
+    C_Modal.closeModal(objectElements.modalContainerElement, objectElements.modalParentElement)
+    payloadChangeProfiles = {};
+  })
 });
