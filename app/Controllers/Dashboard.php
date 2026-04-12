@@ -6,6 +6,8 @@ use CodeIgniter\Controller;
 use App\Models\Pengajuan;
 use App\Models\StatusPengajuan;
 use App\Models\UserActivities;
+use App\Models\UserMeta;
+
 // load helper cookie
 helper("cookie");
 // @class
@@ -16,6 +18,7 @@ class Dashboard extends Controller
     protected $pengajuanModel;
     protected $statusPengajuanModel;
     protected $userActivitiesModel;
+    protected $userMetaModel;
     protected $user_id;
     // @constructor
     public function __construct()
@@ -25,6 +28,7 @@ class Dashboard extends Controller
         $this->pengajuanModel           = new Pengajuan();
         $this->statusPengajuanModel     = new StatusPengajuan();
         $this->userActivitiesModel      = new UserActivities();
+        $this->userMetaModel            = new userMeta();
     }
     // @method: home
     public function home(): string
@@ -107,10 +111,12 @@ class Dashboard extends Controller
     // @method: profil
     public function profil(): string
     {
+        // __COMMENT__ saat mengambil data di Database, pastikan sesuai dengan role-nya, karena meta user dan admin terpisah
         // @data
         $data_page = [
             "navigation" => "Profil",
             "subtitle" => "Edit data profil anda",
+            "user_meta_data" => $this->userMetaModel->getUserMeta($this->user_id),
         ];
         // @return: view home by role
         return view("$this->pages_dashboard/" . $this->role . "/profil", $data_page);
