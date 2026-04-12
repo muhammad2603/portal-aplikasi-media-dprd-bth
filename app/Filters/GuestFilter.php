@@ -35,6 +35,7 @@ class GuestFilter implements FilterInterface
         // ambil token login dari cookie
         $get_cookie_token_login = get_cookie("token_login");
         // @if pengguna tidak memiliki sesi login, tapi memiliki cookie token login
+        // TODO update last_login user ditabel user_meta
         if ((! $is_user_logged_in) && $get_cookie_token_login) {
             // hash token login dari cookie menggunakan algoritma sha256
             $hash_token_login = hash("sha256", $get_cookie_token_login);
