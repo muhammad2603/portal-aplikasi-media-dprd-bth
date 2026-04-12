@@ -68,12 +68,14 @@ $routes->group('', ["filter" => VerifiedFilter::class], function ($routes) {
     $routes->get('/dashboard/search-pengajuan', 'API_CRUD::searchPengajuan');
     $routes->get('/dashboard/filter-pengajuan', 'API_CRUD::filterPengajuan');
     $routes->get('/dashboard/log-aktivitas', 'API_CRUD::userActivities');
+    $routes->get('/dashboard/profil-pengguna', 'API_CRUD::userProfile');
 });
 $routes->group('', ["filter" => [VerifiedFilter::class, APIFilter::class]], function ($routes) {
     $routes->post('/dashboard/tambah-pengajuan', 'API_CRUD::createPengajuan');
     $routes->post('/dashboard/pulihkan-pengajuan', 'API_CRUD::recoveryPengajuan');
     $routes->delete('/dashboard/hapus-pengajuan', 'API_CRUD::deletePengajuan');
     $routes->delete('/dashboard/hapus-pengajuan-permanen', 'API_CRUD::deletePengajuan');
+    $routes->put('/dashboard/ubah-data-profil', 'API_CRUD::changeUserProfiles');
 });
 /**
  * @route group
