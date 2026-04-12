@@ -9,6 +9,7 @@ use Config\Database;
 use App\Models\Pengajuan;
 use App\Models\StatusPengajuan;
 use App\Models\UserActivities;
+use App\Models\UserMeta;
 // @class
 class API_CRUD extends BaseController
 {
@@ -374,6 +375,59 @@ class API_CRUD extends BaseController
         return $this->response->setJSON([
             "status" => 200,
             "message" => "Pengajuan berhasil dipulihkan",
+        ]);
+    }
+    public function changeUserProfiles()
+    {
+        $user_id = (int) session()->get("userId") ?? null;
+        $requests = $this->request->getJSON(true);
+        $userMetaModel = new UserMeta();
+        $fields_user_meta = [
+            "nama_lengkap AS namaLengkap",
+            "kartu_tanda_anggota AS kartuTandaAnggota",
+            "tanggal_lahir AS tanggalLahir",
+            "nomor_hp AS noTelp",
+            "nama_media AS namaKantorMedia",
+            "alamat_media AS alamatKantorMedia",
+        ];
+        $fields_translate = [
+            "namaLengkap" => "nama_lengkap",
+            "kartuTandaAnggota" => "kartu_tanda_anggota",
+            "tanggalLahir" => "tanggal_lahir",
+            "noTelp" => "nomor_hp",
+            "namaKantorMedia" => "nama_media",
+            "alamatKantorMedia" => "alamat_media"
+        ];
+        $get_current_value_user_meta = $userMetaModel->getUserMeta($user_id, $fields_user_meta);
+        $updated_fields = [];
+        foreach ($requests as $f => $v) {
+            if ($get_current_value_user_meta[$f] !== $v) {
+                $updated_fields[$fields_translate[$f]] = $v;
+            }
+        }
+        if (count($updated_fields) === 0)
+            return $this->response->setStatusCode(400)->setJSON([
+                "status" => 400,
+                "message" => "Tidak dapat memperbarui data! Pastikan semua inputnya tidak sama dengan data yang tersimpan."
+            ]);
+        $db = Database::connect();
+        $builder = $db->table("user_meta");
+        $db->transBegin();
+        $update = $builder->set($updated_fields)->where("user_id", $user_id)->update();
+        if ($db->transStatus() === false) {
+            log_message("error", "Gagal melakukan update profil pengguna.");
+            $db->transRollback();
+            return;
+        }
+        $db->transCommit();
+        if (! $update)
+            return $this->response->setStatusCode(400)->setJSON([
+                "status" => 400,
+                "message" => "Terjadi kesalahan saat memperbarui data profil."
+            ]);
+        return $this->response->setJSON([
+            "status" => 200,
+            "message" => "Profil sudah diperbarui!"
         ]);
     }
 }
