@@ -1,7 +1,8 @@
 import { classManipulation } from "./class-module.js";
 // @class
 class Modal {
-    /** @note
+    // TODO Class Modal JS
+    /**
      * class belum sempurna, untuk kedepannya, lakukan:
      * constructor init: gunakan constructor untuk inisialisasi element yang penting, cth: title modal, warning message modal, dsb.
      */
@@ -75,7 +76,7 @@ class Modal {
         classManipulation(modalContainerElement).remove("opacity-100")
         // @note: menghapus styling pada tombol konfirmasi pada modal confirm
         /**
-         * @fix:
+         // __FIX__:
          * problem: jika ada class baru pada tombol konfirmasi, class tersebut juga harus ditambahkan disini.
          * perbaiki logika tersebut jika memungkinkan
         */
