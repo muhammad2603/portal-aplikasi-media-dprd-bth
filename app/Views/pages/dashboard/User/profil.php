@@ -1,5 +1,6 @@
 <?= $this->extend('pages/dashboard/main') ?>
 <?= $this->section('content') ?>
+<?php $timeService = new App\Libraries\TimeService ?>
 <!-- Section Data Profil -->
 <section class="riwayat-pengajuan py-12 lg:py-13 xl:py-10 px-7 bg-white rounded-lg shadow-md">
     <!-- Legend -->
@@ -23,7 +24,7 @@
     <div id="boxDataProfile" class="box-data-profile mt-4">
         <!-- Profil Image -->
         <figure class="current-profil-image">
-            <img src="/assets/images/default-profile-image.webp" alt="Profil" class="current-profile-image w-[100px] aspect-square rounded-full overflow-hidden">
+            <img src="<?= $user_meta_data["profil"] ?>" alt="Profil" class="current-profile-image w-[100px] aspect-square rounded-full overflow-hidden">
         </figure>
         <!-- Informasi Pribadi -->
         <div class="informasi-pribadi mt-4">
@@ -31,15 +32,19 @@
             <h3 class="mt-4 pb-2 text-lg border-b-[1.5px] border-solid border-gray-200">Informasi Dasar</h3>
             <!-- Nama Lengkap -->
             <div class="nama-lengkap mt-4 flex flex-col gap-1.5 text-sm">
-                <p class="font-text text-sm font-medium">Nama Lengkap: <span class="font-text font-normal text-gray-500/90">Muhammad Fattahillah. Mz</span></p>
+                <p class="font-text text-sm font-medium">Nama Lengkap: <span class="font-text font-normal text-gray-500/90"><?= $user_meta_data["nama_lengkap"] ?></span></p>
+            </div>
+            <!-- Kartu Tanda Anggota -->
+            <div class="kartu-tanda-anggota mt-4 flex flex-col gap-1.5 text-sm">
+                <p class="font-text text-sm font-medium">Kartu Tanda Anggota (KTA): <span class="font-text font-normal text-gray-500/90"><?= $user_meta_data["kartu_tanda_anggota"] ?? "-" ?></span></p>
             </div>
             <!-- Tanggal Lahir -->
             <div class="tanggal-lahir mt-2 flex flex-col gap-1.5 text-sm">
-                <p class="font-text text-sm font-medium">Tanggal Lahir: <span class="font-text font-normal text-gray-500/90">26 Maret 2026</span></p>
+                <p class="font-text text-sm font-medium">Tanggal Lahir: <span class="font-text font-normal text-gray-500/90"><?= $user_meta_data["tanggal_lahir"] !== null ? $timeService->translateDate($user_meta_data["tanggal_lahir"]) : "-" ?></span></p>
             </div>
             <!-- No Telp/WA -->
             <div class="no-telp mt-2 flex flex-col gap-1.5 text-sm">
-                <p class="font-text text-sm font-medium">No HP/WA: <span class="font-text font-normal text-gray-500/90">0822-8034-3857</span></p>
+                <p class="font-text text-sm font-medium">No HP/WA: <span class="font-text font-normal text-gray-500/90"><?= $user_meta_data["nomor_hp"] ?></span></p>
             </div>
         </div>
         <!-- Informasi Kantor/Perusahaan Media -->
@@ -48,11 +53,11 @@
             <h3 class="mt-4 pb-2 text-lg border-b-[1.5px] border-solid border-gray-200">Informasi Kantor/Perusahaan Media</h3>
             <!-- Kantor/Perusahaan Media -->
             <div class="nama-kantor-media mt-4 flex flex-col gap-1.5 text-sm">
-                <p class="font-text text-sm font-medium">Nama Kantor/Perusahaan Media: <span class="font-text font-normal text-gray-500/90">Media Jambi News</span></p>
+                <p class="font-text text-sm font-medium">Nama Kantor/Perusahaan Media: <span class="font-text font-normal text-gray-500/90"><?= $user_meta_data["nama_media"] ?></span></p>
             </div>
             <!-- Alamat Kantor/Perusahaan Media -->
             <div class="alamat-kantor-media mt-2 flex flex-col gap-1.5 text-sm">
-                <p class="font-text text-sm font-medium">Alamat Kantor/Perusahaan Media: <span class="font-text font-normal text-gray-500/90">Jl Cut Mutia No. 6 Kelurahan Rajawali, Kecamatan Jambi Timur, Kota Jambi, 36143</span></p>
+                <p class="font-text text-sm font-medium">Alamat Kantor/Perusahaan Media: <span class="font-text font-normal text-gray-500/90"><?= $user_meta_data["alamat_media"] ?></span></p>
             </div>
         </div>
     </div>
@@ -62,7 +67,7 @@
         <div class="profile-image flex flex-col items-center gap-0.5">
             <!-- Placeholder Profile Image -->
             <figure id="currentProfileImage">
-                <img src="/assets/images/default-profile-image.webp" alt="Profil" class="w-[100px] object-cover aspect-square rounded-full overflow-hidden">
+                <img src="<?= $user_meta_data["profil"] ?>" alt="Profil" class="w-[100px] object-cover aspect-square rounded-full overflow-hidden">
             </figure>
             <!-- Current Profile Image -->
             <div class="current-profile-image-wrapper relative hidden">
@@ -72,7 +77,7 @@
                     </svg>
                 </button>
                 <figure id="figureProfilePreview" class="mb-2">
-                    <img src="/assets/images/default-profile-image.webp" alt="Profil" class="w-[100px] object-cover aspect-square rounded-full overflow-hidden">
+                    <img src="<?= $user_meta_data["profil"] ?>" alt="Profil" class="w-[100px] object-cover aspect-square rounded-full overflow-hidden">
                 </figure>
             </div>
             <span class="font-text font-medium text-xs text-gray-500/90">Ukuran maks: 5 MB</span>
@@ -96,7 +101,7 @@
                 <label for="namaLengkap" class="text-sm font-medium">Nama Lengkap</label>
                 <span id="errorInputNamaLengkap" class="error pl-1.5 font-text font-semibold text-xs text-red-500 tracking-wide"></span>
                 <div class="input text-gray-500/90">
-                    <input type="text" name="_change_full_name" id="namaLengkap" class="py-2.5 px-3 w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" value="Muhammad Fattahillah. Mz" data-default-value="Muhammad Fattahillah. Mz" placeholder="Nama Lengkap" aria-label="Masukkan Nama Lengkap Anda" autocomplete="name" />
+                    <input type="text" name="_change_full_name" id="namaLengkap" class="py-2.5 px-3 w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" value="<?= $user_meta_data["nama_lengkap"] ?>" data-default-value="<?= $user_meta_data["nama_lengkap"] ?>" placeholder="Nama Lengkap" aria-label="Masukkan Nama Lengkap Anda" autocomplete="name" />
                 </div>
             </div>
             <!-- Input Nomor Kartu Tanda Anggota -->
@@ -105,7 +110,7 @@
                 <p class="pl-1.5 font-semibold text-xs text-gray-500/90 tracking-wide">Tidak wajib diisi.</p>
                 <span id="errorInputKTA" class="error pl-1.5 font-text font-semibold text-xs text-red-500 tracking-wide"></span>
                 <div class="input text-gray-500/90">
-                    <input type="text" name="_change_no_kta" id="kartuTandaAnggota" class="py-2.5 px-3 w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" value="XX.XX.XX.XX B" data-default-value="XX.XX.XX.XX B" placeholder="Nomor Kartu Tanda Anggota" aria-label="Masukkan Nomor Kartu Tanda Anggota atau Kartu Pers Anda" autocomplete="off" />
+                    <input type="text" name="_change_no_kta" id="kartuTandaAnggota" class="py-2.5 px-3 w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" value="<?= $user_meta_data["kartu_tanda_anggota"] ?>" data-default-value="<?= $user_meta_data["kartu_tanda_anggota"] ?>" placeholder="Nomor Kartu Tanda Anggota" aria-label="Masukkan Nomor Kartu Tanda Anggota atau Kartu Pers Anda" autocomplete="off" />
                 </div>
             </div>
             <!-- Input Tanggal Lahir -->
@@ -114,7 +119,7 @@
                 <p class="pl-1.5 font-semibold text-xs text-gray-500/90 tracking-wide">Tidak wajib diisi.</p>
                 <span id="errorInputTanggalLahir" class="error pl-1.5 font-text font-semibold text-xs text-red-500 tracking-wide"></span>
                 <div class="input mt-1.5 text-gray-500/90">
-                    <input type="date" name="_change_date_birth" id="tanggalLahir" lang="id" class="py-2.5 px-3 w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" aria-label="Masukkan Tanggal Lahir Anda" value="2004-03-26" data-default-value="2004-03-26" />
+                    <input type="date" name="_change_date_birth" id="tanggalLahir" lang="id" class="py-2.5 px-3 w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" aria-label="Masukkan Tanggal Lahir Anda" value="<?= $user_meta_data["tanggal_lahir"] ?? "" ?>" data-default-value="<?= $user_meta_data["tanggal_lahir"] ?? "" ?>" />
                 </div>
             </div>
             <!-- Input No Telp/WA -->
@@ -123,7 +128,7 @@
                 <p class="pl-1.5 font-semibold text-xs text-gray-500/90 tracking-wide">Diawali dengan 08XXXXXXXXXX. Minimal 10 digit angka dan maksimal 13 digit angka</p>
                 <span id="errorInputNoTelp" class="error pl-1.5 font-text font-semibold text-xs text-red-500 tracking-wide"></span>
                 <div class="input mt-1.5 text-gray-500/90">
-                    <input type="tel" name="_change_no_telp" id="noTelp" class="py-2.5 px-3 w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" aria-label="Masukkan Nomor HP atau WhatsApp Anda" value="082280343857" data-default-value="082280343857" placeholder="No HP/WA" autocomplete="tel-local" />
+                    <input type="tel" name="_change_no_telp" id="noTelp" class="py-2.5 px-3 w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" aria-label="Masukkan Nomor HP atau WhatsApp Anda" value="<?= $user_meta_data["nomor_hp"] ?>" data-default-value="<?= $user_meta_data["nomor_hp"] ?>" placeholder="No HP/WA" autocomplete="tel-local" />
                 </div>
             </div>
         </div>
@@ -137,7 +142,7 @@
                 <p class="pl-1.5 font-semibold text-xs text-gray-500/90 tracking-wide">Tidak wajib diisi.</p>
                 <span id="errorInputNamaKantor" class="error pl-1.5 font-text font-semibold text-xs text-red-500 tracking-wide"></span>
                 <div class="input mt-1.5 text-gray-500/90">
-                    <input type="text" name="_change_media_office_name" id="namaKantorMedia" class="py-2.5 px-3 w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" aria-label="Masukkan Nama Kantor/Perusahaan Media Anda" placeholder="Cth: Media Jambi News, CNN, dll." value="Media Jambi News" data-default-value="Media Jambi News" autocomplete="off" />
+                    <input type="text" name="_change_media_office_name" id="namaKantorMedia" class="py-2.5 px-3 w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" aria-label="Masukkan Nama Kantor/Perusahaan Media Anda" placeholder="Cth: Media Jambi News, CNN, dll." value="<?= $user_meta_data["nama_media"] !== "-" ? $user_meta_data["nama_media"] : "" ?>" data-default-value="<?= $user_meta_data["nama_media"] !== "-" ? $user_meta_data["nama_media"] : "" ?>" autocomplete="off" />
                 </div>
             </div>
             <!-- Input Alamat Kantor/Perusahaan Media -->
@@ -146,7 +151,7 @@
                 <p class="pl-1.5 font-semibold text-xs text-gray-500/90 tracking-wide">Tidak wajib diisi.</p>
                 <span id="errorInputAlamatKantor" class="error pl-1.5 font-text font-semibold text-xs text-red-500 tracking-wide"></span>
                 <div class="input mt-1.5 text-gray-500/90">
-                    <input type="text" name="_change_media_office_address" id="alamatKantorMedia" class="py-2.5 px-3 w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" aria-label="Masukkan Alamat Kantor/Perusahaan Media Anda" placeholder="Cth: Jl. Melati No. 5, RT 01/RW 02, Jakarta, 14350" value="Jl Cut Mutia No. 6 Kelurahan Rajawali, Kecamatan Jambi Timur, Kota Jambi, 36143" data-default-value="Jl Cut Mutia No. 6 Kelurahan Rajawali, Kecamatan Jambi Timur, Kota Jambi, 36143" autocomplete="off" />
+                    <input type="text" name="_change_media_office_address" id="alamatKantorMedia" class="py-2.5 px-3 w-full bg-primary border border-solid border-gray-500/90 rounded-md focus:outline-none" aria-label="Masukkan Alamat Kantor/Perusahaan Media Anda" placeholder="Cth: Jl. Melati No. 5, RT 01/RW 02, Jakarta, 14350" value="<?= $user_meta_data["alamat_media"] !== "-" ? $user_meta_data["alamat_media"] : "" ?? "" ?>" data-default-value="<?= $user_meta_data["alamat_media"] !== "-" ? $user_meta_data["alamat_media"] : "" ?? "" ?>" autocomplete="off" />
                 </div>
             </div>
         </div>
